@@ -1,0 +1,26 @@
+{%- comment -%}
+  Responsive image helper.
+  Usage: {% render 'img', image: section.settings.image, sizes: '(min-width: 990px) 50vw, 100vw', class: 'x', eager: true, alt: 'Alt' %}
+{%- endcomment -%}
+{%- if image != blank -%}
+  {%- liquid
+    assign loading = 'lazy'
+    assign priority = 'auto'
+    if eager
+      assign loading = 'eager'
+      assign priority = 'high'
+    endif
+    assign alt_text = alt | default: image.alt | escape
+  -%}
+  {{
+    image
+    | image_url: width: 2400
+    | image_tag:
+      widths: '240, 360, 480, 640, 800, 1000, 1200, 1600, 2000, 2400',
+      sizes: sizes | default: '100vw',
+      class: class,
+      alt: alt_text,
+      loading: loading,
+      fetchpriority: priority
+  }}
+{%- endif -%}

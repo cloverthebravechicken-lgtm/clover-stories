@@ -1,0 +1,114 @@
+<cart-drawer class="drawer" id="CartDrawer" aria-hidden="true">
+  <div class="drawer__overlay" data-cart-close></div>
+  <div class="drawer__panel" role="dialog" aria-modal="true" aria-labelledby="CartDrawerTitle" tabindex="-1">
+    <div class="drawer__head">
+      <p class="drawer__title h4" id="CartDrawerTitle">Your basket {% render 'icon', name: 'egg', size: 18 %}</p>
+      <button type="button" class="header__icon" aria-label="Close cart" data-cart-close>{% render 'icon', name: 'close', size: 24 %}</button>
+    </div>
+
+    <div class="drawer__content" data-cart-content>
+      {%- if cart.item_count == 0 -%}
+        <div class="drawer__empty">
+          <p class="h3">{{ settings.empty_cart_title }}</p>
+          <p>{{ settings.empty_cart_text }}</p>
+          <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">Find Clover</a>
+        </div>
+      {%- else -%}
+        {%- if settings.cart_perk_text != blank -%}
+          <p class="drawer__perk">{{ settings.cart_perk_text }}</p>
+        {%- endif -%}
+
+        <ul class="cart-lines" role="list">
+          {%- for item in cart.items -%}
+            <li class="cart-line" data-line="{{ forloop.index }}">
+              <a href="{{ item.url }}" class="cart-line__img">
+                {%- if item.image -%}
+                  {{ item.image | image_url: width: 180 | image_tag: loading: 'lazy', alt: item.product.title, width: 90, height: 90 }}
+                {%- endif -%}
+              </a>
+              <div class="cart-line__info">
+                <a href="{{ item.url }}" class="cart-line__title">{{ item.product.title }}</a>
+                {%- unless item.product.has_only_default_variant -%}
+                  <p class="cart-line__meta">{{ item.variant.title }}</p>
+                {%- endunless -%}
+                {%- for p in item.properties -%}
+                  {%- assign first = p.first | slice: 0 -%}
+                  {%- if p.last != blank and first != '_' -%}
+                    <p class="cart-line__meta">{{ p.first }}: {{ p.last }}</p>
+                  {%- endif -%}
+                {%- endfor -%}
+                <div class="cart-line__row">
+                  <div class="qty qty--sm">
+                    <button type="button" class="qty__btn" data-line-change="{{ item.quantity | minus: 1 }}" aria-label="Decrease quantity">{% render 'icon', name: 'minus', size: 14 %}</button>
+                    <span class="qty__val">{{ item.quantity }}</span>
+                    <button type="button" class="qty__btn" data-line-change="{{ item.quantity | plus: 1 }}" aria-label="Increase quantity">{% render 'icon', name: 'plus', size: 14 %}</button>
+                  </div>
+                  <span class="cart-line__price">
+                    {%- if item.original_line_price > item.final_line_price -%}<s>{{ item.original_line_price | money }}</s> {% endif -%}
+                    {{ item.final_line_price | money }}
+                  </span>
+                </div>
+                <button type="button" class="cart-line__remove" data-line-change="0">Remove</button>
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+
+        {%- liquid
+          assign upsell = settings.cart_upsell_product
+          assign show_upsell = false
+          if upsell != blank and upsell.available
+            assign show_upsell = true
+            for item in cart.items
+              if item.product_id == upsell.id
+                assign show_upsell = false
+              endif
+            endfor
+          endif
+        -%}
+        {%- if show_upsell -%}
+          {%- assign uv = upsell.selected_or_first_available_variant -%}
+          <div class="upsell">
+            <p class="upsell__heading">{{ settings.cart_upsell_heading }}</p>
+            <div class="upsell__card">
+              {%- if upsell.featured_image -%}
+                {{ upsell.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: upsell.title, width: 72, height: 72, class: 'upsell__img' }}
+              {%- endif -%}
+              <div class="upsell__info">
+                <p class="upsell__title">{{ upsell.title }}</p>
+                <p class="upsell__price">{{ uv.price | money }}</p>
+              </div>
+              <button type="button" class="btn btn--primary btn--sm" data-quick-add="{{ uv.id }}">Add</button>
+            </div>
+          </div>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+
+    {%- if cart.item_count > 0 -%}
+      <div class="drawer__foot">
+        {%- for discount in cart.cart_level_discount_applications -%}
+          <p class="drawer__row drawer__row--discount"><span>{{ discount.title }}</span><span>-{{ discount.total_allocated_amount | money }}</span></p>
+        {%- endfor -%}
+        <p class="drawer__row drawer__subtotal"><span>Subtotal</span><strong>{{ cart.total_price | money_with_currency }}</strong></p>
+        <p class="drawer__note">Taxes and discount codes are calculated at checkout.</p>
+        <form action="{{ routes.cart_url }}" method="post">
+          <button type="submit" name="checkout" class="btn btn--primary btn--xl btn--block">
+            {% render 'icon', name: 'lock', size: 18 %} Checkout securely
+          </button>
+        </form>
+        <p class="drawer__trust">
+          <span>{% render 'icon', name: 'truck', size: 16 %} Free shipping on books</span>
+          <span>{% render 'icon', name: 'shield', size: 16 %} Secure checkout</span>
+        </p>
+      </div>
+    {%- endif -%}
+  </div>
+</cart-drawer>
+
+{% schema %}
+{
+  "name": "Cart drawer",
+  "settings": []
+}
+{% endschema %}

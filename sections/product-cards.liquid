@@ -1,0 +1,37 @@
+<section class="pcards section anim" style="--bg: {{ section.settings.bg }};">
+  <div class="container">
+    <div class="section-head">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="h2">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="pcards__grid">
+      {%- for block in section.blocks -%}
+        {%- if block.settings.product != blank -%}
+          <div {{ block.shopify_attributes }}>{% render 'product-card', product: block.settings.product, badge: block.settings.badge %}</div>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product cards",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "The Clover collection" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Storytime, snuggle time, gift time" }
+  ],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "badge", "label": "Badge" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Product cards", "blocks": [{ "type": "product" }, { "type": "product" }, { "type": "product" }] }]
+}
+{% endschema %}

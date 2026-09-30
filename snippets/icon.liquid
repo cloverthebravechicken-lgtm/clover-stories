@@ -1,0 +1,62 @@
+{%- comment -%}
+  Usage: {% render 'icon', name: 'star', size: 20 %}
+{%- endcomment -%}
+{%- assign s = size | default: 24 -%}
+{%- case name -%}
+  {%- when 'star' -%}
+    <svg class="icon icon-star" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2.2l2.9 6.1 6.6.8-4.9 4.6 1.3 6.6L12 17l-5.9 3.3 1.3-6.6-4.9-4.6 6.6-.8z"/></svg>
+  {%- when 'check' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+  {%- when 'truck' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M2 6h11v10H2zM13 9h4.5L21 12.5V16h-8z"/><circle cx="6.5" cy="17.5" r="2" fill="#fff" stroke="currentColor" stroke-width="2"/><circle cx="17" cy="17.5" r="2" fill="#fff" stroke="currentColor" stroke-width="2"/></svg>
+  {%- when 'gift' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M3 9h18v4H3zM5 13h14v8H5zM12 9v12M12 9S10.5 4 8 4.5 7 9 12 9zm0 0s1.5-5 4-4.5S17 9 12 9z"/></svg>
+  {%- when 'heart' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 21s-7.5-4.6-9.6-9.3C.9 8.3 3 4.5 6.7 4.5c2.1 0 3.6 1.2 4.3 2.4.7-1.2 2.2-2.4 4.3-2.4 3.7 0 5.8 3.8 4.3 7.2C19.5 16.4 12 21 12 21z"/></svg>
+  {%- when 'book' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M12 6.5C10 5 7 4.5 3 5v13c4-.5 7 0 9 1.5 2-1.5 5-2 9-1.5V5c-4-.5-7 0-9 1.5zM12 6.5v13"/></svg>
+  {%- when 'shield' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M12 2.5l8 3v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10v-6z"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M8.5 12l2.5 2.5 4.5-5"/></svg>
+  {%- when 'lock' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4.5" y="10.5" width="15" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path fill="none" stroke="currentColor" stroke-width="2" d="M8 10.5V7.5a4 4 0 018 0v3"/></svg>
+  {%- when 'pencil' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M4 20l1-4.5L16 4.5l3.5 3.5L8.5 19zM14 7l3.5 3.5"/></svg>
+  {%- when 'sparkle' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 1.5c.6 4.9 2.6 7.9 8.5 10.5-5.9 2.6-7.9 5.6-8.5 10.5-.6-4.9-2.6-7.9-8.5-10.5C9.4 9.4 11.4 6.4 12 1.5z"/></svg>
+  {%- when 'feather' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20.5 3.5c-6.5-.5-12 3.5-13.3 10.3L5 16.2l1 1 2.4-2.2C15.3 13.7 19.8 9 20.5 3.5z"/><path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" d="M3.5 20.5L15 9"/></svg>
+  {%- when 'cart' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 4h2.5l2.2 11h10.6L21 7.5H6.4"/><circle cx="9" cy="19.5" r="1.6" fill="currentColor"/><circle cx="17" cy="19.5" r="1.6" fill="currentColor"/></svg>
+  {%- when 'close' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M6 6l12 12M18 6L6 18"/></svg>
+  {%- when 'plus' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M12 5v14M5 12h14"/></svg>
+  {%- when 'minus' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M5 12h14"/></svg>
+  {%- when 'chevron' -%}
+    <svg class="icon icon-chevron" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></svg>
+  {%- when 'arrow' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" d="M5 12h14M13 6l6 6-6 6"/></svg>
+  {%- when 'play' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M8 5.5v13l11-6.5z"/></svg>
+  {%- when 'menu' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"/></svg>
+  {%- when 'sun' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4.5" fill="currentColor"/><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+  {%- when 'moon' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M20 14.5A8.5 8.5 0 019.5 4a8.5 8.5 0 1010.5 10.5z"/></svg>
+  {%- when 'school' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M2 9l10-5 10 5-10 5zM6 11v5c3 2.5 9 2.5 12 0v-5M21 9.5v5"/></svg>
+  {%- when 'chat' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M4 5h16v11H9l-5 4z"/></svg>
+  {%- when 'egg' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2.5c-4 0-7 6.5-7 11a7 7 0 0014 0c0-4.5-3-11-7-11z"/></svg>
+  {%- when 'instagram' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg>
+  {%- when 'facebook' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M13.5 21v-7.5H16l.5-3h-3V8.6c0-.9.3-1.6 1.6-1.6h1.6V4.3c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.4-4 4.1v2.2H7.5v3h2.8V21z"/></svg>
+  {%- when 'tiktok' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M16.5 3c.4 2.3 1.8 3.8 4 4v3c-1.5 0-2.8-.4-4-1.2v6.4a6 6 0 11-6-6c.3 0 .7 0 1 .1v3.1a3 3 0 102 2.8V3z"/></svg>
+  {%- when 'pinterest' -%}
+    <svg class="icon" width="{{ s }}" height="{{ s }}" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path fill="currentColor" d="M12 2a10 10 0 00-3.6 19.3c-.1-.8-.2-2 0-2.9l1.2-5s-.3-.6-.3-1.5c0-1.4.8-2.5 1.8-2.5.9 0 1.3.7 1.3 1.4 0 .9-.6 2.2-.8 3.4-.2 1 .5 1.9 1.6 1.9 1.9 0 3.3-2 3.3-4.9 0-2.5-1.8-4.3-4.4-4.3-3 0-4.8 2.3-4.8 4.6 0 .9.4 1.9.8 2.4l.1.4-.3 1.2c0 .2-.2.3-.4.2-1.3-.6-2.1-2.5-2.1-4.1 0-3.3 2.4-6.4 7-6.4 3.7 0 6.5 2.6 6.5 6.1 0 3.7-2.3 6.6-5.5 6.6-1.1 0-2.1-.6-2.4-1.2l-.7 2.5c-.2.9-.9 2.1-1.3 2.8A10 10 0 1012 2z"/></svg>
+{%- endcase -%}

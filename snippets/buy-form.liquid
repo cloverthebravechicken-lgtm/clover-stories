@@ -1,0 +1,167 @@
+{%- comment -%}
+  Conversion-focused buy box used by the homepage hero and the product page.
+
+  Params:
+  - product: the primary product (book)
+  - section: parent section (reads offer blocks + add-on settings)
+  - form_id: unique id
+  - require_match: only show offers when `product` is one of them (product page)
+
+  Section settings used:
+  - addon_product, addon_label, addon_placeholder
+  - button_label, show_buy_now, show_payment_buttons
+  Offer blocks (type "offer"): product, title, subtitle, badge
+{%- endcomment -%}
+{%- liquid
+  assign offers_count = 0
+  assign offer_match = false
+  assign checked_id = blank
+  for block in section.blocks
+    if block.type == 'offer' and block.settings.product != blank and block.settings.product.available
+      assign offers_count = offers_count | plus: 1
+      if checked_id == blank
+        assign checked_id = block.settings.product.id
+      endif
+      if block.settings.product.id == product.id
+        assign offer_match = true
+        assign checked_id = product.id
+      endif
+    endif
+  endfor
+  if require_match and offer_match == false
+    assign offers_count = 0
+  endif
+  assign current_variant = product.selected_or_first_available_variant
+  assign addon = section.settings.addon_product
+-%}
+
+<buy-form class="buy-form" data-section="{{ section.id }}">
+  {%- form 'product', product, id: form_id, class: 'buy-form__form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
+    <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-input>
+
+    {%- if offers_count > 1 -%}
+      <fieldset class="offers">
+        <legend class="offers__legend">Choose your Clover</legend>
+        {%- for block in section.blocks -%}
+          {%- if block.type == 'offer' -%}
+            {%- assign op = block.settings.product -%}
+            {%- if op != blank and op.available -%}
+              {%- assign ov = op.selected_or_first_available_variant -%}
+              <label class="offer{% if block.settings.badge != blank %} offer--badged{% endif %}" {{ block.shopify_attributes }}>
+                <input
+                  type="radio"
+                  name="offer-{{ form_id }}"
+                  value="{{ ov.id }}"
+                  data-price="{{ ov.price | money }}"
+                  {% if op.id == checked_id %}checked{% endif %}
+                >
+                {%- if block.settings.badge != blank -%}
+                  <span class="offer__badge">{{ block.settings.badge }}</span>
+                {%- endif -%}
+                <span class="offer__radio" aria-hidden="true"></span>
+                {%- if op.featured_image -%}
+                  <span class="offer__img">
+                    {{ op.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: op.title, width: 80, height: 80 }}
+                  </span>
+                {%- endif -%}
+                <span class="offer__body">
+                  <span class="offer__title">{{ block.settings.title | default: op.title }}</span>
+                  {%- if block.settings.subtitle != blank -%}
+                    <span class="offer__sub">{{ block.settings.subtitle }}</span>
+                  {%- endif -%}
+                </span>
+                <span class="offer__price">
+                  <strong>{{ ov.price | money }}</strong>
+                  {%- if ov.compare_at_price > ov.price -%}
+                    <s>{{ ov.compare_at_price | money }}</s>
+                  {%- endif -%}
+                </span>
+              </label>
+            {%- endif -%}
+          {%- endif -%}
+        {%- endfor -%}
+      </fieldset>
+    {%- elsif product.has_only_default_variant == false -%}
+      <div class="variant-pills">
+        {%- for option in product.options_with_values -%}
+          <fieldset class="variant-pills__group">
+            <legend>{{ option.name }}</legend>
+            {%- for value in option.values -%}
+              <label class="pill">
+                <input type="radio" name="{{ form_id }}-{{ option.name | handle }}" value="{{ value | escape }}" data-option="{{ forloop.parentloop.index0 }}" {% if option.selected_value == value %}checked{% endif %}>
+                <span>{{ value }}</span>
+              </label>
+            {%- endfor -%}
+          </fieldset>
+        {%- endfor -%}
+        <script type="application/json" data-variants>
+          {{ product.variants | json }}
+        </script>
+      </div>
+    {%- endif -%}
+
+    {%- if addon != blank and addon.available -%}
+      {%- assign addon_variant = addon.selected_or_first_available_variant -%}
+      <div class="addon" data-addon>
+        <label class="addon__toggle">
+          <input type="checkbox" data-addon-toggle value="{{ addon_variant.id }}">
+          <span class="addon__check" aria-hidden="true">{% render 'icon', name: 'check', size: 16 %}</span>
+          <span class="addon__label">
+            {{ section.settings.addon_label | default: 'Add a personalized, author-signed inscription' }}
+            <strong class="addon__price">+{{ addon_variant.price | money_without_trailing_zeros }}</strong>
+          </span>
+          <span class="addon__icon">{% render 'icon', name: 'pencil', size: 20 %}</span>
+        </label>
+        <div class="addon__field" hidden data-addon-field>
+          <label class="visually-hidden" for="{{ form_id }}-inscription">Name for the inscription</label>
+          <input
+            id="{{ form_id }}-inscription"
+            class="input"
+            type="text"
+            maxlength="60"
+            placeholder="{{ section.settings.addon_placeholder | default: 'Child’s name (e.g. “To Emma”)' | escape }}"
+            data-addon-name
+          >
+        </div>
+      </div>
+    {%- endif -%}
+
+    <div class="buy-form__row">
+      <div class="qty" data-qty>
+        <button type="button" class="qty__btn" data-qty-minus aria-label="Decrease quantity">{% render 'icon', name: 'minus', size: 16 %}</button>
+        <input class="qty__input" type="number" name="quantity" value="1" min="1" max="99" aria-label="Quantity" data-qty-input>
+        <button type="button" class="qty__btn" data-qty-plus aria-label="Increase quantity">{% render 'icon', name: 'plus', size: 16 %}</button>
+      </div>
+      <button
+        type="submit"
+        name="add"
+        class="btn btn--primary btn--xl btn--wiggle buy-form__submit"
+        data-add-btn
+        {% unless current_variant.available %}disabled{% endunless %}
+      >
+        <span class="btn__label">
+          {%- if current_variant.available -%}
+            {{ section.settings.button_label | default: 'Add to cart' }}
+          {%- else -%}
+            Sold out
+          {%- endif -%}
+        </span>
+        <span class="btn__spinner" aria-hidden="true"></span>
+      </button>
+    </div>
+
+    {%- if section.settings.show_buy_now -%}
+      <button type="button" class="btn btn--dark btn--block buy-form__buynow" data-buy-now {% unless current_variant.available %}disabled{% endunless %}>
+        {% render 'icon', name: 'lock', size: 18 %} Buy it now
+      </button>
+    {%- endif -%}
+
+    {%- if section.settings.show_payment_buttons -%}
+      <div class="buy-form__dynamic" data-dynamic-checkout>
+        {{ form | payment_button }}
+      </div>
+    {%- endif -%}
+
+    <p class="buy-form__error" role="alert" hidden data-form-error></p>
+  {%- endform -%}
+</buy-form>

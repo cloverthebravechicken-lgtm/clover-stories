@@ -1,0 +1,22 @@
+<section class="section apps-sec" id="{{ section.settings.anchor }}">
+  <div class="container">
+    {%- if section.settings.heading != blank -%}
+      <div class="section-head"><h2 class="h2">{{ section.settings.heading }}</h2></div>
+    {%- endif -%}
+    {%- for block in section.blocks -%}
+      {% render block %}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Apps",
+  "settings": [
+    { "type": "text", "id": "anchor", "label": "Anchor id" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading" }
+  ],
+  "blocks": [{ "type": "@app" }],
+  "presets": [{ "name": "Apps" }]
+}
+{% endschema %}

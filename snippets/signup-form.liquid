@@ -1,0 +1,31 @@
+{%- comment -%}
+  Newsletter signup (Shopify customer form). Subscribers get tagged "newsletter" + "clovers-club"
+  so your email app (Shopify Email / Klaviyo) can send the activity packet automatically.
+  Params: form_id, button, placeholder, center
+{%- endcomment -%}
+{%- form 'customer', id: form_id, class: 'signup' -%}
+  <input type="hidden" name="contact[tags]" value="newsletter,clovers-club">
+  {%- if form.posted_successfully? -%}
+    <p class="signup__ok" role="status" tabindex="-1" autofocus>{% render 'icon', name: 'check', size: 18 %} {{ success | default: "You're in! Check your inbox for Clover's activity packet." }}</p>
+  {%- else -%}
+    <div class="signup__row">
+      <label class="visually-hidden" for="{{ form_id }}-email">Email</label>
+      <input
+        id="{{ form_id }}-email"
+        class="input signup__input"
+        type="email"
+        name="contact[email]"
+        required
+        autocomplete="email"
+        autocorrect="off"
+        autocapitalize="off"
+        placeholder="{{ placeholder | default: 'Your email address' | escape }}"
+        {% if form.errors %}aria-invalid="true" aria-describedby="{{ form_id }}-error"{% endif %}
+      >
+      <button type="submit" class="btn btn--primary signup__btn">{{ button | default: 'Send it to me' }}</button>
+    </div>
+    {%- if form.errors -%}
+      <p class="signup__err" id="{{ form_id }}-error">{{ form.errors.translated_fields.email | capitalize }} {{ form.errors.messages.email }}</p>
+    {%- endif -%}
+  {%- endif -%}
+{%- endform -%}

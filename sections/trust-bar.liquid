@@ -1,0 +1,47 @@
+<section class="trust" style="--bg: {{ section.settings.bg }};">
+  <ul class="trust__list container" role="list">
+    {%- for block in section.blocks -%}
+      <li class="trust__item" {{ block.shopify_attributes }}>
+        <span class="trust__icon">{% render 'icon', name: block.settings.icon, size: 26 %}</span>
+        <span>
+          <strong>{{ block.settings.title }}</strong>
+          {%- if block.settings.text != blank -%}<small>{{ block.settings.text }}</small>{%- endif -%}
+        </span>
+      </li>
+    {%- endfor -%}
+  </ul>
+</section>
+
+{% schema %}
+{
+  "name": "Trust badges",
+  "settings": [{ "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" }],
+  "blocks": [
+    {
+      "type": "badge",
+      "name": "Badge",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "truck",
+          "options": [
+            { "value": "truck", "label": "Truck" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "book", "label": "Book" },
+            { "value": "shield", "label": "Shield" },
+            { "value": "heart", "label": "Heart" },
+            { "value": "pencil", "label": "Pencil" },
+            { "value": "star", "label": "Star" },
+            { "value": "lock", "label": "Lock" }
+          ]
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "Free shipping" },
+        { "type": "text", "id": "text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Trust badges", "blocks": [{ "type": "badge" }, { "type": "badge" }, { "type": "badge" }] }]
+}
+{% endschema %}

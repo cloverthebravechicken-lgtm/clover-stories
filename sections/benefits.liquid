@@ -1,0 +1,63 @@
+<section class="benefits section anim" style="--bg: {{ section.settings.bg }};">
+  <div class="container">
+    <div class="section-head">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="h2">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="benefits__grid">
+      {%- for block in section.blocks -%}
+        <div class="benefit card tilt-{{ forloop.index | modulo: 3 }}" {{ block.shopify_attributes }} style="--accent: {{ block.settings.accent }};">
+          <span class="benefit__icon">{% render 'icon', name: block.settings.icon, size: 30 %}</span>
+          <h3 class="benefit__title">{{ block.settings.title }}</h3>
+          <p class="benefit__text">{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+    {%- if section.settings.button_label != blank -%}
+      <p class="center mt-l"><a href="{{ section.settings.button_link | default: '#top-buy' }}" class="btn btn--primary btn--lg">{{ section.settings.button_label }}</a></p>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Benefits",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Why families love Clover" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "More than a bedtime story" },
+    { "type": "text", "id": "button_label", "label": "Button label" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "default": "heart",
+          "options": [
+            { "value": "heart", "label": "Heart" },
+            { "value": "sparkle", "label": "Sparkle" },
+            { "value": "chat", "label": "Chat" },
+            { "value": "book", "label": "Book" },
+            { "value": "moon", "label": "Moon" },
+            { "value": "school", "label": "School" },
+            { "value": "gift", "label": "Gift" },
+            { "value": "feather", "label": "Feather" },
+            { "value": "sun", "label": "Sun" },
+            { "value": "pencil", "label": "Pencil" }
+          ]
+        },
+        { "type": "color", "id": "accent", "label": "Accent", "default": "#FF5757" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Builds confidence" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Encourages self-belief and celebrates what makes every child unique." }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Benefits", "blocks": [{ "type": "benefit" }, { "type": "benefit" }, { "type": "benefit" }] }]
+}
+{% endschema %}

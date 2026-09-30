@@ -1,0 +1,30 @@
+{%- assign items = section.settings.items | split: ',' -%}
+<section class="marquee" style="--bg: {{ section.settings.bg }}; --fg: {{ section.settings.fg }};" aria-label="{{ section.settings.label | escape }}">
+  <div class="marquee__track">
+    {%- for n in (1..2) -%}
+      <ul class="marquee__list" role="list" {% if n == 2 %}aria-hidden="true"{% endif %}>
+        {%- for item in items -%}
+          <li>{{ item | strip }}</li>
+          <li class="marquee__dot" aria-hidden="true">{% render 'icon', name: 'egg', size: 18 %}</li>
+        {%- endfor -%}
+        {%- for item in items -%}
+          <li>{{ item | strip }}</li>
+          <li class="marquee__dot" aria-hidden="true">{% render 'icon', name: 'egg', size: 18 %}</li>
+        {%- endfor -%}
+      </ul>
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Scrolling ribbon",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FF5757" },
+    { "type": "color", "id": "fg", "label": "Text", "default": "#FFFFFF" },
+    { "type": "text", "id": "label", "label": "Accessible label", "default": "Perfect for" },
+    { "type": "textarea", "id": "items", "label": "Items (comma separated)", "default": "Perfect for bedtime, Classrooms, Libraries, Birthday gifts, Homeschool, Grandparents, Baby showers" }
+  ],
+  "presets": [{ "name": "Scrolling ribbon" }]
+}
+{% endschema %}

@@ -1,0 +1,44 @@
+<section class="signup-sec section anim" id="{{ section.settings.anchor | default: 'clovers-club' }}" style="--bg: {{ section.settings.bg }};">
+  <div class="container">
+    <div class="signup-sec__card">
+      <div class="signup-sec__media">
+        {%- if section.settings.image != blank -%}
+          {% render 'img', image: section.settings.image, sizes: '(min-width: 990px) 40vw, 100vw' %}
+        {%- endif -%}
+        {%- if section.settings.sticker != blank -%}<span class="sticker sticker--signup" aria-hidden="true">{{ section.settings.sticker }}</span>{%- endif -%}
+      </div>
+      <div class="signup-sec__content">
+        {%- if section.settings.eyebrow != blank -%}<p class="pill pill--sun">{% render 'icon', name: 'pencil', size: 14 %} {{ section.settings.eyebrow }}</p>{%- endif -%}
+        <h2 class="h2">{{ section.settings.heading }}</h2>
+        <div class="rte">{{ section.settings.text }}</div>
+        {%- assign items = section.settings.includes | split: ',' -%}
+        {%- if section.settings.includes != blank -%}
+          <ul class="chips" role="list">
+            {%- for item in items -%}<li>{{ item | strip }}</li>{%- endfor -%}
+          </ul>
+        {%- endif -%}
+        {% render 'signup-form', form_id: 'ActivitySignup', button: section.settings.button_label, placeholder: 'Your email address' %}
+        {%- if section.settings.fine_print != blank -%}<p class="fine">{{ section.settings.fine_print }}</p>{%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Activity packet signup",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Background", "default": "#EAFBFF" },
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "clovers-club" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "sticker", "label": "Sticker", "default": "FREE!" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "10 pages, free to download" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Get Clover's free activity packet" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Join Clover's Club and we'll send the printable packet straight to your inbox — plus a bonus parent & teacher discussion sheet.</p>" },
+    { "type": "text", "id": "includes", "label": "Includes (comma separated)", "default": "Coloring, Tracing, Maze, Sequencing, Counting, Drawing, Matching" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Send my packet" },
+    { "type": "text", "id": "fine_print", "label": "Fine print", "default": "No spam, just farmyard fun. Unsubscribe anytime." }
+  ],
+  "presets": [{ "name": "Activity packet signup" }]
+}
+{% endschema %}

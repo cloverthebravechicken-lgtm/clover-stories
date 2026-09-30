@@ -1,0 +1,206 @@
+{%- liquid
+  assign current_variant = product.selected_or_first_available_variant
+  assign media_count = product.media.size
+-%}
+<section class="pdp section" id="top-buy">
+  <div class="container pdp__inner">
+    <div class="pdp__gallery">
+      <div class="pdp__main" data-rail data-gallery>
+        {%- for media in product.media -%}
+          <div class="pdp__slide" data-media-id="{{ media.id }}">
+            {%- case media.media_type -%}
+              {%- when 'image' -%}
+                <button type="button" class="pdp__zoom" data-lightbox="{{ media | image_url: width: 2400 }}" data-lightbox-alt="{{ media.alt | escape }}" aria-label="Zoom image {{ forloop.index }}">
+                  {%- if forloop.first -%}
+                    {% render 'img', image: media, sizes: '(min-width: 990px) 55vw, 100vw', eager: true, alt: media.alt %}
+                  {%- else -%}
+                    {% render 'img', image: media, sizes: '(min-width: 990px) 55vw, 100vw', alt: media.alt %}
+                  {%- endif -%}
+                </button>
+              {%- when 'video' -%}
+                {{ media | video_tag: controls: true, playsinline: true, muted: true, preload: 'metadata', image_size: '1200x' }}
+              {%- when 'external_video' -%}
+                {{ media | external_video_tag: loading: 'lazy' }}
+              {%- else -%}
+                {{ media | media_tag }}
+            {%- endcase -%}
+          </div>
+        {%- else -%}
+          <div class="pdp__slide">{{ 'product-1' | placeholder_svg_tag: 'placeholder' }}</div>
+        {%- endfor -%}
+      </div>
+      {%- if media_count > 1 -%}
+        <div class="pdp__thumbs" role="list">
+          {%- for media in product.media -%}
+            <button type="button" class="pdp__thumb{% if forloop.first %} is-active{% endif %}" data-thumb="{{ forloop.index0 }}" aria-label="Show media {{ forloop.index }}" role="listitem">
+              {{ media.preview_image | image_url: width: 180 | image_tag: loading: 'lazy', alt: '', width: 90, height: 90 }}
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+      <dialog class="lightbox" data-lightbox-dialog>
+        <button type="button" class="lightbox__close round-btn" aria-label="Close" data-lightbox-close>{% render 'icon', name: 'close', size: 22 %}</button>
+        <img alt="" width="1600" height="1000" data-lightbox-img>
+      </dialog>
+    </div>
+
+    <div class="pdp__info">
+      {%- if section.settings.badge != blank -%}
+        <p class="pill pill--green">{% render 'icon', name: 'sparkle', size: 14 %} {{ section.settings.badge }}</p>
+      {%- endif -%}
+      <h1 class="pdp__title">{{ product.title }}</h1>
+
+      {%- for block in section.blocks -%}
+        {%- if block.type == '@app' -%}
+          <div class="pdp__app">{% render block %}</div>
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if section.settings.rating_text != blank -%}
+        <a href="#reviews" class="hero__rating">{% render 'stars', rating: 5, size: 18 %}<span>{{ section.settings.rating_text }}</span></a>
+      {%- endif -%}
+
+      <div class="pdp__price" data-live-price>
+        {% render 'price', variant: current_variant %}
+      </div>
+
+      {%- if section.settings.blurb != blank -%}
+        <div class="pdp__blurb rte">{{ section.settings.blurb }}</div>
+      {%- endif -%}
+
+      {% render 'buy-form', product: product, section: section, form_id: 'ProductForm', require_match: true %}
+
+      <ul class="pdp__perks" role="list">
+        {%- if section.settings.perk_1 != blank -%}<li>{% render 'icon', name: 'truck', size: 20 %} {{ section.settings.perk_1 }}</li>{%- endif -%}
+        {%- if section.settings.perk_2 != blank -%}<li>{% render 'icon', name: 'gift', size: 20 %} {{ section.settings.perk_2 }}</li>{%- endif -%}
+        {%- if section.settings.perk_3 != blank -%}<li>{% render 'icon', name: 'shield', size: 20 %} {{ section.settings.perk_3 }}</li>{%- endif -%}
+      </ul>
+
+      {%- if section.settings.quote != blank -%}
+        <blockquote class="mini-quote mini-quote--card">
+          {% render 'stars', rating: 5, size: 14 %}
+          <p>“{{ section.settings.quote }}”</p>
+          <cite>— {{ section.settings.quote_author }}</cite>
+        </blockquote>
+      {%- endif -%}
+
+      <div class="accordion">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'description' -%}
+              {%- if product.description != blank -%}
+                <details class="faq__item" {{ block.shopify_attributes }}{% if block.settings.open %} open{% endif %}>
+                  <summary><span>{{ block.settings.title }}</span>{% render 'icon', name: 'chevron', size: 20 %}</summary>
+                  <div class="faq__answer rte">{{ product.description }}</div>
+                </details>
+              {%- endif -%}
+            {%- when 'collapsible' -%}
+              <details class="faq__item" {{ block.shopify_attributes }}{% if block.settings.open %} open{% endif %}>
+                <summary><span>{{ block.settings.title }}</span>{% render 'icon', name: 'chevron', size: 20 %}</summary>
+                <div class="faq__answer rte">{{ block.settings.content }}</div>
+              </details>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Sticky add-to-cart bar (mobile + desktop when the buy box scrolls away) {%- endcomment -%}
+  <sticky-atc class="satc" hidden>
+    <div class="satc__inner container">
+      {%- if product.featured_image -%}
+        {{ product.featured_image | image_url: width: 120 | image_tag: loading: 'lazy', alt: '', width: 48, height: 48, class: 'satc__img' }}
+      {%- endif -%}
+      <div class="satc__info">
+        <p class="satc__title">{{ product.title }}</p>
+        <p class="satc__price" data-satc-price>{{ current_variant.price | money }}</p>
+      </div>
+      <button type="button" class="btn btn--primary" data-satc-btn {% unless current_variant.available %}disabled{% endunless %}>
+        {%- if current_variant.available -%}{{ section.settings.button_label | default: 'Add to cart' }}{%- else -%}Sold out{%- endif -%}
+      </button>
+    </div>
+  </sticky-atc>
+</section>
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Product",
+    "name": {{ product.title | json }},
+    "url": {{ request.origin | append: product.url | json }},
+    {%- if product.featured_image -%}
+    "image": [{{ product.featured_image | image_url: width: 1200 | prepend: 'https:' | json }}],
+    {%- endif -%}
+    "description": {{ product.description | strip_html | json }},
+    "brand": { "@type": "Brand", "name": {{ product.vendor | json }} },
+    "offers": [
+      {%- for variant in product.variants -%}
+        {
+          "@type": "Offer",
+          "sku": {{ variant.sku | json }},
+          "availability": "http://schema.org/{% if variant.available %}InStock{% else %}OutOfStock{% endif %}",
+          "price": {{ variant.price | divided_by: 100.00 | json }},
+          "priceCurrency": {{ cart.currency.iso_code | json }},
+          "url": {{ request.origin | append: variant.url | json }}
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Product page",
+  "class": "section-main-product",
+  "settings": [
+    { "type": "text", "id": "badge", "label": "Badge", "default": "Free shipping + free activity packet" },
+    { "type": "text", "id": "rating_text", "label": "Rating text", "default": "Loved by parents & teachers" },
+    { "type": "richtext", "id": "blurb", "label": "Short pitch (above buy box)" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Add to cart" },
+    { "type": "checkbox", "id": "show_buy_now", "label": "Show \"Buy it now\" button", "default": false },
+    { "type": "checkbox", "id": "show_payment_buttons", "label": "Show express checkout buttons", "default": true },
+    { "type": "header", "content": "Add-on" },
+    { "type": "product", "id": "addon_product", "label": "Add-on product (e.g. personalized & signed)" },
+    { "type": "text", "id": "addon_label", "label": "Add-on label", "default": "Personalize & sign it by the author" },
+    { "type": "text", "id": "addon_placeholder", "label": "Add-on name placeholder", "default": "Who is it for? (e.g. “To Emma”)" },
+    { "type": "header", "content": "Perks" },
+    { "type": "text", "id": "perk_1", "label": "Perk 1", "default": "Free shipping on all books" },
+    { "type": "text", "id": "perk_2", "label": "Perk 2", "default": "Free 10-page printable activity packet" },
+    { "type": "text", "id": "perk_3", "label": "Perk 3", "default": "Secure checkout" },
+    { "type": "header", "content": "Mini review" },
+    { "type": "text", "id": "quote", "label": "Quote" },
+    { "type": "text", "id": "quote_author", "label": "Author" }
+  ],
+  "blocks": [
+    { "type": "@app" },
+    {
+      "type": "offer",
+      "name": "Offer option",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle" },
+        { "type": "text", "id": "badge", "label": "Badge" }
+      ]
+    },
+    {
+      "type": "description",
+      "name": "Description tab",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "About the book" },
+        { "type": "checkbox", "id": "open", "label": "Open by default", "default": false }
+      ]
+    },
+    {
+      "type": "collapsible",
+      "name": "Collapsible tab",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Details" },
+        { "type": "richtext", "id": "content", "label": "Content", "default": "<p>Add details here.</p>" },
+        { "type": "checkbox", "id": "open", "label": "Open by default", "default": false }
+      ]
+    }
+  ]
+}
+{% endschema %}

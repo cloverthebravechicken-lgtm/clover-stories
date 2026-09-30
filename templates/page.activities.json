@@ -1,0 +1,39 @@
+{
+  "sections": {
+    "signup": {
+      "type": "activity-signup",
+      "settings": {
+        "bg": "#FFFFFF",
+        "anchor": "clovers-club",
+        "image": "shopify://shop_images/Copy_of_CV_of_30_coloring_pages_mockup_V1.png",
+        "sticker": "FREE!",
+        "eyebrow": "10 pages, free to download",
+        "heading": "Get Clover's free activity packet",
+        "text": "<p>Join Clover's Club and we'll send the printable packet straight to your inbox, plus a bonus parent & teacher discussion sheet.</p>",
+        "includes": "Coloring, Tracing, Maze, Sequencing, Counting, Drawing, Matching",
+        "button_label": "Send my packet",
+        "fine_print": "No spam, just farmyard fun. Unsubscribe anytime."
+      }
+    },
+    "main": {
+      "type": "main-page",
+      "settings": {}
+    },
+    "final": {
+      "type": "final-cta",
+      "settings": {
+        "bg": "#FF5757",
+        "product": "clover-the-brave-chicken",
+        "image": "shopify://shop_images/clovercoverupdated_merged_2.jpg",
+        "heading": "Be brave. Be you. Bring Clover home.",
+        "text": "<p>The story your little one will ask for again and again.</p>",
+        "button_label": "Add to cart"
+      }
+    }
+  },
+  "order": [
+    "signup",
+    "main",
+    "final"
+  ]
+}

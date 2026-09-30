@@ -1,0 +1,57 @@
+<section class="faq section anim" style="--bg: {{ section.settings.bg }};">
+  <div class="container container--narrow">
+    <div class="section-head">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="h2">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="faq__list">
+      {%- for block in section.blocks -%}
+        <details class="faq__item" {{ block.shopify_attributes }}{% if forloop.first and section.settings.open_first %} open{% endif %}>
+          <summary><span>{{ block.settings.question }}</span>{% render 'icon', name: 'chevron', size: 20 %}</summary>
+          <div class="faq__answer rte">{{ block.settings.answer }}</div>
+        </details>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{%- if section.blocks.size > 0 -%}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {%- for block in section.blocks -%}
+        {
+          "@type": "Question",
+          "name": {{ block.settings.question | json }},
+          "acceptedAnswer": { "@type": "Answer", "text": {{ block.settings.answer | strip_html | json }} }
+        }{% unless forloop.last %},{% endunless %}
+      {%- endfor -%}
+    ]
+  }
+</script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "FAQ",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Good questions" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Frequently asked questions" },
+    { "type": "checkbox", "id": "open_first", "label": "Open first question", "default": true }
+  ],
+  "blocks": [
+    {
+      "type": "question",
+      "name": "Question",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Question", "default": "What ages is Clover for?" },
+        { "type": "richtext", "id": "answer", "label": "Answer", "default": "<p>Clover is written for ages 3–5, and younger toddlers love pointing out the farm animals too.</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "FAQ", "blocks": [{ "type": "question" }] }]
+}
+{% endschema %}

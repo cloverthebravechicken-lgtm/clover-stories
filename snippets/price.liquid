@@ -1,0 +1,12 @@
+{%- comment -%}
+  Usage: {% render 'price', variant: variant %}
+{%- endcomment -%}
+{%- if variant -%}
+  <span class="price" data-price>
+    <span class="price__now">{{ variant.price | money }}</span>
+    {%- if variant.compare_at_price > variant.price -%}
+      <s class="price__was">{{ variant.compare_at_price | money }}</s>
+      <span class="price__save">Save {{ variant.compare_at_price | minus: variant.price | money_without_trailing_zeros }}</span>
+    {%- endif -%}
+  </span>
+{%- endif -%}

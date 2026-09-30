@@ -1,0 +1,65 @@
+{%- liquid
+  assign logo = settings.logo
+-%}
+<sticky-header class="header{% if section.settings.sticky %} header--sticky{% endif %}">
+  <div class="header__inner container">
+    <button type="button" class="header__icon header__burger" aria-label="Open menu" aria-controls="MobileNav" aria-expanded="false" data-nav-open>
+      {% render 'icon', name: 'menu', size: 26 %}
+    </button>
+
+    {%- if request.page_type == 'index' -%}<h1 class="header__logo">{%- else -%}<div class="header__logo">{%- endif -%}
+      <a href="{{ routes.root_url }}" aria-label="{{ shop.name }}">
+        {%- if logo != blank -%}
+          {{ logo | image_url: width: 520 | image_tag: loading: 'eager', alt: shop.name, class: 'header__logo-img', widths: '180, 260, 360, 520', sizes: '200px' }}
+        {%- else -%}
+          <span class="header__logo-text">{{ shop.name }}</span>
+        {%- endif -%}
+      </a>
+    {%- if request.page_type == 'index' -%}</h1>{%- else -%}</div>{%- endif -%}
+
+    <nav class="header__nav" aria-label="Main">
+      <ul class="header__menu">
+        {%- for link in section.settings.menu.links -%}
+          <li><a href="{{ link.url }}" class="header__link{% if link.active %} is-active{% endif %}">{{ link.title }}</a></li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="header__actions">
+      {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+        <a href="{{ section.settings.cta_link }}" class="btn btn--primary btn--sm header__cta">{{ section.settings.cta_label }}</a>
+      {%- endif -%}
+      <a href="{{ routes.cart_url }}" class="header__icon header__cart" data-cart-open aria-label="Cart ({{ cart.item_count }})">
+        {% render 'icon', name: 'cart', size: 26 %}
+        <span class="header__count{% if cart.item_count == 0 %} is-empty{% endif %}" data-cart-count>{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="mnav" id="MobileNav" hidden>
+    <div class="mnav__panel">
+      <button type="button" class="header__icon mnav__close" aria-label="Close menu" data-nav-close>{% render 'icon', name: 'close', size: 26 %}</button>
+      <ul class="mnav__list">
+        {%- for link in section.settings.menu.links -%}
+          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {%- endfor -%}
+      </ul>
+      {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+        <a href="{{ section.settings.cta_link }}" class="btn btn--primary btn--block">{{ section.settings.cta_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</sticky-header>
+
+{% schema %}
+{
+  "name": "Header",
+  "class": "section-header",
+  "settings": [
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
+    { "type": "checkbox", "id": "sticky", "label": "Sticky header", "default": true },
+    { "type": "text", "id": "cta_label", "label": "Button label", "default": "Get the book" },
+    { "type": "url", "id": "cta_link", "label": "Button link" }
+  ]
+}
+{% endschema %}

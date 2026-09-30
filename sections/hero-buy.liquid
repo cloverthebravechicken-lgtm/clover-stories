@@ -1,0 +1,153 @@
+{%- liquid
+  assign product = section.settings.product
+  assign images = section.blocks | where: 'type', 'image'
+  assign bullets = section.blocks | where: 'type', 'bullet'
+-%}
+<section class="hero" id="top-buy" style="--hero-bg: {{ section.settings.bg }};">
+  <div class="hero__sky" aria-hidden="true">
+    <span class="hero__sun">{% render 'deco', name: 'sunburst', color: '#FFD45C' %}</span>
+    <span class="hero__cloud hero__cloud--1">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
+    <span class="hero__cloud hero__cloud--2">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
+  </div>
+
+  <div class="hero__inner container">
+    <div class="hero__media">
+      <div class="hero__slides" data-slideshow data-interval="{{ section.settings.autoplay_speed | times: 1000 }}">
+        {%- for block in images -%}
+          <figure class="hero__slide{% if forloop.first %} is-active{% endif %}" {{ block.shopify_attributes }}>
+            {%- if block.settings.image != blank -%}
+              {%- if forloop.first -%}
+                {% render 'img', image: block.settings.image, sizes: '(min-width: 990px) 50vw, 100vw', eager: true, alt: block.settings.caption %}
+              {%- else -%}
+                {% render 'img', image: block.settings.image, sizes: '(min-width: 990px) 50vw, 100vw', alt: block.settings.caption %}
+              {%- endif -%}
+            {%- elsif product.featured_image -%}
+              {% render 'img', image: product.featured_image, sizes: '(min-width: 990px) 50vw, 100vw', eager: true %}
+            {%- endif -%}
+            {%- if block.settings.caption != blank -%}
+              <figcaption class="hero__caption">{{ block.settings.caption }}</figcaption>
+            {%- endif -%}
+          </figure>
+        {%- else -%}
+          {%- if product.featured_image -%}
+            <figure class="hero__slide is-active">{% render 'img', image: product.featured_image, sizes: '(min-width: 990px) 50vw, 100vw', eager: true %}</figure>
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if images.size > 1 -%}
+          <div class="hero__dots" role="tablist" aria-label="Choose image">
+            {%- for block in images -%}
+              <button type="button" class="hero__dot{% if forloop.first %} is-active{% endif %}" aria-label="Image {{ forloop.index }}" data-slide-to="{{ forloop.index0 }}"></button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- if section.settings.sticker != blank -%}
+        <span class="sticker sticker--hero" aria-hidden="true">{{ section.settings.sticker }}</span>
+      {%- endif -%}
+    </div>
+
+    <div class="hero__content">
+      {%- if section.settings.badge != blank -%}
+        <p class="pill pill--green">{% render 'icon', name: 'sparkle', size: 14 %} {{ section.settings.badge }}</p>
+      {%- endif -%}
+
+      <h2 class="hero__title">{{ section.settings.heading }}</h2>
+
+      {%- if section.settings.rating_text != blank -%}
+        <a href="#reviews" class="hero__rating">
+          {% render 'stars', rating: 5, size: 20 %}
+          <span>{{ section.settings.rating_text }}</span>
+        </a>
+      {%- endif -%}
+
+      {%- if section.settings.text != blank -%}
+        <div class="hero__text rte">{{ section.settings.text }}</div>
+      {%- endif -%}
+
+      {%- if bullets.size > 0 -%}
+        <ul class="checks" role="list">
+          {%- for block in bullets -%}
+            <li {{ block.shopify_attributes }}><span class="checks__i">{% render 'icon', name: 'check', size: 14 %}</span>{{ block.settings.text }}</li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+
+      {%- if product != blank -%}
+        <div class="hero__buy card">
+          <div class="hero__price-row">
+            <span class="hero__price" data-live-price>{{ product.selected_or_first_available_variant.price | money }}</span>
+            {%- if section.settings.price_note != blank -%}
+              <span class="hero__price-note">{{ section.settings.price_note }}</span>
+            {%- endif -%}
+          </div>
+          {% render 'buy-form', product: product, section: section, form_id: 'HeroForm' %}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.quote != blank -%}
+        <blockquote class="mini-quote">
+          {% render 'stars', rating: 5, size: 14 %}
+          <p>“{{ section.settings.quote }}”</p>
+          <cite>— {{ section.settings.quote_author }}</cite>
+        </blockquote>
+      {%- endif -%}
+    </div>
+  </div>
+  {% render 'deco', name: 'wave', color: section.settings.next_bg %}
+</section>
+
+{% schema %}
+{
+  "name": "Hero + buy box",
+  "class": "section-hero",
+  "settings": [
+    { "type": "product", "id": "product", "label": "Main product" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#EAFBFF" },
+    { "type": "color", "id": "next_bg", "label": "Wave color (next section background)", "default": "#FFFFFF" },
+    { "type": "text", "id": "badge", "label": "Badge", "default": "Available now in hardcover" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Meet Clover, the <em>Brave</em> Chicken" },
+    { "type": "text", "id": "rating_text", "label": "Rating text", "default": "Loved by parents, grandparents & teachers" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>A heartwarming rhyming farm adventure that reminds children the bravest thing they can be is <strong>themselves</strong>.</p>" },
+    { "type": "text", "id": "price_note", "label": "Price note", "default": "Free shipping" },
+    { "type": "text", "id": "sticker", "label": "Round sticker text", "default": "Ages 3–5" },
+    { "type": "range", "id": "autoplay_speed", "label": "Image rotation", "min": 3, "max": 10, "step": 1, "unit": "s", "default": 4 },
+    { "type": "header", "content": "Buy box" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Add to cart" },
+    { "type": "checkbox", "id": "show_buy_now", "label": "Show \"Buy it now\" button", "default": false },
+    { "type": "checkbox", "id": "show_payment_buttons", "label": "Show express checkout buttons (Shop Pay, Apple Pay…)", "default": true },
+    { "type": "product", "id": "addon_product", "label": "Add-on product (e.g. personalized & signed)" },
+    { "type": "text", "id": "addon_label", "label": "Add-on label", "default": "Personalize & sign it by the author" },
+    { "type": "text", "id": "addon_placeholder", "label": "Add-on name placeholder", "default": "Who is it for? (e.g. “To Emma”)" },
+    { "type": "header", "content": "Mini review" },
+    { "type": "text", "id": "quote", "label": "Quote" },
+    { "type": "text", "id": "quote_author", "label": "Author" }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Image",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "caption", "label": "Caption bubble" }
+      ]
+    },
+    {
+      "type": "bullet",
+      "name": "Bullet",
+      "settings": [{ "type": "text", "id": "text", "label": "Text", "default": "Rhyming read-aloud" }]
+    },
+    {
+      "type": "offer",
+      "name": "Offer option",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle" },
+        { "type": "text", "id": "badge", "label": "Badge", "info": "e.g. Most popular" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Hero + buy box" }]
+}
+{% endschema %}

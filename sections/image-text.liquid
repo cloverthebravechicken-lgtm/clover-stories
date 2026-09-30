@@ -1,0 +1,42 @@
+<section class="imgtext section anim{% if section.settings.reverse %} imgtext--reverse{% endif %}" id="{{ section.settings.anchor }}" style="--bg: {{ section.settings.bg }};">
+  <div class="container imgtext__inner">
+    <div class="imgtext__media">
+      <div class="imgtext__frame{% if section.settings.frame == 'blob' %} imgtext__frame--blob{% elsif section.settings.frame == 'polaroid' %} imgtext__frame--polaroid{% endif %}">
+        {%- if section.settings.image != blank -%}
+          {% render 'img', image: section.settings.image, sizes: '(min-width: 990px) 45vw, 100vw' %}
+        {%- endif -%}
+      </div>
+      {%- if section.settings.sticker != blank -%}<span class="sticker sticker--img" aria-hidden="true">{{ section.settings.sticker }}</span>{%- endif -%}
+    </div>
+    <div class="imgtext__content">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="h2">{{ section.settings.heading }}</h2>
+      <div class="rte">{{ section.settings.text }}</div>
+      {%- if section.settings.signature != blank -%}<p class="signature">{{ section.settings.signature }}</p>{%- endif -%}
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link | default: '#top-buy' }}" class="btn btn--primary btn--lg">{{ section.settings.button_label }}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Image with text",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" },
+    { "type": "text", "id": "anchor", "label": "Anchor id" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "select", "id": "frame", "label": "Image frame", "default": "blob", "options": [{ "value": "blob", "label": "Playful blob" }, { "value": "polaroid", "label": "Polaroid" }, { "value": "none", "label": "Rounded" }] },
+    { "type": "checkbox", "id": "reverse", "label": "Image on right", "default": false },
+    { "type": "text", "id": "sticker", "label": "Sticker text" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Image with text" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Tell your story.</p>" },
+    { "type": "text", "id": "signature", "label": "Signature" },
+    { "type": "text", "id": "button_label", "label": "Button label" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Image with text" }]
+}
+{% endschema %}

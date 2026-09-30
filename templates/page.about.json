@@ -1,0 +1,109 @@
+{
+  "sections": {
+    "author": {
+      "type": "image-text",
+      "settings": {
+        "bg": "#EAFBFF",
+        "anchor": "author",
+        "image": "shopify://shop_images/Untitled_design-92.png",
+        "frame": "blob",
+        "reverse": false,
+        "sticker": "Hi!",
+        "eyebrow": "Meet the author",
+        "heading": "Hi! I'm Melanie.",
+        "text": "<p>I'm a writer and farm-loving mom who lives on a little patch of land with my family and animals (including a flock of spirited chickens!). Inspired by my son and everyday moments in the countryside, I wrote <em>Clover, the Brave Chicken</em> to celebrate courage, curiosity, and the quiet strength that lives inside every child.</p><p>I'm a big believer in muddy boots, bedtime stories, and raising kids to be both kind and brave. Thank you for supporting my dreams with Clover!</p>",
+        "signature": "— Melanie",
+        "button_label": "Bring Clover home",
+        "button_link": ""
+      }
+    },
+    "press": {
+      "type": "press-reviews",
+      "settings": {
+        "bg": "#FFFFFF",
+        "anchor": "praise",
+        "eyebrow": "Professionally reviewed",
+        "heading": "The critics are clucking about Clover"
+      },
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "logo": "shopify://shop_images/Kirkus-Logo-300x158.png",
+            "quote": "<p>“Clover’s worries will feel familiar to many readers, and through her gentle moments of uncertainty and self-discovery, her quiet optimism and determination make her an endearing character to follow. […] <strong>A charming farmyard story about finding the courage to embrace who you are.</strong>”</p>",
+            "source": "Kirkus Reviews"
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "logo": "shopify://shop_images/Untitled_design-90.png",
+            "quote": "<p>“Set amidst the familiar sights and sounds of an idyllic farmyard, this story teaches readers about the importance of being true to oneself and recognizing one’s own strengths. […] <strong>Perfect for shared reading, especially aloud, this uplifting story will help young readers reflect on their own unique gifts.</strong>”</p>",
+            "source": "The Children's Book Review"
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2"
+      ]
+    },
+    "collection": {
+      "type": "product-cards",
+      "settings": {
+        "bg": "#EAFBFF",
+        "eyebrow": "The Clover collection",
+        "heading": "Storytime, snuggle time, gift time"
+      },
+      "blocks": {
+        "product_1": {
+          "type": "product",
+          "settings": {
+            "product": "clover-the-brave-chicken",
+            "badge": "Bestseller"
+          }
+        },
+        "product_2": {
+          "type": "product",
+          "settings": {
+            "product": "clover-book-plush-bundle",
+            "badge": "Best gift"
+          }
+        },
+        "product_3": {
+          "type": "product",
+          "settings": {
+            "product": "clover-plush",
+            "badge": ""
+          }
+        }
+      },
+      "block_order": [
+        "product_1",
+        "product_2",
+        "product_3"
+      ]
+    },
+    "signup": {
+      "type": "activity-signup",
+      "settings": {
+        "bg": "#FFFFFF",
+        "anchor": "clovers-club",
+        "image": "shopify://shop_images/Copy_of_CV_of_30_coloring_pages_mockup_V1.png",
+        "sticker": "FREE!",
+        "eyebrow": "10 pages, free to download",
+        "heading": "Get Clover's free activity packet",
+        "text": "<p>Join Clover's Club and we'll send the printable packet straight to your inbox, plus a bonus parent & teacher discussion sheet.</p>",
+        "includes": "Coloring, Tracing, Maze, Sequencing, Counting, Drawing, Matching",
+        "button_label": "Send my packet",
+        "fine_print": "No spam, just farmyard fun. Unsubscribe anytime."
+      }
+    }
+  },
+  "order": [
+    "author",
+    "press",
+    "collection",
+    "signup"
+  ]
+}

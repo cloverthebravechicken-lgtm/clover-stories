@@ -1,0 +1,53 @@
+<section class="video-story section anim" style="--bg: {{ section.settings.bg }};">
+  <div class="container video-story__inner">
+    <div class="video-story__media">
+      <div class="video-story__frame">
+        {%- if section.settings.video != blank -%}
+          {{
+            section.settings.video
+            | video_tag:
+              autoplay: true,
+              loop: true,
+              muted: true,
+              playsinline: true,
+              controls: false,
+              preload: 'none',
+              image_size: '1000x',
+              class: 'video-story__video'
+          }}
+          <button type="button" class="video-story__sound" data-video-sound aria-label="Turn sound on">
+            <span data-sound-off>🔇 Tap for sound</span><span data-sound-on hidden>🔊 Sound on</span>
+          </button>
+        {%- elsif section.settings.poster != blank -%}
+          {% render 'img', image: section.settings.poster, sizes: '(min-width: 990px) 50vw, 100vw' %}
+        {%- endif -%}
+      </div>
+      <span class="video-story__tape" aria-hidden="true"></span>
+    </div>
+    <div class="video-story__content">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="h2">{{ section.settings.heading }}</h2>
+      <div class="rte">{{ section.settings.text }}</div>
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link | default: '#top-buy' }}" class="btn btn--primary btn--lg">{{ section.settings.button_label }} {% render 'icon', name: 'arrow', size: 18 %}</a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Video story",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FFF3ED" },
+    { "type": "video", "id": "video", "label": "Video (Shopify-hosted)" },
+    { "type": "image_picker", "id": "poster", "label": "Fallback image" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Storytime preview" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Watch Clover's story come to life" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Discover the heartwarming journey of a little chicken who learns that her greatest strength comes from embracing who she is.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Bring Clover home" },
+    { "type": "url", "id": "button_link", "label": "Button link" }
+  ],
+  "presets": [{ "name": "Video story" }]
+}
+{% endschema %}

@@ -1,0 +1,18 @@
+{%- comment -%}
+  Playful decorative SVGs. Usage: {% render 'deco', name: 'wave', color: '#fff', flip: true %}
+{%- endcomment -%}
+{%- assign fill = color | default: 'currentColor' -%}
+{%- case name -%}
+  {%- when 'wave' -%}
+    <svg class="deco-wave{% if flip %} deco-wave--flip{% endif %}" viewBox="0 0 1440 60" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path fill="{{ fill }}" d="M0 30c120-22 240-22 360 0s240 22 360 0 240-22 360 0 240 22 360 0v30H0z"/></svg>
+  {%- when 'scallop' -%}
+    <svg class="deco-wave{% if flip %} deco-wave--flip{% endif %}" viewBox="0 0 1440 40" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path fill="{{ fill }}" d="M0 40V20{% for i in (0..35) %} a20 20 0 0 1 40 0{% endfor %}V40z"/></svg>
+  {%- when 'grass' -%}
+    <svg class="deco-wave{% if flip %} deco-wave--flip{% endif %}" viewBox="0 0 1440 50" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path fill="{{ fill }}" d="M0 50V30{% for i in (0..71) %} l10 -{% cycle 'up': '22', '14', '26', '10' %} l10 {% cycle 'down': '22', '14', '26', '10' %}{% endfor %}V50z"/></svg>
+  {%- when 'cloud' -%}
+    <svg class="deco-cloud" viewBox="0 0 120 60" aria-hidden="true" focusable="false"><path fill="{{ fill }}" d="M30 58a22 22 0 01-4-43.6A26 26 0 0176 12a18 18 0 0124 16 15 15 0 01-2 30z"/></svg>
+  {%- when 'sunburst' -%}
+    <svg class="deco-sunburst" viewBox="0 0 200 200" aria-hidden="true" focusable="false"><g fill="{{ fill }}">{% for i in (0..11) %}{% assign deg = i | times: 30 %}<path transform="rotate({{ deg }} 100 100)" d="M92 0h16l-8 70z"/>{% endfor %}<circle cx="100" cy="100" r="42"/></g></svg>
+  {%- when 'feet' -%}
+    <svg class="deco-feet" viewBox="0 0 200 60" aria-hidden="true" focusable="false"><g fill="none" stroke="{{ fill }}" stroke-width="4" stroke-linecap="round"><path d="M20 50l0-18M20 32l-8-10M20 32l8-10M20 32l0-12"/><path d="M70 30l0-18M70 12l-8-10M70 12l8-10M70 12l0-12" transform="translate(0 10)"/><path d="M120 50l0-18M120 32l-8-10M120 32l8-10M120 32l0-12"/><path d="M170 30l0-18M170 12l-8-10M170 12l8-10M170 12l0-12" transform="translate(0 10)"/></g></svg>
+{%- endcase -%}

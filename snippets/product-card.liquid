@@ -1,0 +1,23 @@
+{%- comment -%} Usage: {% render 'product-card', product: product, badge: 'Best value' %} {%- endcomment -%}
+{%- assign v = product.selected_or_first_available_variant -%}
+<div class="pcard card">
+  {%- if badge != blank -%}<span class="pcard__badge">{{ badge }}</span>{%- endif -%}
+  <a href="{{ product.url }}" class="pcard__media">
+    {%- if product.featured_image -%}
+      {% render 'img', image: product.featured_image, sizes: '(min-width: 990px) 30vw, 80vw', alt: product.title %}
+    {%- endif -%}
+  </a>
+  <div class="pcard__body">
+    <a href="{{ product.url }}" class="pcard__title">{{ product.title }}</a>
+    {% render 'price', variant: v %}
+    {%- if v.available -%}
+      {%- if product.has_only_default_variant -%}
+        <button type="button" class="btn btn--primary btn--block" data-quick-add="{{ v.id }}">Add to cart</button>
+      {%- else -%}
+        <a href="{{ product.url }}" class="btn btn--primary btn--block">Choose options</a>
+      {%- endif -%}
+    {%- else -%}
+      <button type="button" class="btn btn--block" disabled>Sold out</button>
+    {%- endif -%}
+  </div>
+</div>

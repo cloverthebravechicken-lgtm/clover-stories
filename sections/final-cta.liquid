@@ -1,0 +1,45 @@
+{%- assign product = section.settings.product -%}
+<section class="final-cta section anim" style="--bg: {{ section.settings.bg }};">
+  <div class="final-cta__feet" aria-hidden="true">{% render 'deco', name: 'feet', color: 'rgba(255,255,255,.35)' %}</div>
+  <div class="container final-cta__inner">
+    <div class="final-cta__media">
+      {%- if section.settings.image != blank -%}
+        {% render 'img', image: section.settings.image, sizes: '(min-width: 990px) 40vw, 80vw', class: 'bob' %}
+      {%- elsif product.featured_image -%}
+        {% render 'img', image: product.featured_image, sizes: '(min-width: 990px) 40vw, 80vw', class: 'bob' %}
+      {%- endif -%}
+    </div>
+    <div class="final-cta__content">
+      <h2 class="h1">{{ section.settings.heading }}</h2>
+      <div class="rte">{{ section.settings.text }}</div>
+      {%- if product != blank -%}
+        {%- assign v = product.selected_or_first_available_variant -%}
+        <div class="final-cta__actions">
+          <button type="button" class="btn btn--light btn--xl btn--wiggle" data-quick-add="{{ v.id }}" {% unless v.available %}disabled{% endunless %}>
+            {{ section.settings.button_label }} — {{ v.price | money }}
+          </button>
+        </div>
+      {%- endif -%}
+      <p class="final-cta__perks">
+        <span>{% render 'icon', name: 'truck', size: 18 %} Free shipping</span>
+        <span>{% render 'icon', name: 'gift', size: 18 %} Free activity packet</span>
+        <span>{% render 'icon', name: 'book', size: 18 %} Premium hardcover</span>
+      </p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Final call to action",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FF5757" },
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Be brave. Be you. Bring Clover home." },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>The story your little one will ask for again and again.</p>" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Add to cart" }
+  ],
+  "presets": [{ "name": "Final call to action" }]
+}
+{% endschema %}

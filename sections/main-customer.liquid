@@ -1,0 +1,141 @@
+{%- comment -%}
+  One section handles all legacy customer-account templates.
+  (If the store uses new customer accounts, Shopify hosts these pages instead.)
+{%- endcomment -%}
+<section class="section account">
+  <div class="container container--narrow">
+    {%- case template.name -%}
+      {%- when 'login' -%}
+        <h1 class="h1 center">Log in</h1>
+        <div class="card mt-m">
+          {%- form 'customer_login', class: 'stack' -%}
+            {{ form.errors | default_errors }}
+            <label for="LoginEmail">Email</label>
+            <input id="LoginEmail" class="input" type="email" name="customer[email]" autocomplete="email" required>
+            {%- if form.password_needed -%}
+              <label for="LoginPassword">Password</label>
+              <input id="LoginPassword" class="input" type="password" name="customer[password]" autocomplete="current-password" required>
+            {%- endif -%}
+            <button type="submit" class="btn btn--primary btn--block">Sign in</button>
+          {%- endform -%}
+          <p class="center mt-m"><a href="{{ routes.account_register_url }}">Create account</a> · <a href="#recover" data-toggle-recover>Forgot password?</a></p>
+          {%- form 'recover_customer_password', id: 'recover', class: 'stack mt-m' -%}
+            {%- if form.posted_successfully? -%}<p class="signup__ok">We've sent you an email with a link to reset your password.</p>{%- endif -%}
+            {{ form.errors | default_errors }}
+            <label for="RecoverEmail">Reset password — email</label>
+            <input id="RecoverEmail" class="input" type="email" name="email" autocomplete="email" required>
+            <button type="submit" class="btn btn--block">Send reset link</button>
+          {%- endform -%}
+        </div>
+      {%- when 'register' -%}
+        <h1 class="h1 center">Create account</h1>
+        <div class="card mt-m">
+          {%- form 'create_customer', class: 'stack' -%}
+            {{ form.errors | default_errors }}
+            <label for="RegFirst">First name</label>
+            <input id="RegFirst" class="input" type="text" name="customer[first_name]" autocomplete="given-name">
+            <label for="RegLast">Last name</label>
+            <input id="RegLast" class="input" type="text" name="customer[last_name]" autocomplete="family-name">
+            <label for="RegEmail">Email</label>
+            <input id="RegEmail" class="input" type="email" name="customer[email]" autocomplete="email" required>
+            <label for="RegPassword">Password</label>
+            <input id="RegPassword" class="input" type="password" name="customer[password]" autocomplete="new-password" required>
+            <button type="submit" class="btn btn--primary btn--block">Create</button>
+          {%- endform -%}
+        </div>
+      {%- when 'activate_account' -%}
+        <h1 class="h1 center">Activate account</h1>
+        <div class="card mt-m">
+          {%- form 'activate_customer_password', class: 'stack' -%}
+            {{ form.errors | default_errors }}
+            <label for="ActPassword">Password</label>
+            <input id="ActPassword" class="input" type="password" name="customer[password]" autocomplete="new-password" required>
+            <label for="ActConfirm">Confirm password</label>
+            <input id="ActConfirm" class="input" type="password" name="customer[password_confirmation]" autocomplete="new-password" required>
+            <button type="submit" class="btn btn--primary btn--block">Activate</button>
+          {%- endform -%}
+        </div>
+      {%- when 'reset_password' -%}
+        <h1 class="h1 center">Reset password</h1>
+        <div class="card mt-m">
+          {%- form 'reset_customer_password', class: 'stack' -%}
+            {{ form.errors | default_errors }}
+            <label for="ResetPassword">New password</label>
+            <input id="ResetPassword" class="input" type="password" name="customer[password]" autocomplete="new-password" required>
+            <label for="ResetConfirm">Confirm password</label>
+            <input id="ResetConfirm" class="input" type="password" name="customer[password_confirmation]" autocomplete="new-password" required>
+            <button type="submit" class="btn btn--primary btn--block">Reset password</button>
+          {%- endform -%}
+        </div>
+      {%- when 'account' -%}
+        <h1 class="h1 center">Hi, {{ customer.first_name | default: 'friend' }}!</h1>
+        <p class="center"><a href="{{ routes.account_addresses_url }}">Addresses ({{ customer.addresses_count }})</a> · <a href="{{ routes.account_logout_url }}">Log out</a></p>
+        <div class="card mt-m">
+          <h2 class="h3">Order history</h2>
+          {%- paginate customer.orders by 20 -%}
+            {%- for order in customer.orders -%}
+              <p class="drawer__row"><a href="{{ order.customer_url }}">{{ order.name }}</a><span>{{ order.created_at | date: '%b %d, %Y' }}</span><span>{{ order.fulfillment_status_label }}</span><strong>{{ order.total_price | money }}</strong></p>
+            {%- else -%}
+              <p>You haven't placed any orders yet.</p>
+            {%- endfor -%}
+            {%- if paginate.pages > 1 -%}{{ paginate | default_pagination }}{%- endif -%}
+          {%- endpaginate -%}
+        </div>
+      {%- when 'order' -%}
+        <h1 class="h1 center">Order {{ order.name }}</h1>
+        <p class="center"><a href="{{ routes.account_url }}">← Back to account</a></p>
+        <div class="card mt-m">
+          <p>Placed {{ order.created_at | date: '%B %d, %Y' }} · {{ order.financial_status_label }} · {{ order.fulfillment_status_label }}</p>
+          {%- for line_item in order.line_items -%}
+            <p class="drawer__row"><span>{{ line_item.title }} × {{ line_item.quantity }}</span><strong>{{ line_item.final_line_price | money }}</strong></p>
+            {%- if line_item.fulfillment -%}<p class="fine">Tracking: {{ line_item.fulfillment.tracking_company }} {{ line_item.fulfillment.tracking_number | link_to: line_item.fulfillment.tracking_url }}</p>{%- endif -%}
+          {%- endfor -%}
+          <p class="drawer__row drawer__subtotal"><span>Total</span><strong>{{ order.total_price | money_with_currency }}</strong></p>
+          {%- if order.shipping_address -%}
+            <h2 class="h4 mt-m">Shipping address</h2>
+            {{ order.shipping_address | format_address }}
+          {%- endif -%}
+        </div>
+      {%- when 'addresses' -%}
+        <h1 class="h1 center">Your addresses</h1>
+        <p class="center"><a href="{{ routes.account_url }}">← Back to account</a></p>
+        {%- paginate customer.addresses by 10 -%}
+          {%- for address in customer.addresses -%}
+            <div class="card mt-m">
+              {%- if address == customer.default_address -%}<p class="pill pill--green">Default</p>{%- endif -%}
+              {{ address | format_address }}
+              {%- form 'customer_address', address, class: 'stack mt-m' -%}
+                <input type="hidden" name="_method" value="delete">
+                <button type="submit" class="btn btn--sm">Delete</button>
+              {%- endform -%}
+            </div>
+          {%- endfor -%}
+        {%- endpaginate -%}
+        <div class="card mt-m">
+          <h2 class="h3">Add a new address</h2>
+          {%- form 'customer_address', customer.new_address, class: 'stack' -%}
+            {{ form.errors | default_errors }}
+            <label for="AddrFirst">First name</label><input id="AddrFirst" class="input" name="address[first_name]" autocomplete="given-name">
+            <label for="AddrLast">Last name</label><input id="AddrLast" class="input" name="address[last_name]" autocomplete="family-name">
+            <label for="Addr1">Address</label><input id="Addr1" class="input" name="address[address1]" autocomplete="address-line1">
+            <label for="Addr2">Apartment, suite</label><input id="Addr2" class="input" name="address[address2]" autocomplete="address-line2">
+            <label for="AddrCity">City</label><input id="AddrCity" class="input" name="address[city]" autocomplete="address-level2">
+            <label for="AddrCountry">Country</label>
+            <select id="AddrCountry" class="input" name="address[country]" autocomplete="country">{{ all_country_option_tags }}</select>
+            <label for="AddrProvince">State / Province</label><input id="AddrProvince" class="input" name="address[province]" autocomplete="address-level1">
+            <label for="AddrZip">ZIP / Postal code</label><input id="AddrZip" class="input" name="address[zip]" autocomplete="postal-code">
+            <label for="AddrPhone">Phone</label><input id="AddrPhone" class="input" type="tel" name="address[phone]" autocomplete="tel">
+            <label class="addon__toggle"><input type="checkbox" name="address[default]" value="1"> Set as default</label>
+            <button type="submit" class="btn btn--primary btn--block">Add address</button>
+          {%- endform -%}
+        </div>
+    {%- endcase -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Customer account",
+  "settings": []
+}
+{% endschema %}

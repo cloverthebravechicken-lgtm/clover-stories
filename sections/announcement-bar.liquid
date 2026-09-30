@@ -1,0 +1,38 @@
+{%- if section.blocks.size > 0 -%}
+  <div class="announce" style="--bg: {{ section.settings.bg }}; --fg: {{ section.settings.fg }};">
+    <div class="announce__track" data-rotator data-interval="{{ section.settings.speed | times: 1000 }}">
+      {%- for block in section.blocks -%}
+        <p class="announce__msg{% if forloop.first %} is-active{% endif %}" {{ block.shopify_attributes }}>
+          {%- if block.settings.link != blank -%}
+            <a href="{{ block.settings.link }}">{{ block.settings.text }}</a>
+          {%- else -%}
+            {{ block.settings.text }}
+          {%- endif -%}
+        </p>
+      {%- endfor -%}
+    </div>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "class": "section-announce",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Background", "default": "#518339" },
+    { "type": "color", "id": "fg", "label": "Text", "default": "#FFFFFF" },
+    { "type": "range", "id": "speed", "label": "Rotate every", "min": 2, "max": 10, "step": 1, "unit": "s", "default": 4 }
+  ],
+  "blocks": [
+    {
+      "type": "message",
+      "name": "Message",
+      "settings": [
+        { "type": "inline_richtext", "id": "text", "label": "Text", "default": "📦 <strong>Free shipping</strong> on all books" },
+        { "type": "url", "id": "link", "label": "Link" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Announcement bar", "blocks": [{ "type": "message" }] }]
+}
+{% endschema %}

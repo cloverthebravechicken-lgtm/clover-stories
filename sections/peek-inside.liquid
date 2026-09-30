@@ -1,0 +1,54 @@
+<section class="peek section anim" style="--bg: {{ section.settings.bg }};">
+  <div class="container">
+    <div class="section-head">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="h2">{{ section.settings.heading }}</h2>
+      {%- if section.settings.text != blank -%}<div class="rte section-head__text">{{ section.settings.text }}</div>{%- endif -%}
+    </div>
+  </div>
+
+  <div class="peek__rail" data-rail tabindex="0" aria-label="Pages from the book">
+    {%- for block in section.blocks -%}
+      {%- if block.settings.image != blank -%}
+        <button type="button" class="peek__page{% if block.settings.wide %} peek__page--wide{% endif %}" data-lightbox="{{ block.settings.image | image_url: width: 2400 }}" data-lightbox-alt="{{ block.settings.caption | escape }}" {{ block.shopify_attributes }}>
+          {% render 'img', image: block.settings.image, sizes: '(min-width: 990px) 60vw, 90vw', alt: block.settings.caption %}
+          {%- if block.settings.caption != blank -%}<span class="peek__caption">{{ block.settings.caption }}</span>{%- endif -%}
+          <span class="peek__zoom" aria-hidden="true">{% render 'icon', name: 'plus', size: 18 %}</span>
+        </button>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+  <div class="container peek__nav">
+    <button type="button" class="round-btn" data-rail-prev aria-label="Previous page">{% render 'icon', name: 'arrow', size: 20 %}</button>
+    <button type="button" class="round-btn" data-rail-next aria-label="Next page">{% render 'icon', name: 'arrow', size: 20 %}</button>
+  </div>
+
+  <dialog class="lightbox" data-lightbox-dialog>
+    <button type="button" class="lightbox__close round-btn" aria-label="Close" data-lightbox-close>{% render 'icon', name: 'close', size: 22 %}</button>
+    <img alt="" width="1600" height="1000" data-lightbox-img>
+  </dialog>
+</section>
+
+{% schema %}
+{
+  "name": "Peek inside",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Hand-drawn & full color" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Take a peek inside the book" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Tap a page to take a closer look.</p>" }
+  ],
+  "blocks": [
+    {
+      "type": "page",
+      "name": "Page",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Image" },
+        { "type": "text", "id": "caption", "label": "Caption" },
+        { "type": "checkbox", "id": "wide", "label": "Two-page spread (wide)", "default": true }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Peek inside", "blocks": [{ "type": "page" }, { "type": "page" }] }]
+}
+{% endschema %}

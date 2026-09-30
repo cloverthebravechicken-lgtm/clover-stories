@@ -1,0 +1,57 @@
+<section class="section cart-page">
+  <div class="container container--narrow">
+    <h1 class="h1 center">Your basket</h1>
+    {%- if cart.item_count == 0 -%}
+      <div class="center mt-m">
+        <p class="h3">{{ settings.empty_cart_title }}</p>
+        <p>{{ settings.empty_cart_text }}</p>
+        <a href="{{ routes.root_url }}" class="btn btn--primary btn--lg mt-m">Find Clover</a>
+      </div>
+    {%- else -%}
+      <form action="{{ routes.cart_url }}" method="post" class="cart-form card mt-m">
+        {%- if settings.cart_perk_text != blank -%}<p class="drawer__perk">{{ settings.cart_perk_text }}</p>{%- endif -%}
+        <ul class="cart-lines" role="list">
+          {%- for item in cart.items -%}
+            <li class="cart-line">
+              <a href="{{ item.url }}" class="cart-line__img">
+                {%- if item.image -%}{{ item.image | image_url: width: 200 | image_tag: loading: 'lazy', alt: item.product.title, width: 100, height: 100 }}{%- endif -%}
+              </a>
+              <div class="cart-line__info">
+                <a href="{{ item.url }}" class="cart-line__title">{{ item.product.title }}</a>
+                {%- unless item.product.has_only_default_variant -%}<p class="cart-line__meta">{{ item.variant.title }}</p>{%- endunless -%}
+                {%- for p in item.properties -%}
+                  {%- assign first = p.first | slice: 0 -%}
+                  {%- if p.last != blank and first != '_' -%}<p class="cart-line__meta">{{ p.first }}: {{ p.last }}</p>{%- endif -%}
+                {%- endfor -%}
+                <div class="cart-line__row">
+                  <label class="visually-hidden" for="Qty-{{ forloop.index }}">Quantity</label>
+                  <input id="Qty-{{ forloop.index }}" class="input input--qty" type="number" name="updates[]" value="{{ item.quantity }}" min="0">
+                  <span class="cart-line__price">{{ item.final_line_price | money }}</span>
+                </div>
+                <a href="{{ item.url_to_remove }}" class="cart-line__remove">Remove</a>
+              </div>
+            </li>
+          {%- endfor -%}
+        </ul>
+        <label for="CartNote" class="cart-note__label">Gift note or special instructions</label>
+        <textarea id="CartNote" name="note" class="input" rows="2">{{ cart.note }}</textarea>
+        <p class="drawer__row drawer__subtotal"><span>Subtotal</span><strong>{{ cart.total_price | money_with_currency }}</strong></p>
+        <p class="drawer__note">Taxes and discount codes are calculated at checkout.</p>
+        <div class="cart-page__actions">
+          <button type="submit" name="update" class="btn">Update</button>
+          <button type="submit" name="checkout" class="btn btn--primary btn--xl">{% render 'icon', name: 'lock', size: 18 %} Checkout securely</button>
+        </div>
+        {%- if additional_checkout_buttons -%}
+          <div class="cart-page__dynamic">{{ content_for_additional_checkout_buttons }}</div>
+        {%- endif -%}
+      </form>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart",
+  "settings": []
+}
+{% endschema %}

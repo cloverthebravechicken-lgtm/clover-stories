@@ -1,0 +1,72 @@
+<footer class="footer" style="--bg: {{ section.settings.bg }};">
+  {% render 'deco', name: 'grass', color: section.settings.bg %}
+  <div class="footer__inner container">
+    <div class="footer__brand">
+      {%- if settings.logo != blank -%}
+        {{ settings.logo | image_url: width: 400 | image_tag: loading: 'lazy', alt: shop.name, class: 'footer__logo' }}
+      {%- else -%}
+        <p class="h3">{{ shop.name }}</p>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <div class="footer__text rte">{{ section.settings.text }}</div>
+      {%- endif -%}
+      <ul class="social" role="list">
+        {%- if settings.social_instagram != blank -%}<li><a href="{{ settings.social_instagram }}" aria-label="Instagram" target="_blank" rel="noopener">{% render 'icon', name: 'instagram', size: 22 %}</a></li>{%- endif -%}
+        {%- if settings.social_facebook != blank -%}<li><a href="{{ settings.social_facebook }}" aria-label="Facebook" target="_blank" rel="noopener">{% render 'icon', name: 'facebook', size: 22 %}</a></li>{%- endif -%}
+        {%- if settings.social_tiktok != blank -%}<li><a href="{{ settings.social_tiktok }}" aria-label="TikTok" target="_blank" rel="noopener">{% render 'icon', name: 'tiktok', size: 22 %}</a></li>{%- endif -%}
+        {%- if settings.social_pinterest != blank -%}<li><a href="{{ settings.social_pinterest }}" aria-label="Pinterest" target="_blank" rel="noopener">{% render 'icon', name: 'pinterest', size: 22 %}</a></li>{%- endif -%}
+      </ul>
+    </div>
+
+    {%- if section.settings.menu != blank -%}
+      <nav class="footer__nav" aria-label="Footer">
+        <p class="footer__heading">{{ section.settings.menu_heading }}</p>
+        <ul role="list">
+          {%- for link in section.settings.menu.links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+    {%- endif -%}
+
+    <div class="footer__signup">
+      <p class="footer__heading">{{ section.settings.signup_heading }}</p>
+      {%- if section.settings.signup_text != blank -%}<div class="rte">{{ section.settings.signup_text }}</div>{%- endif -%}
+      {% render 'signup-form', form_id: 'FooterSignup', button: 'Join' %}
+    </div>
+  </div>
+
+  <div class="footer__bottom container">
+    <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name | link_to: routes.root_url }}. Made with {% render 'icon', name: 'heart', size: 14 %} on the farm.</p>
+    {%- if section.settings.show_payment_icons -%}
+      <ul class="payment-icons" role="list">
+        {%- for type in shop.enabled_payment_types -%}
+          <li>{{ type | payment_type_svg_tag: class: 'payment-icon' }}</li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+    {%- if shop.policies.size > 0 -%}
+      <ul class="footer__policies" role="list">
+        {%- for policy in shop.policies -%}
+          <li><a href="{{ policy.url }}">{{ policy.title }}</a></li>
+        {%- endfor -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "class": "section-footer",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FFF3ED" },
+    { "type": "richtext", "id": "text", "label": "About text", "default": "<p>Heartwarming picture books that help little ones discover the bravest thing they can be is themselves.</p>" },
+    { "type": "text", "id": "menu_heading", "label": "Menu heading", "default": "Quick links" },
+    { "type": "link_list", "id": "menu", "label": "Menu", "default": "footer" },
+    { "type": "text", "id": "signup_heading", "label": "Signup heading", "default": "Join Clover's Club" },
+    { "type": "richtext", "id": "signup_text", "label": "Signup text", "default": "<p>Get instant access to a free 10-page activity packet!</p>" },
+    { "type": "checkbox", "id": "show_payment_icons", "label": "Show payment icons", "default": true }
+  ]
+}
+{% endschema %}

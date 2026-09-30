@@ -1,0 +1,48 @@
+<section class="press section anim" id="{{ section.settings.anchor | default: 'praise' }}" style="--bg: {{ section.settings.bg }};">
+  <div class="container">
+    <div class="section-head">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="h2">{{ section.settings.heading }}</h2>
+    </div>
+    <div class="press__grid">
+      {%- for block in section.blocks -%}
+        <figure class="press__card card" {{ block.shopify_attributes }}>
+          {%- if block.settings.logo != blank -%}
+            <div class="press__logo">
+              {{ block.settings.logo | image_url: width: 400 | image_tag: loading: 'lazy', alt: block.settings.source, sizes: '200px', widths: '200, 300, 400' }}
+            </div>
+          {%- endif -%}
+          {% render 'stars', rating: 5, size: 18 %}
+          <blockquote class="press__quote">{{ block.settings.quote }}</blockquote>
+          {%- if block.settings.source != blank -%}
+            <figcaption class="press__source">— {{ block.settings.source }}</figcaption>
+          {%- endif -%}
+        </figure>
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Editorial reviews",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" },
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "praise" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Professionally reviewed" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "The critics are clucking about Clover" }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Review",
+      "settings": [
+        { "type": "image_picker", "id": "logo", "label": "Logo" },
+        { "type": "richtext", "id": "quote", "label": "Quote", "default": "<p>A charming farmyard story about finding the courage to embrace who you are.</p>" },
+        { "type": "text", "id": "source", "label": "Source" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Editorial reviews", "blocks": [{ "type": "review" }, { "type": "review" }] }]
+}
+{% endschema %}

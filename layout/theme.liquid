@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}" class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="{{ settings.color_primary }}">
+    <link rel="canonical" href="{{ canonical_url }}">
+    <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.shopifycdn.com" crossorigin>
+
+    {%- if settings.favicon != blank -%}
+      <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 64, height: 64 }}">
+    {%- endif -%}
+
+    <title>
+      {{ page_title }}
+      {%- if current_tags %} &ndash; {{ current_tags | join: ', ' }}{% endif -%}
+      {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+      {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+    </title>
+    {%- if page_description -%}
+      <meta name="description" content="{{ page_description | escape }}">
+    {%- endif -%}
+
+    {% render 'meta-tags' %}
+
+    {%- liquid
+      assign heading_font = settings.font_heading
+      assign body_font = settings.font_body
+      assign body_font_bold = body_font | font_modify: 'weight', 'bold'
+      assign heading_font_600 = heading_font | font_modify: 'weight', '600'
+    -%}
+    {{ heading_font | font_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: true }}
+    {{ body_font | font_url | preload_tag: as: 'font', type: 'font/woff2', crossorigin: true }}
+
+    <style>
+      {{ heading_font | font_face: font_display: 'swap' }}
+      {{ heading_font_600 | font_face: font_display: 'swap' }}
+      {{ body_font | font_face: font_display: 'swap' }}
+      {{ body_font_bold | font_face: font_display: 'swap' }}
+
+      :root {
+        --c-primary: {{ settings.color_primary }};
+        --c-primary-hover: {{ settings.color_primary_hover }};
+        --c-primary-shadow: {{ settings.color_primary_shadow }};
+        --c-green: {{ settings.color_green }};
+        --c-sun: {{ settings.color_sun }};
+        --c-sky: {{ settings.color_sky }};
+        --c-cream: {{ settings.color_cream }};
+        --c-text: {{ settings.color_text }};
+        --c-text-soft: {{ settings.color_text_soft }};
+        --c-text-rgb: {{ settings.color_text.red }}, {{ settings.color_text.green }}, {{ settings.color_text.blue }};
+        --f-heading: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+        --f-heading-weight: {{ heading_font.weight }};
+        --f-body: {{ body_font.family }}, {{ body_font.fallback_families }};
+        --f-body-weight: {{ body_font.weight }};
+        --logo-w: {{ settings.logo_width }}px;
+        --logo-w-m: {{ settings.logo_width_mobile }}px;
+      }
+    </style>
+
+    {{ 'theme.css' | asset_url | stylesheet_tag }}
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
+    <script>
+      document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      window.Clover = {
+        routes: {
+          cart: {{ routes.cart_url | json }},
+          cartAdd: {{ routes.cart_add_url | json }},
+          cartChange: {{ routes.cart_change_url | json }},
+          root: {{ routes.root_url | json }}
+        },
+        cartDrawer: {{ settings.cart_drawer | json }},
+        confetti: {{ settings.enable_confetti | json }},
+        animations: {{ settings.enable_animations | json }}
+      };
+    </script>
+
+    {{ content_for_header }}
+  </head>
+
+  <body class="template-{{ template.name | handle }}{% if template.suffix %} template-{{ template.suffix | handle }}{% endif %}{% if settings.enable_animations %} has-anim{% endif %}">
+    <a class="skip-link btn" href="#MainContent">Skip to content</a>
+
+    {% sections 'header-group' %}
+
+    <main id="MainContent" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {% sections 'footer-group' %}
+
+    {% section 'cart-drawer' %}
+
+    <div class="toast" id="Toast" role="status" aria-live="polite" hidden></div>
+  </body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "current": {
+    "logo": "shopify://shop_images/Untitled_design-63.png",
+    "favicon": "shopify://shop_images/Written_by_Melanie_Dieas_-_2.png",
+    "logo_width": 168,
+    "logo_width_mobile": 124,
+    "cart_upsell_product": "clover-plush"
+  },
+  "presets": {
+    "Default": {}
+  }
+}
