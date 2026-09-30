@@ -1,4 +1,4 @@
-<section class="faq section anim{% if section.settings.compact %} section--compact{% endif %}{% if section.settings.tight_top %} section--tight-top{% endif %}" style="--bg: {{ section.settings.bg }};">
+<section class="faq section anim{% if section.settings.spacing != "normal" %} section--{{ section.settings.spacing }}{% endif %}{% if section.settings.tight_top %} section--tight-top{% endif %}" style="--bg: {{ section.settings.bg }};">
   <div class="container container--narrow">
     <div class="section-head">
       {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
@@ -41,7 +41,7 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Good questions" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Frequently asked questions" },
     { "type": "checkbox", "id": "open_first", "label": "Open first question", "default": true },
-    { "type": "checkbox", "id": "compact", "label": "Less space above and below", "default": false },
+    { "type": "select", "id": "spacing", "label": "Space above and below", "options": [{ "value": "normal", "label": "Normal" }, { "value": "medium", "label": "Medium" }, { "value": "compact", "label": "Compact" }], "default": "normal" },
     { "type": "checkbox", "id": "tight_top", "label": "Less space above", "default": false }
   ],
   "blocks": [

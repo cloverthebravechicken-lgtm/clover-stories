@@ -431,8 +431,8 @@
         "eyebrow": "Good questions",
         "heading": "Frequently asked questions",
         "open_first": true,
-        "tight_top": true,
-        "compact": true
+        "tight_top": false,
+        "spacing": "medium"
       },
       "blocks": {
         "question_1": {

@@ -357,7 +357,7 @@
         "eyebrow": "Good questions",
         "heading": "Frequently asked questions",
         "open_first": true,
-        "compact": true
+        "spacing": "compact"
       },
       "blocks": {
         "question_1": {
