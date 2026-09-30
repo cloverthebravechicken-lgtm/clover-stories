@@ -1,0 +1,78 @@
+{%- assign facts = section.blocks | where: 'type', 'fact' -%}
+<section class="auhero anim" style="--bg: {{ section.settings.bg }};">
+  <div class="hero__sky" aria-hidden="true">
+    <span class="hero__cloud hero__cloud--1">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
+    <span class="hero__cloud hero__cloud--3">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
+    <span class="hero__cloud hero__cloud--5">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
+  </div>
+  <div class="container auhero__inner">
+    <div class="auhero__media">
+      <figure class="polaroid">
+        <span class="polaroid__tape" aria-hidden="true"></span>
+        {%- if section.settings.image != blank -%}
+          {% render 'img', image: section.settings.image, sizes: '(min-width: 990px) 480px, 90vw', eager: true, alt: section.settings.image_caption %}
+        {%- endif -%}
+        {%- if section.settings.image_caption != blank -%}<figcaption class="polaroid__caption">{{ section.settings.image_caption }}</figcaption>{%- endif -%}
+      </figure>
+      {%- if section.settings.sticker != blank -%}<span class="sticker sticker--author" aria-hidden="true">{{ section.settings.sticker }}</span>{%- endif -%}
+      <span class="auhero__feet" aria-hidden="true">{% render 'deco', name: 'feet', color: 'rgba(140, 90, 38, .45)' %}</span>
+    </div>
+
+    <div class="auhero__content">
+      {%- if section.settings.eyebrow != blank -%}<p class="pill pill--green">{% render 'icon', name: 'feather', size: 14 %} {{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h1 class="auhero__title">{{ section.settings.heading }}</h1>
+      <div class="rte auhero__bio">{{ section.settings.text }}</div>
+      {%- if section.settings.show_signature -%}
+        <div class="auhero__sig">{% render 'signature-draw', uid: section.id, alt: 'Melanie' %}</div>
+      {%- endif -%}
+      {%- if facts.size > 0 -%}
+        <ul class="facts" role="list">
+          {%- for block in facts -%}
+            <li class="fact" {{ block.shopify_attributes }}><span aria-hidden="true">{{ block.settings.emoji }}</span> {{ block.settings.text }}</li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+      <div class="auhero__actions">
+        {%- if section.settings.button_label != blank -%}
+          <a href="{{ section.settings.button_link | default: '#signed-copy' }}" class="btn btn--primary btn--lg btn--wiggle">{% render 'icon', name: 'pencil', size: 18 %} {{ section.settings.button_label }}</a>
+        {%- endif -%}
+        {%- if section.settings.button2_label != blank -%}
+          <a href="{{ section.settings.button2_link | default: '/pages/activities' }}" class="btn btn--lg">{{ section.settings.button2_label }}</a>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+  {% render 'grass' %}
+</section>
+
+{% schema %}
+{
+  "name": "Author hero",
+  "class": "section-auhero",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Background", "default": "#EAFBFF" },
+    { "type": "image_picker", "id": "image", "label": "Author photo" },
+    { "type": "text", "id": "image_caption", "label": "Photo caption", "default": "Melanie & the farm crew" },
+    { "type": "text", "id": "sticker", "label": "Sticker", "default": "Hi!" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Meet the author" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Hi! I'm <em>Melanie</em>." },
+    { "type": "richtext", "id": "text", "label": "Bio" },
+    { "type": "checkbox", "id": "show_signature", "label": "Show hand-drawn signature", "default": true },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Get a signed copy" },
+    { "type": "url", "id": "button_link", "label": "Button link" },
+    { "type": "text", "id": "button2_label", "label": "Second button label", "default": "Free activity packet" },
+    { "type": "url", "id": "button2_link", "label": "Second button link" }
+  ],
+  "blocks": [
+    {
+      "type": "fact",
+      "name": "Fun fact",
+      "settings": [
+        { "type": "text", "id": "emoji", "label": "Emoji", "default": "🐔" },
+        { "type": "text", "id": "text", "label": "Text", "default": "Chicken keeper" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Author hero" }]
+}
+{% endschema %}

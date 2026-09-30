@@ -1,0 +1,23 @@
+<section class="qbanner section anim" style="--bg: {{ section.settings.bg }}; --fg: {{ section.settings.fg }};">
+  <div class="container container--narrow center">
+    <span class="qbanner__mark" aria-hidden="true">“</span>
+    <blockquote class="qbanner__quote">{{ section.settings.quote }}</blockquote>
+    {%- if section.settings.cite != blank -%}<p class="qbanner__cite">{{ section.settings.cite }}</p>{%- endif -%}
+    <span class="qbanner__doodle" aria-hidden="true">
+      <svg viewBox="0 0 220 24" focusable="false"><path d="M4 14 C30 2, 50 22, 76 12 S122 2, 148 12 S196 22, 216 8"/></svg>
+    </span>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Quote banner",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FF5757" },
+    { "type": "color", "id": "fg", "label": "Text", "default": "#FFFFFF" },
+    { "type": "textarea", "id": "quote", "label": "Quote", "default": "The bravest thing you can be is yourself." },
+    { "type": "text", "id": "cite", "label": "Attribution", "default": "The heart of Clover's story" }
+  ],
+  "presets": [{ "name": "Quote banner" }]
+}
+{% endschema %}

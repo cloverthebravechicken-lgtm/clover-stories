@@ -50,6 +50,8 @@
           {%- endfor -%}
         </ul>
 
+        {% render 'inscription-upsell' %}
+
         {%- liquid
           assign upsell = settings.cart_upsell_product
           assign show_upsell = false

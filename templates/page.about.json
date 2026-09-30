@@ -1,21 +1,134 @@
 {
   "sections": {
-    "author": {
-      "type": "image-text",
+    "hero": {
+      "type": "author-hero",
       "settings": {
         "bg": "#EAFBFF",
-        "anchor": "author",
         "image": "shopify://shop_images/Untitled_design-92.png",
-        "frame": "blob",
-        "reverse": false,
+        "image_caption": "Melanie & the farm crew",
         "sticker": "Hi!",
         "eyebrow": "Meet the author",
-        "heading": "Hi! I'm Melanie.",
-        "text": "<p>I'm a writer and farm-loving mom who lives on a little patch of land with my family and animals (including a flock of spirited chickens!). Inspired by my son and everyday moments in the countryside, I wrote <em>Clover, the Brave Chicken</em> to celebrate courage, curiosity, and the quiet strength that lives inside every child.</p><p>I'm a big believer in muddy boots, bedtime stories, and raising kids to be both kind and brave. Thank you for supporting my dreams with Clover!</p>",
-        "signature": "Melanie",
-        "button_label": "Bring Clover home",
+        "heading": "Hi! I'm <em>Melanie</em>.",
+        "text": "<p>Nice to meet you! I'm a writer and farm-loving mom who lives on a little patch of land with my family and animals (including a flock of spirited chickens!). Inspired by my son and everyday moments in the countryside, I wrote <em>Clover, the Brave Chicken</em> to celebrate courage, curiosity, and the quiet strength that lives inside every child.</p><p>I'm a big believer in muddy boots, bedtime stories, and raising kids to be both kind and brave. Thank you for supporting my dreams with Clover!</p>",
+        "show_signature": true,
+        "button_label": "Get a signed copy",
         "button_link": "",
-        "use_signature_asset": true
+        "button2_label": "Free activity packet",
+        "button2_link": "/pages/activities"
+      },
+      "blocks": {
+        "fact_1": {
+          "type": "fact",
+          "settings": {
+            "emoji": "🐔",
+            "text": "Chicken keeper"
+          }
+        },
+        "fact_2": {
+          "type": "fact",
+          "settings": {
+            "emoji": "🌾",
+            "text": "Lives on a little farm"
+          }
+        },
+        "fact_3": {
+          "type": "fact",
+          "settings": {
+            "emoji": "👢",
+            "text": "Muddy boots fan"
+          }
+        },
+        "fact_4": {
+          "type": "fact",
+          "settings": {
+            "emoji": "📚",
+            "text": "Bedtime story lover"
+          }
+        },
+        "fact_5": {
+          "type": "fact",
+          "settings": {
+            "emoji": "💛",
+            "text": "Writer & mom"
+          }
+        }
+      },
+      "block_order": [
+        "fact_1",
+        "fact_2",
+        "fact_3",
+        "fact_4",
+        "fact_5"
+      ]
+    },
+    "quote": {
+      "type": "quote-banner",
+      "settings": {
+        "bg": "#FF5757",
+        "fg": "#FFFFFF",
+        "quote": "The bravest thing you can be is yourself.",
+        "cite": "The heart of Clover's story"
+      }
+    },
+    "story": {
+      "type": "steps",
+      "settings": {
+        "bg": "#FFFFFF",
+        "eyebrow": "Where Clover came from",
+        "heading": "How Clover hatched"
+      },
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "emoji": "🏡",
+            "accent": "#518339",
+            "title": "Life on a little farm",
+            "text": "Our family shares a small patch of land with a whole crew of animals, including a flock of very spirited chickens."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "emoji": "👦",
+            "accent": "#FFB800",
+            "title": "Inspired by my son",
+            "text": "Everyday moments in the countryside with my son sparked the idea for a little chicken with a big, curious heart."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "emoji": "💪",
+            "accent": "#FF5757",
+            "title": "A story about being you",
+            "text": "Clover celebrates courage, curiosity and the quiet strength that lives inside every child."
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3"
+      ]
+    },
+    "buy": {
+      "type": "book-buy",
+      "settings": {
+        "bg": "#FFF3ED",
+        "anchor": "signed-copy",
+        "product": "clover-the-brave-chicken",
+        "image": "shopify://shop_images/clovercoverupdated_merged_2.jpg",
+        "sticker": "Signed!",
+        "eyebrow": "Signed by Melanie",
+        "heading": "Get your copy of <em>Clover</em>",
+        "text": "<p>A premium hardcover with a rhyming story, hand-drawn illustrations and a message kids carry with them. Add a personal inscription and Melanie will sign it just for your little one.</p>",
+        "button_label": "Add to cart",
+        "show_buy_now": false,
+        "show_payment_buttons": true,
+        "addon_product": "personalized-author-inscription",
+        "addon_label": "Add a personal inscription from Melanie",
+        "addon_placeholder": "Who is it for? (e.g. “To Emma”)"
       }
     },
     "press": {
@@ -67,7 +180,10 @@
     }
   },
   "order": [
-    "author",
+    "hero",
+    "quote",
+    "story",
+    "buy",
     "press",
     "signup"
   ]

@@ -261,6 +261,39 @@
     }
   });
 
+  /* ---------- Basket inscription upsell ---------- */
+  document.addEventListener('input', (e) => {
+    const t = e.target.closest('[data-insup-name]');
+    if (t) t.closest('[data-insup]').querySelector('[data-insup-error]').hidden = true;
+  });
+  document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-insup-add]');
+    if (!btn) return;
+    const box = btn.closest('[data-insup]');
+    const input = box.querySelector('[data-insup-name]');
+    const err = box.querySelector('[data-insup-error]');
+    const name = input.value.trim();
+    if (!name) {
+      err.textContent = 'Who should Melanie sign the book to? Add a name so we can personalize it.';
+      err.hidden = false;
+      input.focus();
+      return;
+    }
+    btn.classList.add('is-loading');
+    btn.disabled = true;
+    try {
+      await addItems([{ id: Number(btn.dataset.insupAdd), quantity: 1, properties: { 'Inscription for': name } }]);
+      await addInscriptionNote(name);
+      if (document.body.classList.contains('template-cart') && !(cartDrawer() && cartDrawer().classList.contains('is-open'))) { window.location.reload(); return; }
+      toast('Melanie will sign it for ' + name + '! ✍️');
+    } catch (ex) {
+      err.textContent = ex.message;
+      err.hidden = false;
+      btn.classList.remove('is-loading');
+      btn.disabled = false;
+    }
+  });
+
   /* ---------- Buy form ---------- */
   class BuyForm extends HTMLElement {
     connectedCallback() {

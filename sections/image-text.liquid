@@ -15,7 +15,7 @@
       {%- if section.settings.signature_image != blank -%}
         <p class="signature signature--img">{{ section.settings.signature_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: section.settings.signature | default: 'Signature', widths: '300, 450, 600' }}</p>
       {%- elsif section.settings.use_signature_asset -%}
-        <p class="signature signature--img"><img src="{{ 'signature.png' | asset_url }}" alt="{{ section.settings.signature | default: 'Signature' | escape }}" width="1000" height="319" loading="lazy"></p>
+        <div class="signature signature--img">{% render 'signature-draw', uid: section.id, alt: section.settings.signature %}</div>
       {%- elsif section.settings.signature != blank -%}
         <p class="signature">{{ section.settings.signature }}</p>
       {%- endif -%}

@@ -29,6 +29,7 @@
             </li>
           {%- endfor -%}
         </ul>
+        {% render 'inscription-upsell' %}
         <label for="CartNote" class="cart-note__label">Gift note or special instructions</label>
         <textarea id="CartNote" name="note" class="input" rows="2">{{ cart.note }}</textarea>
         <p class="drawer__row drawer__subtotal"><span>Subtotal</span><strong>{{ cart.total_price | money_with_currency }}</strong></p>

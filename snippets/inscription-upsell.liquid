@@ -1,0 +1,34 @@
+{%- comment -%}
+  Cart upsell: offer the personalized, author-signed inscription when the book is
+  in the cart without it. Uses Theme settings → Cart → Empty basket product/add-on.
+{%- endcomment -%}
+{%- liquid
+  assign book = settings.empty_cart_product
+  assign ins = settings.empty_cart_addon
+  assign has_book = false
+  assign has_ins = false
+  for item in cart.items
+    if book != blank and item.product_id == book.id
+      assign has_book = true
+    endif
+    if ins != blank and item.product_id == ins.id
+      assign has_ins = true
+    endif
+  endfor
+-%}
+{%- if settings.cart_inscription_upsell and has_book and has_ins == false and ins != blank and ins.available -%}
+  {%- assign iv = ins.selected_or_first_available_variant -%}
+  <div class="insup" data-insup>
+    <span class="insup__icon" aria-hidden="true">{% render 'icon', name: 'pencil', size: 22 %}</span>
+    <div class="insup__body">
+      <p class="insup__title">{{ settings.cart_inscription_heading | default: 'Make it extra special' }}</p>
+      <p class="insup__text">{{ settings.empty_cart_addon_label | default: 'Personalize & sign it by the author' }} <strong>+{{ iv.price | money_without_trailing_zeros }}</strong></p>
+      <div class="insup__row">
+        <label class="visually-hidden" for="InsupName">Name for the inscription</label>
+        <input id="InsupName" class="input" type="text" maxlength="60" placeholder="Who is it for? (e.g. “To Emma”)" data-insup-name>
+        <button type="button" class="btn btn--primary btn--sm" data-insup-add="{{ iv.id }}"><span class="btn__label">Add</span><span class="btn__spinner" aria-hidden="true"></span></button>
+      </div>
+      <p class="buy-form__error" role="alert" hidden data-insup-error></p>
+    </div>
+  </div>
+{%- endif -%}

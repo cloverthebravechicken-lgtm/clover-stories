@@ -151,6 +151,19 @@
         "default": "🎉 Free shipping + a free printable activity packet are included!"
       },
       {
+        "type": "checkbox",
+        "id": "cart_inscription_upsell",
+        "label": "Offer the personalized inscription in the basket",
+        "default": true,
+        "info": "Shows when the book is in the basket without the inscription. Uses the product and add-on set under Empty basket."
+      },
+      {
+        "type": "text",
+        "id": "cart_inscription_heading",
+        "label": "Inscription upsell heading",
+        "default": "Make it extra special"
+      },
+      {
         "type": "product",
         "id": "cart_upsell_product",
         "label": "Cart upsell product",

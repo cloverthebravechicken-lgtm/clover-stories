@@ -1,0 +1,63 @@
+{%- assign product = section.settings.product -%}
+<section class="bookbuy section anim" id="{{ section.settings.anchor | default: 'signed-copy' }}" style="--bg: {{ section.settings.bg }};">
+  <div class="container">
+    <div class="bookbuy__card">
+      <div class="bookbuy__media">
+        {%- if section.settings.image != blank -%}
+          {% render 'img', image: section.settings.image, sizes: '(min-width: 990px) 480px, 90vw', class: 'bob' %}
+        {%- elsif product.featured_image -%}
+          {% render 'img', image: product.featured_image, sizes: '(min-width: 990px) 480px, 90vw', class: 'bob' %}
+        {%- endif -%}
+        {%- if section.settings.sticker != blank -%}<span class="sticker sticker--bookbuy" aria-hidden="true">{{ section.settings.sticker }}</span>{%- endif -%}
+      </div>
+      <div class="bookbuy__content">
+        {%- if section.settings.eyebrow != blank -%}<p class="pill pill--sun">{% render 'icon', name: 'pencil', size: 14 %} {{ section.settings.eyebrow }}</p>{%- endif -%}
+        <h2 class="h2">{{ section.settings.heading }}</h2>
+        <a href="{{ product.url | default: '#' }}#reviews" class="hero__rating">{% render 'stars', rating: 5, size: 18 %}<span class="hero__rating-link">Read reviews</span></a>
+        {%- if section.settings.text != blank -%}<div class="rte bookbuy__text">{{ section.settings.text }}</div>{%- endif -%}
+        {%- if product != blank -%}
+          <div class="bookbuy__price-row">
+            <span class="hero__price" data-live-price>{{ product.selected_or_first_available_variant.price | money }}</span>
+            <span class="hero__price-note">Free shipping</span>
+          </div>
+          {% render 'buy-form', product: product, section: section, form_id: 'BookBuyForm' %}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Book buy box",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FFF3ED" },
+    { "type": "text", "id": "anchor", "label": "Anchor id", "default": "signed-copy" },
+    { "type": "product", "id": "product", "label": "Product" },
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "text", "id": "sticker", "label": "Sticker", "default": "Signed!" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Signed by Melanie" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Bring Clover home" },
+    { "type": "richtext", "id": "text", "label": "Text" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Add to cart" },
+    { "type": "checkbox", "id": "show_buy_now", "label": "Show \"Buy it now\" button", "default": false },
+    { "type": "checkbox", "id": "show_payment_buttons", "label": "Show express checkout buttons", "default": true },
+    { "type": "product", "id": "addon_product", "label": "Add-on product (e.g. personalized & signed)" },
+    { "type": "text", "id": "addon_label", "label": "Add-on label", "default": "Add a personal inscription from Melanie" },
+    { "type": "text", "id": "addon_placeholder", "label": "Add-on name placeholder", "default": "Who is it for? (e.g. “To Emma”)" }
+  ],
+  "blocks": [
+    {
+      "type": "offer",
+      "name": "Offer option",
+      "settings": [
+        { "type": "product", "id": "product", "label": "Product" },
+        { "type": "text", "id": "title", "label": "Title" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle" },
+        { "type": "text", "id": "badge", "label": "Badge" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Book buy box" }]
+}
+{% endschema %}
