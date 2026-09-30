@@ -4,7 +4,9 @@
     "favicon": "shopify://shop_images/Written_by_Melanie_Dieas_-_2.png",
     "logo_width": 168,
     "logo_width_mobile": 124,
-    "cart_upsell_product": "clover-plush"
+    "cart_upsell_product": "clover-plush",
+    "empty_cart_product": "clover-the-brave-chicken",
+    "empty_cart_addon": "personalized-author-inscription"
   },
   "presets": {
     "Default": {}

@@ -10,58 +10,215 @@
   {
     "name": "Brand",
     "settings": [
-      { "type": "image_picker", "id": "logo", "label": "Logo" },
-      { "type": "range", "id": "logo_width", "label": "Logo width (desktop)", "min": 80, "max": 260, "step": 4, "unit": "px", "default": 168 },
-      { "type": "range", "id": "logo_width_mobile", "label": "Logo width (mobile)", "min": 60, "max": 200, "step": 4, "unit": "px", "default": 120 },
-      { "type": "image_picker", "id": "favicon", "label": "Favicon" }
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "range",
+        "id": "logo_width",
+        "label": "Logo width (desktop)",
+        "min": 80,
+        "max": 260,
+        "step": 4,
+        "unit": "px",
+        "default": 168
+      },
+      {
+        "type": "range",
+        "id": "logo_width_mobile",
+        "label": "Logo width (mobile)",
+        "min": 60,
+        "max": 200,
+        "step": 4,
+        "unit": "px",
+        "default": 120
+      },
+      {
+        "type": "image_picker",
+        "id": "favicon",
+        "label": "Favicon"
+      }
     ]
   },
   {
     "name": "Colors",
     "settings": [
-      { "type": "color", "id": "color_primary", "label": "Primary (buttons, accents)", "default": "#FF5757" },
-      { "type": "color", "id": "color_primary_hover", "label": "Primary hover", "default": "#FE924E" },
-      { "type": "color", "id": "color_primary_shadow", "label": "Button shadow", "default": "#C62A1E" },
-      { "type": "color", "id": "color_green", "label": "Farm green", "default": "#518339" },
-      { "type": "color", "id": "color_sun", "label": "Sunshine (stars, highlights)", "default": "#FFB800" },
-      { "type": "color", "id": "color_sky", "label": "Sky background", "default": "#EAFBFF" },
-      { "type": "color", "id": "color_cream", "label": "Cream background", "default": "#FFF3ED" },
-      { "type": "color", "id": "color_text", "label": "Text", "default": "#2B1D14" },
-      { "type": "color", "id": "color_text_soft", "label": "Secondary text", "default": "#736D6B" }
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary (buttons, accents)",
+        "default": "#FF5757"
+      },
+      {
+        "type": "color",
+        "id": "color_primary_hover",
+        "label": "Primary hover",
+        "default": "#FE924E"
+      },
+      {
+        "type": "color",
+        "id": "color_primary_shadow",
+        "label": "Button shadow",
+        "default": "#C62A1E"
+      },
+      {
+        "type": "color",
+        "id": "color_green",
+        "label": "Farm green",
+        "default": "#518339"
+      },
+      {
+        "type": "color",
+        "id": "color_sun",
+        "label": "Sunshine (stars, highlights)",
+        "default": "#FFB800"
+      },
+      {
+        "type": "color",
+        "id": "color_sky",
+        "label": "Sky background",
+        "default": "#EAFBFF"
+      },
+      {
+        "type": "color",
+        "id": "color_cream",
+        "label": "Cream background",
+        "default": "#FFF3ED"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Text",
+        "default": "#2B1D14"
+      },
+      {
+        "type": "color",
+        "id": "color_text_soft",
+        "label": "Secondary text",
+        "default": "#736D6B"
+      }
     ]
   },
   {
     "name": "Typography",
     "settings": [
-      { "type": "font_picker", "id": "font_heading", "label": "Headings", "default": "poppins_n8" },
-      { "type": "font_picker", "id": "font_body", "label": "Body", "default": "inter_n4" }
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Headings",
+        "default": "poppins_n8"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body",
+        "default": "inter_n4"
+      }
     ]
   },
   {
     "name": "Fun & motion",
     "settings": [
-      { "type": "checkbox", "id": "enable_animations", "label": "Animate sections on scroll", "default": true },
-      { "type": "checkbox", "id": "enable_confetti", "label": "Feather confetti on add to cart", "default": true }
+      {
+        "type": "checkbox",
+        "id": "enable_animations",
+        "label": "Animate sections on scroll",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_confetti",
+        "label": "Feather confetti on add to cart",
+        "default": true
+      }
     ]
   },
   {
     "name": "Cart",
     "settings": [
-      { "type": "checkbox", "id": "cart_drawer", "label": "Open cart drawer after add to cart", "default": true },
-      { "type": "text", "id": "cart_perk_text", "label": "Cart perk message", "default": "🎉 Free shipping + a free printable activity packet are included!" },
-      { "type": "product", "id": "cart_upsell_product", "label": "Cart upsell product", "info": "Shown in the cart drawer if it isn't already in the cart." },
-      { "type": "text", "id": "cart_upsell_heading", "label": "Upsell heading", "default": "Make storytime extra snuggly" },
-      { "type": "text", "id": "empty_cart_title", "label": "Empty cart title", "default": "Your basket is empty… Clover is sad!" },
-      { "type": "text", "id": "empty_cart_text", "label": "Empty cart text", "default": "Free shipping on all books, plus a free 10-page activity packet with every order." }
+      {
+        "type": "checkbox",
+        "id": "cart_drawer",
+        "label": "Open cart drawer after add to cart",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "cart_perk_text",
+        "label": "Cart perk message",
+        "default": "🎉 Free shipping + a free printable activity packet are included!"
+      },
+      {
+        "type": "product",
+        "id": "cart_upsell_product",
+        "label": "Cart upsell product",
+        "info": "Shown in the cart drawer if it isn't already in the cart."
+      },
+      {
+        "type": "text",
+        "id": "cart_upsell_heading",
+        "label": "Upsell heading",
+        "default": "Make storytime extra snuggly"
+      },
+      {
+        "type": "text",
+        "id": "empty_cart_title",
+        "label": "Empty cart title",
+        "default": "Your basket is empty… Clover is sad!"
+      },
+      {
+        "type": "text",
+        "id": "empty_cart_text",
+        "label": "Empty cart text",
+        "default": "Free shipping on all books, plus a free 10-page activity packet with every order."
+      },
+      {
+        "type": "header",
+        "content": "Empty basket"
+      },
+      {
+        "type": "product",
+        "id": "empty_cart_product",
+        "label": "Quick-add product when the basket is empty"
+      },
+      {
+        "type": "product",
+        "id": "empty_cart_addon",
+        "label": "Optional add-on (e.g. personalized & signed)"
+      },
+      {
+        "type": "text",
+        "id": "empty_cart_addon_label",
+        "label": "Add-on label",
+        "default": "Personalize & sign it by the author"
+      }
     ]
   },
   {
     "name": "Social media",
     "settings": [
-      { "type": "text", "id": "social_instagram", "label": "Instagram URL" },
-      { "type": "text", "id": "social_facebook", "label": "Facebook URL" },
-      { "type": "text", "id": "social_tiktok", "label": "TikTok URL" },
-      { "type": "text", "id": "social_pinterest", "label": "Pinterest URL" }
+      {
+        "type": "text",
+        "id": "social_instagram",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "text",
+        "id": "social_facebook",
+        "label": "Facebook URL"
+      },
+      {
+        "type": "text",
+        "id": "social_tiktok",
+        "label": "TikTok URL"
+      },
+      {
+        "type": "text",
+        "id": "social_pinterest",
+        "label": "Pinterest URL"
+      }
     ]
   }
 ]

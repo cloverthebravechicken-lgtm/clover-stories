@@ -1,0 +1,66 @@
+{%- comment -%}
+  Empty cart state: an empty egg basket illustration, message, and a quick-add card
+  for the book with the optional personalized inscription.
+  Settings: empty_cart_product, empty_cart_addon (theme settings → Cart)
+{%- endcomment -%}
+{%- liquid
+  assign qp = settings.empty_cart_product
+  assign qa = settings.empty_cart_addon
+-%}
+<div class="empty">
+  <div class="empty__art" aria-hidden="true">
+    <span class="empty__feather">{% render 'icon', name: 'feather', size: 26 %}</span>
+    <svg class="empty__basket" viewBox="0 0 200 140" focusable="false">
+      <path class="empty__handle" d="M38 70 C38 10, 162 10, 162 70" fill="none" stroke="#B9803F" stroke-width="9" stroke-linecap="round"/>
+      <path d="M38 70 C38 10, 162 10, 162 70" fill="none" stroke="#D9A566" stroke-width="4" stroke-linecap="round" stroke-dasharray="10 8"/>
+      <ellipse cx="100" cy="72" rx="80" ry="14" fill="#8C5A26"/>
+      <path d="M22 72 L36 128 Q100 142 164 128 L178 72 Q100 88 22 72 Z" fill="#D9A566"/>
+      <g stroke="#B9803F" stroke-width="3" fill="none" opacity=".9">
+        <path d="M26 88 Q100 104 174 88"/>
+        <path d="M30 104 Q100 120 170 104"/>
+        <path d="M34 119 Q100 134 166 119"/>
+      </g>
+      <g stroke="#C48E4E" stroke-width="3" opacity=".8">
+        <path d="M52 80 L58 132"/><path d="M76 84 L79 137"/><path d="M100 86 L100 139"/><path d="M124 84 L121 137"/><path d="M148 80 L142 132"/>
+      </g>
+      <path d="M20 72 Q100 90 180 72" fill="none" stroke="#B9803F" stroke-width="8" stroke-linecap="round"/>
+      <path d="M20 72 Q100 90 180 72" fill="none" stroke="#E7BD84" stroke-width="3" stroke-linecap="round" stroke-dasharray="9 7"/>
+    </svg>
+    <span class="empty__shadow"></span>
+  </div>
+  <p class="h3 empty__title">{{ settings.empty_cart_title }}</p>
+  <p class="empty__text">{{ settings.empty_cart_text }}</p>
+
+  {%- if qp != blank and qp.available -%}
+    {%- assign qv = qp.selected_or_first_available_variant -%}
+    <div class="qcard" data-qcard>
+      <div class="qcard__top">
+        {%- if qp.featured_image -%}
+          {{ qp.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: qp.title, width: 76, height: 76, class: 'qcard__img' }}
+        {%- endif -%}
+        <div class="qcard__info">
+          <p class="qcard__title">{{ qp.title }}</p>
+          <p class="qcard__price">{{ qv.price | money }} <span>· Free shipping</span></p>
+        </div>
+      </div>
+      {%- if qa != blank and qa.available -%}
+        {%- assign av = qa.selected_or_first_available_variant -%}
+        <label class="addon__toggle qcard__addon">
+          <input type="checkbox" value="{{ av.id }}" data-qc-addon>
+          <span class="addon__check" aria-hidden="true">{% render 'icon', name: 'check', size: 14 %}</span>
+          <span class="addon__label">{{ settings.empty_cart_addon_label | default: 'Personalize & sign it by the author' }} <strong class="addon__price">+{{ av.price | money_without_trailing_zeros }}</strong></span>
+        </label>
+        <div class="addon__field" hidden data-qc-field>
+          <label class="visually-hidden" for="QcName">Name for the inscription</label>
+          <input id="QcName" class="input" type="text" maxlength="60" placeholder="Who is it for? (e.g. “To Emma”)" data-qc-name>
+        </div>
+      {%- endif -%}
+      <button type="button" class="btn btn--primary btn--block" data-qc-add="{{ qv.id }}">
+        <span class="btn__label">Add to basket</span><span class="btn__spinner" aria-hidden="true"></span>
+      </button>
+      <p class="buy-form__error" role="alert" hidden data-qc-error></p>
+    </div>
+  {%- else -%}
+    <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">Find Clover</a>
+  {%- endif -%}
+</div>

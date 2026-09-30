@@ -2,11 +2,7 @@
   <div class="container container--narrow">
     <h1 class="h1 center">Your basket</h1>
     {%- if cart.item_count == 0 -%}
-      <div class="center mt-m">
-        <p class="h3">{{ settings.empty_cart_title }}</p>
-        <p>{{ settings.empty_cart_text }}</p>
-        <a href="{{ routes.root_url }}" class="btn btn--primary btn--lg mt-m">Find Clover</a>
-      </div>
+      <div class="center mt-m cart-page__empty">{% render 'empty-basket' %}</div>
     {%- else -%}
       <form action="{{ routes.cart_url }}" method="post" class="cart-form card mt-m">
         {%- if settings.cart_perk_text != blank -%}<p class="drawer__perk">{{ settings.cart_perk_text }}</p>{%- endif -%}

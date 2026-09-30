@@ -8,11 +8,7 @@
 
     <div class="drawer__content" data-cart-content>
       {%- if cart.item_count == 0 -%}
-        <div class="drawer__empty">
-          <p class="h3">{{ settings.empty_cart_title }}</p>
-          <p>{{ settings.empty_cart_text }}</p>
-          <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">Find Clover</a>
-        </div>
+        <div class="drawer__empty">{% render 'empty-basket' %}</div>
       {%- else -%}
         {%- if settings.cart_perk_text != blank -%}
           <p class="drawer__perk">{{ settings.cart_perk_text }}</p>

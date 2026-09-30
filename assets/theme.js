@@ -193,6 +193,74 @@
     }
   });
 
+  /* ---------- Inscription name → order notes ---------- */
+  async function addInscriptionNote(rawName) {
+    const name = (rawName || '').trim();
+    if (!name) return;
+    try {
+      const cart = await (await fetch(C.routes.cart + '.js', { headers: { Accept: 'application/json' } })).json();
+      const line = 'Inscription for signed book: ' + name;
+      const current = cart.note || '';
+      if (current.includes(line)) return;
+      const note = current ? current + '\n' + line : line;
+      await fetch(C.routes.cart + '/update.js', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({ note })
+      });
+    } catch (e) { /* the inscription is still saved on the line item */ }
+  }
+
+  /* ---------- Empty basket quick-add card ---------- */
+  document.addEventListener('change', (e) => {
+    const t = e.target.closest('[data-qc-addon]');
+    if (!t) return;
+    const card = t.closest('[data-qcard]');
+    const field = card.querySelector('[data-qc-field]');
+    field.hidden = !t.checked;
+    if (t.checked) card.querySelector('[data-qc-name]').focus();
+  });
+  document.addEventListener('input', (e) => {
+    const t = e.target.closest('[data-qc-name]');
+    if (t) t.closest('[data-qcard]').querySelector('[data-qc-error]').hidden = true;
+  });
+  document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('[data-qc-add]');
+    if (!btn) return;
+    const card = btn.closest('[data-qcard]');
+    const addon = card.querySelector('[data-qc-addon]');
+    const nameInput = card.querySelector('[data-qc-name]');
+    const err = card.querySelector('[data-qc-error]');
+    const items = [{ id: Number(btn.dataset.qcAdd), quantity: 1 }];
+    if (addon && addon.checked) {
+      const name = nameInput.value.trim();
+      if (!name) {
+        err.textContent = 'Who should Melanie sign the book to? Add a name so we can personalize it.';
+        err.hidden = false;
+        nameInput.focus();
+        return;
+      }
+      items.push({ id: Number(addon.value), quantity: 1, properties: { 'Inscription for': name } });
+    }
+    err.hidden = true;
+    btn.classList.add('is-loading');
+    btn.disabled = true;
+    try {
+      await addItems(items);
+      if (addon && addon.checked) await addInscriptionNote(nameInput.value);
+      if (!cartDrawer() || !cartDrawer().classList.contains('is-open')) {
+        if (document.body.classList.contains('template-cart')) { window.location.reload(); return; }
+      }
+      confetti(btn.isConnected ? btn : cartDrawer());
+    } catch (ex) {
+      err.textContent = ex.message;
+      err.hidden = false;
+    } finally {
+      btn.classList.remove('is-loading');
+      btn.disabled = false;
+    }
+  });
+
   /* ---------- Buy form ---------- */
   class BuyForm extends HTMLElement {
     connectedCallback() {
@@ -305,23 +373,9 @@
       }
     }
 
-    // Also copy the inscription name into the order notes so it's visible at a glance.
     async noteInscription() {
       if (!this.addonToggle || !this.addonToggle.checked) return;
-      const name = (this.addonName.value || '').trim();
-      if (!name) return;
-      try {
-        const cart = await (await fetch(C.routes.cart + '.js', { headers: { Accept: 'application/json' } })).json();
-        const line = 'Inscription for signed book: ' + name;
-        const current = cart.note || '';
-        if (current.includes(line)) return;
-        const note = current ? current + '\n' + line : line;
-        await fetch(C.routes.cart + '/update.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify({ note })
-        });
-      } catch (e) { /* the inscription is still saved on the line item */ }
+      await addInscriptionNote(this.addonName.value);
     }
 
     showError(msg) {

@@ -8,24 +8,50 @@
     </div>
   </div>
 
-  <div class="line__rail" data-rail tabindex="0" aria-label="Pages in the activity packet">
-    <ul class="line__list" role="list">
-      {%- for block in pages -%}
-        {%- if block.settings.image != blank -%}
-          <li class="line__item" style="--d: {{ forloop.index0 | modulo: 5 | times: 0.35 }}s;" {{ block.shopify_attributes }}>
-            <span class="line__pin" aria-hidden="true"></span>
-            <button type="button" class="line__page" data-lightbox="{{ block.settings.image | image_url: width: 1600 }}" data-lightbox-alt="{{ block.settings.label | escape }}" aria-label="View {{ block.settings.label | escape }} page">
-              {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', alt: block.settings.label, widths: '240, 360, 500', sizes: '(min-width: 990px) 200px, 42vw' }}
-              <span class="line__num">{{ forloop.index }}</span>
-            </button>
-            <span class="line__label">
-              {%- if block.settings.emoji != blank -%}<span aria-hidden="true">{{ block.settings.emoji }}</span> {% endif -%}
-              {{ block.settings.label }}
-            </span>
-          </li>
-        {%- endif -%}
-      {%- endfor -%}
-    </ul>
+  {%- liquid
+    assign per_row = section.settings.per_row
+    assign row_count = pages.size | plus: per_row | minus: 1 | divided_by: per_row | floor
+    assign last_row = row_count | minus: 1
+  -%}
+  <div class="line__rows">
+    {%- for r in (0..last_row) -%}
+      {%- assign offset = r | times: per_row -%}
+      <div class="line__rail" data-rail tabindex="0" aria-label="Pages in the activity packet, row {{ r | plus: 1 }}">
+        <div class="line__row" style="--cols: {{ per_row }};">
+          <svg class="line__rope" viewBox="0 0 1000 80" preserveAspectRatio="none" aria-hidden="true" focusable="false">
+            <path d="M0 8 Q500 {{ section.settings.sag | times: 2 | plus: 8 }} 1000 8"/>
+          </svg>
+          <ul class="line__list" role="list">
+          {%- for block in pages limit: per_row offset: offset -%}
+            {%- liquid
+              assign n = forloop.length
+              assign i = forloop.index0
+              assign a = i | times: 2 | plus: 1
+              assign b = n | times: 2 | minus: a
+              assign nn = n | times: n
+              assign drop = a | times: b | times: section.settings.sag | divided_by: nn
+              assign num = offset | plus: forloop.index
+            -%}
+            {%- if block.settings.image != blank -%}
+              <li class="line__item" style="--drop: {{ drop }}px; --d: -{{ num | times: 0.7 | modulo: 4 }}s;" {{ block.shopify_attributes }}>
+                <div class="line__swing">
+                  <span class="line__pin" aria-hidden="true"></span>
+                  <button type="button" class="line__page" data-lightbox="{{ block.settings.image | image_url: width: 1600 }}" data-lightbox-alt="{{ block.settings.label | escape }}" aria-label="View {{ block.settings.label | escape }} page">
+                    {{ block.settings.image | image_url: width: 500 | image_tag: loading: 'lazy', alt: block.settings.label, widths: '240, 360, 500', sizes: '(min-width: 990px) 200px, 42vw' }}
+                    <span class="line__num">{{ num }}</span>
+                  </button>
+                  <span class="line__label">
+                    {%- if block.settings.emoji != blank -%}<span aria-hidden="true">{{ block.settings.emoji }}</span> {% endif -%}
+                    {{ block.settings.label }}
+                  </span>
+                </div>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+          </ul>
+        </div>
+      </div>
+    {%- endfor -%}
   </div>
   <p class="line__hint center">Tap any page to take a closer look</p>
 
@@ -49,6 +75,8 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "What's inside" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "10 pages of farmyard fun" },
     { "type": "richtext", "id": "text", "label": "Text" },
+    { "type": "range", "id": "per_row", "label": "Pages per line", "min": 3, "max": 6, "step": 1, "default": 5 },
+    { "type": "range", "id": "sag", "label": "How much the line sags", "min": 0, "max": 60, "step": 2, "unit": "px", "default": 28 },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Get all 10 pages free" },
     { "type": "url", "id": "button_link", "label": "Button link" }
   ],
