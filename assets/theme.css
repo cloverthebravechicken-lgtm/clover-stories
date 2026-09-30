@@ -389,7 +389,6 @@ buy-form { display: block; }
 .addon__toggle:has(input:focus-visible) { outline: 3px solid var(--c-sun); outline-offset: 2px; }
 .addon__label { flex: 1; }
 .addon__price { color: var(--c-green); white-space: nowrap; }
-.addon__hint { display: block; margin-top: 2px; font-size: .8rem; font-weight: 500; color: var(--c-text-soft); }
 .addon__icon { color: var(--c-primary-hover); }
 .addon__field { margin-top: 8px; animation: pop-in .3s ease; }
 .buy-form__row { display: grid; grid-template-columns: auto 1fr; gap: 10px; }
