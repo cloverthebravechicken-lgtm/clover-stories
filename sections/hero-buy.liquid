@@ -42,6 +42,11 @@
         {%- endif -%}
       </div>
 
+      {%- if section.settings.mascot != blank -%}
+        <span class="hero__mascot hero__mascot--{{ section.settings.mascot_animation }}{% if section.settings.mascot_trim %} hero__mascot--trim{% endif %}" aria-hidden="true">
+          {{ section.settings.mascot | image_url: width: 500 | image_tag: loading: 'eager', alt: '', widths: '200, 300, 400, 500', sizes: '(min-width: 990px) 170px, 30vw' }}
+        </span>
+      {%- endif -%}
       {%- if section.settings.sticker != blank -%}
         <span class="sticker sticker--hero" aria-hidden="true">{{ section.settings.sticker }}</span>
       {%- endif -%}
@@ -66,7 +71,7 @@
       {%- endif -%}
 
       {%- if bullets.size > 0 -%}
-        <ul class="checks" role="list">
+        <ul class="checks checks--compact" role="list">
           {%- for block in bullets -%}
             <li {{ block.shopify_attributes }}><span class="checks__i">{% render 'icon', name: 'check', size: 14 %}</span>{{ block.settings.text }}</li>
           {%- endfor -%}
@@ -111,6 +116,12 @@
     { "type": "richtext", "id": "text", "label": "Text", "default": "<p>A heartwarming rhyming farm adventure that reminds children the bravest thing they can be is <strong>themselves</strong>.</p>" },
     { "type": "text", "id": "price_note", "label": "Price note", "default": "Free shipping" },
     { "type": "text", "id": "sticker", "label": "Round sticker text", "default": "Ages 3–5" },
+    { "type": "image_picker", "id": "mascot", "label": "Corner character (transparent PNG)", "info": "Pops up in the bottom-left corner of the image slider." },
+    { "type": "checkbox", "id": "mascot_trim", "label": "Trim empty space around the character", "default": true },
+    {
+      "type": "select", "id": "mascot_animation", "label": "Character animation", "default": "bob",
+      "options": [{ "value": "bob", "label": "Bob & sway" }, { "value": "peck", "label": "Peck" }, { "value": "still", "label": "Pop in only" }]
+    },
     { "type": "range", "id": "autoplay_speed", "label": "Image rotation", "min": 3, "max": 10, "step": 1, "unit": "s", "default": 4 },
     { "type": "header", "content": "Buy box" },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Add to cart" },

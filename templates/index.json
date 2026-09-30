@@ -8,8 +8,8 @@
         "next_bg": "#FFFFFF",
         "badge": "Available now in premium hardcover",
         "heading": "Meet Clover, the <em>Brave</em> Chicken",
-        "rating_text": "Loved by parents, grandparents & teachers",
-        "text": "<p>A heartwarming rhyming farm adventure that reminds little ones the bravest thing they can be is <strong>themselves</strong>.</p>",
+        "rating_text": "Loved by parents & teachers",
+        "text": "<p>A rhyming farm adventure that shows little ones the bravest thing they can be is <strong>themselves</strong>.</p>",
         "price_note": "Free shipping",
         "sticker": "Ages 3–5",
         "autoplay_speed": 4,
@@ -20,7 +20,10 @@
         "addon_label": "Personalize & sign it by the author",
         "addon_placeholder": "Who is it for? (e.g. “To Emma”)",
         "quote": "This book is absolutely adorable! My three year old loves it!",
-        "quote_author": "Kathryn, mom"
+        "quote_author": "Kathryn, mom",
+        "mascot_animation": "bob",
+        "mascot": "shopify://shop_images/Written_by_Melanie_Dieas_-_2_97c8c5fe-2952-4c29-b9c5-003b8a38daf7.png",
+        "mascot_trim": true
       },
       "blocks": {
         "image_1": {
@@ -54,25 +57,25 @@
         "bullet_5": {
           "type": "bullet",
           "settings": {
-            "text": "Fun rhyming read-aloud kids ask for again & again"
+            "text": "Rhyming read-aloud"
           }
         },
         "bullet_6": {
           "type": "bullet",
           "settings": {
-            "text": "Builds confidence, courage & self-belief"
+            "text": "Builds confidence"
           }
         },
         "bullet_7": {
           "type": "bullet",
           "settings": {
-            "text": "Charming hand-drawn, full-color illustrations"
+            "text": "Hand-drawn illustrations"
           }
         },
         "bullet_8": {
           "type": "bullet",
           "settings": {
-            "text": "Premium hardcover keepsake — perfect for gifting"
+            "text": "Premium hardcover"
           }
         },
         "offer_9": {
@@ -294,7 +297,7 @@
         "end_heading": "Want to find out what Clover does next?",
         "product": "clover-the-brave-chicken",
         "end_button": "Add to cart",
-        "board_color": "#C3F1FC"
+        "board_color": "#FFFFFF"
       },
       "blocks": {
         "spread_1": {
