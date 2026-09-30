@@ -1286,6 +1286,8 @@ flip-book { display: block; }
 .fact { background: #fff; border: 2px solid #F2E8E2; padding: 6px 12px; border-radius: 99px; font-weight: 700; font-size: .88rem; box-shadow: 0 2px 0 rgba(var(--c-text-rgb), .06); }
 .fact:nth-child(3n+1) { rotate: -1.5deg; } .fact:nth-child(3n+2) { rotate: 1deg; }
 .auhero__actions { display: flex; flex-wrap: wrap; gap: 12px; }
+.auhero__actions .btn { padding-inline: 20px; font-size: .95rem; white-space: nowrap; flex-shrink: 0; }
+@media (min-width: 1200px) { .auhero__actions { flex-wrap: nowrap; } }
 @media (min-width: 990px) {
   .auhero { padding-top: 64px; }
   .auhero__inner { grid-template-columns: 1fr 1.1fr; gap: 72px; }
