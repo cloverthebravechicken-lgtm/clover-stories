@@ -165,19 +165,26 @@
         "spread_1": {
           "type": "spread",
           "settings": {
-            "image": "shopify://shop_images/cloverpg8.png"
+            "image": "shopify://shop_images/cloverpg4.png"
           }
         },
         "spread_2": {
           "type": "spread",
           "settings": {
-            "image": "shopify://shop_images/cloverpg11.png"
+            "image": "shopify://shop_images/cloverpg5.png"
+          }
+        },
+        "spread_3": {
+          "type": "spread",
+          "settings": {
+            "image": "shopify://shop_images/cloverpg6.png"
           }
         }
       },
       "block_order": [
         "spread_1",
-        "spread_2"
+        "spread_2",
+        "spread_3"
       ]
     },
     "benefits": {
