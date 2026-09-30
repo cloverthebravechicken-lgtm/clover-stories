@@ -2,7 +2,7 @@
   <div class="container">
     <div class="signup-sec__wrap">
     {%- if section.settings.show_crayons -%}{% render 'crayons', part: 'outside' %}{%- endif -%}
-    <div class="signup-sec__card">
+    <div class="signup-sec__card{% if section.settings.card_style == 'notebook' %} signup-sec__card--notebook{% endif %}">
       {%- if section.settings.show_crayons -%}{% render 'crayons', part: 'doodles' %}{%- endif -%}
       <div class="signup-sec__media">
         {%- if section.settings.image != blank -%}
@@ -10,7 +10,7 @@
         {%- endif -%}
         {%- if section.settings.sticker != blank -%}<span class="sticker sticker--signup" aria-hidden="true">{{ section.settings.sticker }}</span>{%- endif -%}
       </div>
-      <div class="signup-sec__content">
+      <div class="signup-sec__content{% if section.settings.card_style == 'notebook' %} paper-notebook{% endif %}">
         {%- if section.settings.eyebrow != blank -%}<p class="pill pill--sun">{% render 'icon', name: 'pencil', size: 14 %} {{ section.settings.eyebrow }}</p>{%- endif -%}
         <h2 class="h2">{{ section.settings.heading }}</h2>
         <div class="rte">{{ section.settings.text }}</div>
@@ -34,6 +34,10 @@
   "settings": [
     { "type": "color", "id": "bg", "label": "Background", "default": "#EAFBFF" },
     { "type": "text", "id": "anchor", "label": "Anchor id", "default": "clovers-club" },
+    {
+      "type": "select", "id": "card_style", "label": "Card style", "default": "notebook",
+      "options": [{ "value": "notebook", "label": "Notebook paper" }, { "value": "dots", "label": "Blue dots" }]
+    },
     { "type": "checkbox", "id": "show_crayons", "label": "Show animated crayons & doodles", "default": true },
     { "type": "image_picker", "id": "image", "label": "Image" },
     { "type": "text", "id": "sticker", "label": "Sticker", "default": "FREE!" },

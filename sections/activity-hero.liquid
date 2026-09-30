@@ -2,7 +2,7 @@
   assign pages = section.blocks | where: 'type', 'page'
   assign perks = section.settings.perks | split: ','
 -%}
-<section class="ahero{% if section.settings.surface == 'wood' %} ahero--wood{% endif %}" style="--bg: {{ section.settings.bg }};">
+<section class="ahero{% if section.settings.surface == 'wood' %} ahero--wood{% elsif section.settings.surface == 'notebook' %} ahero--notebook paper-notebook{% endif %}" style="--bg: {{ section.settings.bg }};">
   {% render 'art-supplies' %}
   <div class="container ahero__inner">
     <div class="ahero__media">
@@ -56,8 +56,8 @@
   "class": "section-ahero",
   "settings": [
     {
-      "type": "select", "id": "surface", "label": "Background style", "default": "wood",
-      "options": [{ "value": "wood", "label": "Wooden desk" }, { "value": "color", "label": "Solid color" }]
+      "type": "select", "id": "surface", "label": "Background style", "default": "notebook",
+      "options": [{ "value": "notebook", "label": "Notebook paper" }, { "value": "wood", "label": "Wooden desk" }, { "value": "color", "label": "Solid color" }]
     },
     { "type": "color", "id": "bg", "label": "Background color (solid style)", "default": "#EAFBFF" },
     { "type": "color", "id": "next_bg", "label": "Wave color (next section background)", "default": "#FFFFFF" },

@@ -13,7 +13,7 @@
         "button_label": "Send my packet",
         "success_text": "You're in! Check your inbox for Clover's activity packet.",
         "perks": "Instant email delivery, Print as many as you like, Bonus parent & teacher sheet",
-        "surface": "wood"
+        "surface": "notebook"
       },
       "blocks": {
         "page_1": {
@@ -302,7 +302,8 @@
         "text": "<p>Join Clover's Club and we'll send the printable packet straight to your inbox, plus a bonus parent & teacher discussion sheet.</p>",
         "includes": "Coloring, Tracing, Maze, Sequencing, Counting, Drawing, Matching",
         "button_label": "Send my packet",
-        "fine_print": "No spam, just farmyard fun. Unsubscribe anytime."
+        "fine_print": "No spam, just farmyard fun. Unsubscribe anytime.",
+        "card_style": "notebook"
       }
     },
     "final": {

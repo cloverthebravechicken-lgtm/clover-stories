@@ -61,7 +61,8 @@
         "text": "<p>Join Clover's Club and we'll send the printable packet straight to your inbox, plus a bonus parent & teacher discussion sheet.</p>",
         "includes": "Coloring, Tracing, Maze, Sequencing, Counting, Drawing, Matching",
         "button_label": "Send my packet",
-        "fine_print": "No spam, just farmyard fun. Unsubscribe anytime."
+        "fine_print": "No spam, just farmyard fun. Unsubscribe anytime.",
+        "card_style": "notebook"
       }
     }
   },
