@@ -109,6 +109,7 @@
           <span class="addon__label">
             {{ section.settings.addon_label | default: 'Add a personalized, author-signed inscription' }}
             <strong class="addon__price">+{{ addon_variant.price | money_without_trailing_zeros }}</strong>
+            <small class="addon__hint">Books are only signed when this is added.</small>
           </span>
           <span class="addon__icon">{% render 'icon', name: 'pencil', size: 20 %}</span>
         </label>

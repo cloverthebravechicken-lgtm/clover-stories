@@ -103,8 +103,8 @@
           "type": "badge",
           "settings": {
             "icon": "pencil",
-            "title": "Signed by the author",
-            "text": "Personalization available"
+            "title": "Signed copies available",
+            "text": "Add an inscription to get it signed"
           }
         }
       },
@@ -356,7 +356,8 @@
         "bg": "#FFFFFF",
         "eyebrow": "Good questions",
         "heading": "Frequently asked questions",
-        "open_first": true
+        "open_first": true,
+        "compact": true
       },
       "blocks": {
         "question_1": {

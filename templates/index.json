@@ -144,8 +144,8 @@
           "type": "badge",
           "settings": {
             "icon": "pencil",
-            "title": "Signed by the author",
-            "text": "Personalization available"
+            "title": "Signed copies available",
+            "text": "Add an inscription to get it signed"
           }
         }
       },

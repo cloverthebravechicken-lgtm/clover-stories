@@ -1,4 +1,4 @@
-<section class="faq section anim" style="--bg: {{ section.settings.bg }};">
+<section class="faq section anim{% if section.settings.compact %} section--compact{% endif %}" style="--bg: {{ section.settings.bg }};">
   <div class="container container--narrow">
     <div class="section-head">
       {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
@@ -40,7 +40,8 @@
     { "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Good questions" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Frequently asked questions" },
-    { "type": "checkbox", "id": "open_first", "label": "Open first question", "default": true }
+    { "type": "checkbox", "id": "open_first", "label": "Open first question", "default": true },
+    { "type": "checkbox", "id": "compact", "label": "Less space above and below", "default": false }
   ],
   "blocks": [
     {

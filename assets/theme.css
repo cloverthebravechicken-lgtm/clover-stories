@@ -389,6 +389,7 @@ buy-form { display: block; }
 .addon__toggle:has(input:focus-visible) { outline: 3px solid var(--c-sun); outline-offset: 2px; }
 .addon__label { flex: 1; }
 .addon__price { color: var(--c-green); white-space: nowrap; }
+.addon__hint { display: block; margin-top: 2px; font-size: .8rem; font-weight: 500; color: var(--c-text-soft); }
 .addon__icon { color: var(--c-primary-hover); }
 .addon__field { margin-top: 8px; animation: pop-in .3s ease; }
 .buy-form__row { display: grid; grid-template-columns: auto 1fr; gap: 10px; }
@@ -569,6 +570,9 @@ buy-form { display: block; }
 .signup__err { color: #C62A1E; font-size: .9rem; margin-top: 8px; }
 
 /* ---------- FAQ / accordion ---------- */
+.section--compact { padding: clamp(28px, 4vw, 48px) 0; }
+.apps-sec { padding-bottom: clamp(20px, 3vw, 36px); }
+.section--compact .section-head { margin-bottom: 20px; }
 .faq__list, .accordion { display: grid; gap: 12px; }
 .accordion { margin-top: 22px; }
 .faq__item { background: #fff; border: 2px solid #F2E8E2; border-radius: 18px; overflow: hidden; transition: border-color .2s ease; }
@@ -1257,7 +1261,7 @@ flip-book { display: block; }
 
 /* ---------- Hand-drawn signature (traced pen strokes) ---------- */
 .sigdraw { display: block; width: 100%; height: auto; overflow: visible; }
-.sigdraw__strokes path { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+.sigdraw__strokes path { stroke-dasharray: 1 2; stroke-dashoffset: 1.02; }
 .anim.is-inview .sigdraw__strokes path { animation: sig-draw var(--l) var(--s) linear forwards; }
 @keyframes sig-draw { to { stroke-dashoffset: 0; } }
 .no-js .sigdraw__strokes path, .shopify-design-mode .sigdraw__strokes path { stroke-dashoffset: 0; animation: none; }
