@@ -1,6 +1,111 @@
 {
   "sections": {
-    "main": { "type": "contact-form", "settings": {} }
+    "main": {
+      "type": "contact-form",
+      "blocks": {
+        "email": {
+          "type": "way",
+          "settings": {
+            "emoji": "✉️",
+            "title": "Email us",
+            "text": "hello@cloverstories.com",
+            "link": "mailto:hello@cloverstories.com"
+          }
+        },
+        "school": {
+          "type": "way",
+          "settings": {
+            "emoji": "🏫",
+            "title": "School & library visits",
+            "text": "Bring Clover's story to your classroom or story hour"
+          }
+        },
+        "bulk": {
+          "type": "way",
+          "settings": {
+            "emoji": "📦",
+            "title": "Bulk & gift orders",
+            "text": "Books for classrooms, parties or gift baskets"
+          }
+        },
+        "photos": {
+          "type": "way",
+          "settings": {
+            "emoji": "📸",
+            "title": "Share a storytime photo",
+            "text": "We love seeing Clover at bedtime!"
+          }
+        }
+      },
+      "block_order": [
+        "email",
+        "school",
+        "bulk",
+        "photos"
+      ],
+      "settings": {
+        "bg": "#EAFBFF",
+        "eyebrow": "Say hello",
+        "heading": "Let's <em>chat!</em>",
+        "text": "<p>Questions about your order, a school visit, or a photo of your little one reading Clover? We'd love to hear from you.</p>",
+        "mascot": "shopify://shop_images/Written_by_Melanie_Dieas_-_2_97c8c5fe-2952-4c29-b9c5-003b8a38daf7.png",
+        "bubble": "Cluck! Write to us!",
+        "form_heading": "Send Clover a note ✏️",
+        "topics": "Just saying hi, My order, School visit, Bulk order",
+        "placeholder": "Tell us what's on your mind…",
+        "success_heading": "Message sent!",
+        "success_text": "Thanks for writing. We'll get back to you soon."
+      }
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {
+        "bg": "#FFFFFF",
+        "eyebrow": "Before you write",
+        "heading": "Quick answers",
+        "open_first": false,
+        "compact": true
+      },
+      "blocks": {
+        "question_3": {
+          "type": "question",
+          "settings": {
+            "question": "Is shipping really free?",
+            "answer": "<p>Yes! Shipping is free on all books. You'll see your delivery options at checkout.</p>"
+          }
+        },
+        "question_4": {
+          "type": "question",
+          "settings": {
+            "question": "Can I get it personalized and signed?",
+            "answer": "<p>Absolutely. Tick <strong>“Personalize & sign it by the author”</strong> when you add the book to your cart and tell us who it's for, and Melanie will sign it with a personal inscription.</p>"
+          }
+        },
+        "question_5": {
+          "type": "question",
+          "settings": {
+            "question": "How do I get the free activity packet?",
+            "answer": "<p>Every purchase comes with a free 10-page printable activity packet (coloring, tracing, mazes, counting and more). You can also grab it right now by joining Clover's Club with your email.</p>"
+          }
+        },
+        "question_6": {
+          "type": "question",
+          "settings": {
+            "question": "Is it good for classrooms and libraries?",
+            "answer": "<p>Teachers love Clover for circle time. The story sparks conversations about courage, kindness and what makes each of us unique, and the free discussion sheet makes it easy to use in class.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "question_3",
+        "question_4",
+        "question_5",
+        "question_6"
+      ]
+    }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "faq"
+  ]
 }

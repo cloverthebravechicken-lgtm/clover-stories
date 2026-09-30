@@ -1,26 +1,87 @@
-<section class="section contact" style="--bg: {{ section.settings.bg }};">
-  <div class="container container--narrow">
-    <div class="section-head">
-      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
-      <h1 class="h1">{{ section.settings.heading | default: page.title }}</h1>
-      {%- if page.content != blank -%}<div class="rte section-head__text">{{ page.content }}</div>{%- endif -%}
+{%- assign ways = section.blocks | where: 'type', 'way' -%}
+{%- assign topics = section.settings.topics | split: ',' -%}
+<section class="cthero anim" style="--bg: {{ section.settings.bg }};">
+  <div class="hero__sky" aria-hidden="true">
+    <span class="hero__cloud hero__cloud--1">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
+    <span class="hero__cloud hero__cloud--3">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
+    <span class="hero__cloud hero__cloud--4">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
+    <span class="hero__cloud hero__cloud--5">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
+  </div>
+  <div class="container cthero__inner">
+    <div class="cthero__intro">
+      {%- if section.settings.eyebrow != blank -%}<p class="pill pill--green">{% render 'icon', name: 'chat', size: 14 %} {{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h1 class="cthero__title">{{ section.settings.heading | default: page.title }}</h1>
+      {%- if section.settings.text != blank -%}<div class="rte cthero__text">{{ section.settings.text }}</div>{%- endif -%}
+      {%- if page.content != blank -%}<div class="rte cthero__text">{{ page.content }}</div>{%- endif -%}
+      {%- if ways.size > 0 -%}
+        <ul class="ways" role="list">
+          {%- for block in ways -%}
+            <li class="way" {{ block.shopify_attributes }}>
+              <span class="way__emoji" aria-hidden="true">{{ block.settings.emoji }}</span>
+              <span class="way__body">
+                <strong class="way__title">{{ block.settings.title }}</strong>
+                {%- if block.settings.link != blank -%}
+                  <a class="way__text way__link" href="{{ block.settings.link | escape }}">{{ block.settings.text }}</a>
+                {%- else -%}
+                  <span class="way__text">{{ block.settings.text }}</span>
+                {%- endif -%}
+              </span>
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
     </div>
-    <div class="card">
-      {%- form 'contact', class: 'stack' -%}
-        {%- if form.posted_successfully? -%}
-          <p class="signup__ok" role="status">{% render 'icon', name: 'check', size: 18 %} Thanks! Melanie will get back to you soon.</p>
-        {%- endif -%}
-        {{ form.errors | default_errors }}
-        <label for="ContactName">Name</label>
-        <input id="ContactName" class="input" type="text" name="contact[name]" autocomplete="name" value="{{ form.name }}">
-        <label for="ContactEmail">Email</label>
-        <input id="ContactEmail" class="input" type="email" name="contact[email]" autocomplete="email" required value="{{ form.email }}">
-        <label for="ContactBody">Message</label>
-        <textarea id="ContactBody" class="input" name="contact[body]" rows="5" placeholder="{{ section.settings.placeholder | escape }}">{{ form.body }}</textarea>
-        <button type="submit" class="btn btn--primary btn--lg">Send message</button>
-      {%- endform -%}
+
+    <div class="cthero__formwrap">
+      {%- if section.settings.mascot != blank -%}
+        <span class="cthero__mascot" aria-hidden="true">
+          {{ section.settings.mascot | image_url: width: 360 | image_tag: loading: 'eager', alt: '', width: 180, height: 180 }}
+        </span>
+      {%- endif -%}
+      {%- if section.settings.bubble != blank -%}<span class="cthero__bubble" aria-hidden="true">{{ section.settings.bubble }}</span>{%- endif -%}
+      <div class="cthero__card paper-notebook">
+        <span class="cthero__tape" aria-hidden="true"></span>
+        {%- form 'contact', class: 'cthero__form' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="cthero__ok" role="status">
+              <span class="cthero__ok-emoji" aria-hidden="true">🐣</span>
+              <p class="cthero__formtitle">{{ section.settings.success_heading }}</p>
+              <p>{{ section.settings.success_text }}</p>
+            </div>
+          {%- else -%}
+            <p class="cthero__formtitle">{{ section.settings.form_heading }}</p>
+            {{ form.errors | default_errors }}
+            {%- if section.settings.topics != blank -%}
+              <fieldset class="topics">
+                <legend class="cthero__label">What's it about?</legend>
+                {%- for t in topics -%}
+                  {%- assign topic = t | strip -%}
+                  <label class="topic">
+                    <input type="radio" name="contact[Topic]" value="{{ topic | escape }}"{% if forloop.first %} checked{% endif %}>
+                    <span>{{ topic }}</span>
+                  </label>
+                {%- endfor -%}
+              </fieldset>
+            {%- endif -%}
+            <div class="cthero__row">
+              <div>
+                <label class="cthero__label" for="ContactName">Your name</label>
+                <input id="ContactName" class="input" type="text" name="contact[name]" autocomplete="name" value="{{ form.name }}">
+              </div>
+              <div>
+                <label class="cthero__label" for="ContactEmail">Email</label>
+                <input id="ContactEmail" class="input" type="email" name="contact[email]" autocomplete="email" required value="{{ form.email }}">
+              </div>
+            </div>
+            <label class="cthero__label" for="ContactBody">Message</label>
+            <textarea id="ContactBody" class="input" name="contact[body]" rows="5" placeholder="{{ section.settings.placeholder | escape }}">{{ form.body }}</textarea>
+            <button type="submit" class="btn btn--primary btn--lg cthero__send">{% render 'icon', name: 'heart', size: 18 %} Send message</button>
+          {%- endif -%}
+        {%- endform -%}
+      </div>
     </div>
   </div>
+  {% render 'grass' %}
 </section>
 
 {% schema %}
@@ -29,8 +90,27 @@
   "settings": [
     { "type": "color", "id": "bg", "label": "Background", "default": "#EAFBFF" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Say hello" },
-    { "type": "text", "id": "heading", "label": "Heading", "default": "Get in touch" },
-    { "type": "text", "id": "placeholder", "label": "Message placeholder", "default": "School visits, bulk orders, or just to say hi…" }
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Let's <em>chat!</em>" },
+    { "type": "richtext", "id": "text", "label": "Intro", "default": "<p>Questions about your order, a school visit, or a photo of your little one reading Clover? We'd love to hear from you.</p>" },
+    { "type": "image_picker", "id": "mascot", "label": "Clover peeking over the form" },
+    { "type": "text", "id": "bubble", "label": "Speech bubble", "default": "Cluck! Write to us!" },
+    { "type": "text", "id": "form_heading", "label": "Form heading", "default": "Send Clover a note ✏️" },
+    { "type": "text", "id": "topics", "label": "Topics", "default": "Just saying hi, My order, School visit, Bulk order", "info": "Separate with commas. The chosen topic is included in the message." },
+    { "type": "text", "id": "placeholder", "label": "Message placeholder", "default": "Tell us what's on your mind…" },
+    { "type": "text", "id": "success_heading", "label": "Success heading", "default": "Message sent!" },
+    { "type": "text", "id": "success_text", "label": "Success text", "default": "Thanks for writing. We'll get back to you soon." }
+  ],
+  "blocks": [
+    {
+      "type": "way",
+      "name": "Contact option",
+      "settings": [
+        { "type": "text", "id": "emoji", "label": "Emoji", "default": "✉️" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Email us" },
+        { "type": "text", "id": "text", "label": "Text", "default": "hello@cloverstories.com" },
+        { "type": "text", "id": "link", "label": "Link", "info": "Optional, e.g. mailto:hello@cloverstories.com or /pages/activities" }
+      ]
+    }
   ],
   "presets": [{ "name": "Contact form" }]
 }

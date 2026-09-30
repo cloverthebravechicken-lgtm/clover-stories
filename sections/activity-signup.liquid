@@ -1,4 +1,4 @@
-<section class="signup-sec section anim{% if section.settings.tight_top %} section--tight-top{% endif %}" id="{{ section.settings.anchor | default: 'clovers-club' }}" style="--bg: {{ section.settings.bg }};">
+<section class="signup-sec section anim{% if section.settings.tight_top %} section--tight-top{% endif %}{% if section.settings.tight_bottom %} section--tight-bottom{% endif %}" id="{{ section.settings.anchor | default: 'clovers-club' }}" style="--bg: {{ section.settings.bg }};">
   <div class="container">
     <div class="signup-sec__wrap">
     {%- if section.settings.show_crayons -%}{% render 'crayons', part: 'outside' %}{%- endif -%}
@@ -33,6 +33,7 @@
   "name": "Activity packet signup",
   "settings": [
     { "type": "checkbox", "id": "tight_top", "label": "Less space above", "default": false },
+    { "type": "checkbox", "id": "tight_bottom", "label": "Less space below", "default": false },
     { "type": "color", "id": "bg", "label": "Background", "default": "#EAFBFF" },
     { "type": "text", "id": "anchor", "label": "Anchor id", "default": "clovers-club" },
     {
