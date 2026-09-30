@@ -64,7 +64,8 @@
         "eyebrow": "Before you write",
         "heading": "Quick answers",
         "open_first": false,
-        "compact": true
+        "compact": false,
+        "tight_top": true
       },
       "blocks": {
         "question_3": {
