@@ -779,3 +779,13 @@
     $$('.anim').forEach((el) => el.classList.add('is-inview'));
   });
 })();
+
+/* Signature: start drawing when the signature itself scrolls into view */
+(function () {
+  var sigs = document.querySelectorAll('.sigdraw');
+  if (!('IntersectionObserver' in window)) { sigs.forEach(function (s) { s.classList.add('is-drawing'); }); return; }
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('is-drawing'); io.unobserve(en.target); } });
+  }, { threshold: 0.6 });
+  sigs.forEach(function (s) { io.observe(s); });
+})();
