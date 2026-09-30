@@ -159,7 +159,8 @@
         "teaser": "To be continued…",
         "end_heading": "Want to find out what Clover does next?",
         "product": "clover-the-brave-chicken",
-        "end_button": "Add to cart"
+        "end_button": "Add to cart",
+        "board_color": "#C3F1FC"
       },
       "blocks": {
         "spread_1": {
