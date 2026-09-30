@@ -12,14 +12,6 @@
             "link": "mailto:hello@cloverstories.com"
           }
         },
-        "bulk": {
-          "type": "way",
-          "settings": {
-            "emoji": "📦",
-            "title": "Bulk & gift orders",
-            "text": "Books for classrooms, parties or gift baskets"
-          }
-        },
         "photos": {
           "type": "way",
           "settings": {
@@ -35,12 +27,20 @@
             "title": "Wholesale inquiries",
             "text": "Stock Clover in your shop, boutique or bookstore"
           }
+        },
+        "order": {
+          "type": "way",
+          "settings": {
+            "emoji": "📦",
+            "title": "Questions about your order",
+            "text": "Shipping, tracking or changes to your order"
+          }
         }
       },
       "block_order": [
         "email",
+        "order",
         "wholesale",
-        "bulk",
         "photos"
       ],
       "settings": {
@@ -51,7 +51,7 @@
         "mascot": "shopify://shop_images/Written_by_Melanie_Dieas_-_2_97c8c5fe-2952-4c29-b9c5-003b8a38daf7.png",
         "bubble": "Cluck! Write to us!",
         "form_heading": "Send Clover a note ✏️",
-        "topics": "Just saying hi, My order, Wholesale, Bulk order",
+        "topics": "Just saying hi, Question about my order, Wholesale",
         "placeholder": "Tell us what's on your mind…",
         "success_heading": "Message sent!",
         "success_text": "Thanks for writing. We'll get back to you soon."

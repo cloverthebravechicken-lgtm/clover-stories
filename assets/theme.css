@@ -1323,7 +1323,7 @@ flip-book { display: block; }
 /* ---------- Contact page ---------- */
 .section--tight-bottom { padding-bottom: clamp(16px, 2vw, 28px); }
 .cthero { position: relative; background: var(--bg); padding: 48px 0 clamp(120px, 12vw, 160px); overflow: hidden; overflow: clip; }
-.cthero__inner { position: relative; z-index: 3; display: grid; gap: 64px; align-items: center; }
+.cthero__inner { position: relative; z-index: 3; display: grid; gap: 64px; align-items: end; }
 .cthero__title { font-size: clamp(2.4rem, 5.4vw, 3.8rem); margin-bottom: .3em; }
 .cthero__text { font-size: 1.08rem; max-width: 34em; }
 .ways { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 12px; }
@@ -1361,22 +1361,22 @@ flip-book { display: block; }
 .cthero__ok { text-align: center; padding: 28px 0; }
 .cthero__ok-emoji { display: inline-block; font-size: 3.4rem; animation: bob 2.4s ease-in-out infinite; }
 
-.cthero__mascot { position: absolute; right: 18px; top: 0; z-index: 2; width: 120px; translate: 0 -72%; pointer-events: none; filter: drop-shadow(0 6px 8px rgba(0,0,0,.15)); }
-.cthero__mascot img { display: block; width: 100%; height: auto; aspect-ratio: .6; object-fit: cover; object-position: 50% 55%; transform-origin: 50% 100%; animation: mascot-peck 4s 1.3s ease-in-out infinite; }
+.cthero__mascot { position: absolute; right: 0; top: 0; z-index: 2; width: 180px; translate: 0 -58%; pointer-events: none; filter: drop-shadow(0 6px 8px rgba(0,0,0,.15)); }
+.cthero__mascot img { display: block; width: 100%; height: auto; transform-origin: 50% 100%; animation: mascot-peck 4s 1.3s ease-in-out infinite; }
 .cthero__formwrap .cthero__card { z-index: 3; }
-.cthero__bubble { position: absolute; right: 140px; top: -58px; z-index: 4; background: #fff; border: 2px solid var(--c-text); border-radius: 18px; padding: 8px 14px; font-family: var(--f-heading); font-weight: 700; font-size: .9rem; white-space: nowrap; rotate: -4deg; box-shadow: 0 6px 0 rgba(var(--c-text-rgb), .08); animation: sticker-pop 3.5s ease-in-out infinite; }
+.cthero__bubble { position: absolute; right: 170px; top: -58px; z-index: 4; background: #fff; border: 2px solid var(--c-text); border-radius: 18px; padding: 8px 14px; font-family: var(--f-heading); font-weight: 700; font-size: .9rem; white-space: nowrap; rotate: -4deg; box-shadow: 0 6px 0 rgba(var(--c-text-rgb), .08); animation: sticker-pop 3.5s ease-in-out infinite; }
 .cthero__bubble::after { content: ""; position: absolute; right: -10px; bottom: 10px; width: 14px; height: 14px; background: #fff; border-right: 2px solid var(--c-text); border-top: 2px solid var(--c-text); rotate: 45deg; }
 
 @media (min-width: 560px) { .cthero__row { grid-template-columns: 1fr 1fr; gap: 14px; } }
 @media (min-width: 990px) {
   .cthero { padding-top: 72px; }
   .cthero__inner { grid-template-columns: 1fr 1.05fr; gap: 72px; }
-  .cthero__formwrap { margin-top: 60px; }
-  .cthero__mascot { width: 140px; }
+  .cthero__formwrap { margin-top: 150px; }
+  .cthero__mascot { width: 210px; }
 }
 @media (max-width: 559px) {
   .cthero__card { padding: 30px 18px 24px 52px; --margin-x: 38px; --hole-x: 14px; }
-  .cthero__bubble { right: 118px; font-size: .8rem; }
-  .cthero__mascot { width: 100px; }
+  .cthero__bubble { right: 130px; top: -48px; font-size: .8rem; }
+  .cthero__mascot { width: 150px; }
 }
 @media (prefers-reduced-motion: reduce) { .cthero__mascot img, .cthero__bubble, .cthero__ok-emoji { animation: none; } }
