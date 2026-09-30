@@ -429,7 +429,8 @@
         "bg": "#FFFFFF",
         "eyebrow": "Good questions",
         "heading": "Frequently asked questions",
-        "open_first": true
+        "open_first": true,
+        "tight_top": true
       },
       "blocks": {
         "question_1": {
