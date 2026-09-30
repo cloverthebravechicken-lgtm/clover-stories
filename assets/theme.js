@@ -291,6 +291,7 @@
       this.addBtn.disabled = true;
       try {
         await addItems(this.items());
+        await this.noteInscription();
         if (buyNow) {
           window.location.href = '/checkout';
           return;
@@ -302,6 +303,25 @@
         this.addBtn.classList.remove('is-loading');
         this.addBtn.disabled = false;
       }
+    }
+
+    // Also copy the inscription name into the order notes so it's visible at a glance.
+    async noteInscription() {
+      if (!this.addonToggle || !this.addonToggle.checked) return;
+      const name = (this.addonName.value || '').trim();
+      if (!name) return;
+      try {
+        const cart = await (await fetch(C.routes.cart + '.js', { headers: { Accept: 'application/json' } })).json();
+        const line = 'Inscription for signed book: ' + name;
+        const current = cart.note || '';
+        if (current.includes(line)) return;
+        const note = current ? current + '\n' + line : line;
+        await fetch(C.routes.cart + '/update.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify({ note })
+        });
+      } catch (e) { /* the inscription is still saved on the line item */ }
     }
 
     showError(msg) {
