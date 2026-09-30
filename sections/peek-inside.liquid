@@ -12,19 +12,21 @@
       {%- if section.settings.text != blank -%}<div class="rte section-head__text">{{ section.settings.text }}</div>{%- endif -%}
     </div>
 
-    <flip-book class="fb is-closed" style="--ratio: {{ section.settings.page_ratio }};" data-autoplay="{{ section.settings.auto_open }}">
+    <flip-book class="fb is-closed" style="--ratio: {{ section.settings.page_ratio }}; --board: {{ section.settings.board_color }}; --paper: {{ section.settings.paper_color }};" data-autoplay="{{ section.settings.auto_open }}">
       <div class="fb__stage" data-fb-stage>
-        {%- comment -%} Base page shown on the right once every leaf has turned {%- endcomment -%}
-        <div class="fb__base fb__paper">
-          <div class="fb__end">
-            <p class="fb__end-kicker">{% render 'icon', name: 'feather', size: 22 %}</p>
-            <p class="fb__end-title">{{ section.settings.end_heading }}</p>
-            {%- if cta_product != blank -%}
-              {%- assign v = cta_product.selected_or_first_available_variant -%}
-              <button type="button" class="btn btn--primary btn--sm" data-quick-add="{{ v.id }}" {% unless v.available %}disabled{% endunless %}>
-                {{ section.settings.end_button }} · {{ v.price | money }}
-              </button>
-            {%- endif -%}
+        {%- comment -%} Inside of the back cover, with the final page glued to it {%- endcomment -%}
+        <div class="fb__board fb__board--back">
+          <div class="fb__page fb__page--r fb__page--stack">
+            <div class="fb__end">
+              <p class="fb__end-kicker">{% render 'icon', name: 'feather', size: 22 %}</p>
+              <p class="fb__end-title">{{ section.settings.end_heading }}</p>
+              {%- if cta_product != blank -%}
+                {%- assign v = cta_product.selected_or_first_available_variant -%}
+                <button type="button" class="btn btn--primary btn--sm" data-quick-add="{{ v.id }}" {% unless v.available %}disabled{% endunless %}>
+                  {{ section.settings.end_button }} · {{ v.price | money }}
+                </button>
+              {%- endif -%}
+            </div>
           </div>
         </div>
 
@@ -46,29 +48,37 @@
               endif
             endif
           -%}
-          <div class="fb__leaf" data-leaf="{{ i }}" style="z-index: {{ leaf_count | minus: i | plus: 10 }};">
+          <div class="fb__leaf {% if i == 0 %}fb__leaf--cover{% else %}fb__leaf--paper{% endif %}" data-leaf="{{ i }}" style="z-index: {{ leaf_count | minus: i | plus: 10 }};">
             <div class="fb__face fb__face--front{% if i == 0 %} fb__face--cover{% endif %}">
               {%- if i == 0 -%}
                 {%- if cover != blank -%}
                   {{ cover | image_url: width: 1200 | image_tag: loading: 'lazy', alt: 'Book cover', widths: '400, 600, 800, 1200', sizes: '(min-width: 990px) 440px, 50vw' }}
                 {%- endif -%}
                 <span class="fb__open-hint" aria-hidden="true">Tap to open</span>
-              {%- elsif has_front -%}
-                <span class="fb__half fb__half--r">
-                  {{ front_spread | image_url: width: 2000 | image_tag: loading: 'lazy', alt: '', widths: '800, 1200, 1600, 2000', sizes: '(min-width: 990px) 880px, 100vw' }}
-                </span>
-              {%- endif -%}
-            </div>
-            <div class="fb__face fb__face--back">
-              {%- if has_back -%}
-                <span class="fb__half fb__half--l">
-                  {{ back_spread | image_url: width: 2000 | image_tag: loading: 'lazy', alt: '', widths: '800, 1200, 1600, 2000', sizes: '(min-width: 990px) 880px, 100vw' }}
-                </span>
               {%- else -%}
-                <div class="fb__paper fb__end fb__end--quiet">
-                  <p class="fb__end-title">{{ section.settings.teaser }}</p>
+                <div class="fb__page fb__page--r">
+                  {%- if has_front -%}
+                    <span class="fb__half fb__half--r">
+                      {{ front_spread | image_url: width: 2000 | image_tag: loading: 'lazy', alt: '', widths: '800, 1200, 1600, 2000', sizes: '(min-width: 990px) 880px, 100vw' }}
+                    </span>
+                  {%- endif -%}
                 </div>
               {%- endif -%}
+              <span class="fb__shade" aria-hidden="true"></span>
+            </div>
+            <div class="fb__face fb__face--back{% if i == 0 %} fb__face--inside-cover{% endif %}">
+              <div class="fb__page fb__page--l{% if i == 0 %} fb__page--stack{% endif %}">
+                {%- if has_back -%}
+                  <span class="fb__half fb__half--l">
+                    {{ back_spread | image_url: width: 2000 | image_tag: loading: 'lazy', alt: '', widths: '800, 1200, 1600, 2000', sizes: '(min-width: 990px) 880px, 100vw' }}
+                  </span>
+                {%- else -%}
+                  <div class="fb__end fb__end--quiet">
+                    <p class="fb__end-title">{{ section.settings.teaser }}</p>
+                  </div>
+                {%- endif -%}
+              </div>
+              <span class="fb__shade" aria-hidden="true"></span>
             </div>
           </div>
         {%- endfor -%}
@@ -105,6 +115,8 @@
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Take a peek inside the book" },
     { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Open the book and turn the pages.</p>" },
     { "type": "image_picker", "id": "cover", "label": "Front cover" },
+    { "type": "color", "id": "board_color", "label": "Hardcover board color", "default": "#3F6B2C", "info": "Match your book's cover or spine color." },
+    { "type": "color", "id": "paper_color", "label": "Paper color", "default": "#FFFDF7" },
     { "type": "range", "id": "page_ratio", "label": "Page shape (width ÷ height)", "min": 0.6, "max": 1.4, "step": 0.1, "default": 1 },
     { "type": "checkbox", "id": "auto_open", "label": "Open the cover automatically when scrolled into view", "default": true },
     { "type": "text", "id": "teaser", "label": "Last left page text", "default": "To be continued…" },
