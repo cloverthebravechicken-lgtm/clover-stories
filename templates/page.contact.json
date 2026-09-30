@@ -12,14 +12,6 @@
             "link": "mailto:hello@cloverstories.com"
           }
         },
-        "school": {
-          "type": "way",
-          "settings": {
-            "emoji": "🏫",
-            "title": "School & library visits",
-            "text": "Bring Clover's story to your classroom or story hour"
-          }
-        },
         "bulk": {
           "type": "way",
           "settings": {
@@ -35,11 +27,19 @@
             "title": "Share a storytime photo",
             "text": "We love seeing Clover at bedtime!"
           }
+        },
+        "wholesale": {
+          "type": "way",
+          "settings": {
+            "emoji": "🛍️",
+            "title": "Wholesale inquiries",
+            "text": "Stock Clover in your shop, boutique or bookstore"
+          }
         }
       },
       "block_order": [
         "email",
-        "school",
+        "wholesale",
         "bulk",
         "photos"
       ],
@@ -47,11 +47,11 @@
         "bg": "#EAFBFF",
         "eyebrow": "Say hello",
         "heading": "Let's <em>chat!</em>",
-        "text": "<p>Questions about your order, a school visit, or a photo of your little one reading Clover? We'd love to hear from you.</p>",
+        "text": "<p>Questions about your order, wholesale, or a photo of your little one reading Clover? We'd love to hear from you.</p>",
         "mascot": "shopify://shop_images/Written_by_Melanie_Dieas_-_2_97c8c5fe-2952-4c29-b9c5-003b8a38daf7.png",
         "bubble": "Cluck! Write to us!",
         "form_heading": "Send Clover a note ✏️",
-        "topics": "Just saying hi, My order, School visit, Bulk order",
+        "topics": "Just saying hi, My order, Wholesale, Bulk order",
         "placeholder": "Tell us what's on your mind…",
         "success_heading": "Message sent!",
         "success_text": "Thanks for writing. We'll get back to you soon."
