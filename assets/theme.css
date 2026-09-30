@@ -1322,8 +1322,8 @@ flip-book { display: block; }
 
 /* ---------- Contact page ---------- */
 .section--tight-bottom { padding-bottom: clamp(16px, 2vw, 28px); }
-.cthero { position: relative; background: var(--bg); padding: 48px 0 clamp(120px, 12vw, 160px); overflow: hidden; overflow: clip; }
-.cthero__inner { position: relative; z-index: 3; display: grid; gap: 64px; align-items: end; }
+.cthero { position: relative; background: var(--bg); padding: 28px 0 clamp(120px, 12vw, 160px); overflow: hidden; overflow: clip; }
+.cthero__inner { position: relative; z-index: 3; display: grid; gap: 64px; align-items: start; }
 .cthero__title { font-size: clamp(2.4rem, 5.4vw, 3.8rem); margin-bottom: .3em; }
 .cthero__text { font-size: 1.08rem; max-width: 34em; }
 .ways { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 12px; }
@@ -1369,9 +1369,10 @@ flip-book { display: block; }
 
 @media (min-width: 560px) { .cthero__row { grid-template-columns: 1fr 1fr; gap: 14px; } }
 @media (min-width: 990px) {
-  .cthero { padding-top: 72px; }
+  .cthero { padding-top: 40px; }
+  .cthero__intro { padding-top: 24px; }
   .cthero__inner { grid-template-columns: 1fr 1.05fr; gap: 72px; }
-  .cthero__formwrap { margin-top: 150px; }
+  .cthero__formwrap { margin-top: 124px; }
   .cthero__mascot { width: 210px; }
 }
 @media (max-width: 559px) {
