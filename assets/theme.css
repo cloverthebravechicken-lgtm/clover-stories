@@ -1329,7 +1329,7 @@ flip-book { display: block; }
 /* ---------- Hand-drawn signature (traced pen strokes) ---------- */
 .sigdraw { display: block; width: 100%; height: auto; overflow: visible; }
 .sigdraw__strokes path { stroke-dasharray: 1 2; stroke-dashoffset: 1.02; }
-.sigdraw.is-drawing .sigdraw__strokes path { animation: sig-draw var(--l) var(--s) linear forwards; }
+.anim.is-inview .sigdraw__strokes path { animation: sig-draw var(--l) var(--s) linear forwards; }
 @keyframes sig-draw { to { stroke-dashoffset: 0; } }
 .no-js .sigdraw__strokes path, .shopify-design-mode .sigdraw__strokes path { stroke-dashoffset: 0; animation: none; }
 @media (prefers-reduced-motion: reduce) { .sigdraw__strokes path { stroke-dashoffset: 0 !important; animation: none !important; } }
@@ -1480,4 +1480,16 @@ flip-book { display: block; }
   .cthero__formtitle { font-size: 1.25rem; }
   .cart-page__actions { flex-direction: column-reverse; align-items: stretch; }
   .cart-page__actions .btn { width: 100%; justify-content: center; }
+}
+
+/* ---------- Post-launch fixes ---------- */
+/* Signature waits until it scrolls into view (theme.js adds .is-drawing) */
+.anim.is-inview .sigdraw__strokes path { animation: none; }
+.sigdraw.is-drawing .sigdraw__strokes path { animation: sig-draw var(--l) var(--s) linear forwards; }
+/* Activities header: FREE! sticker sits on top of the fanned pages */
+.sticker--ahero { z-index: 30; }
+/* Contact page on phones: less empty space above the form */
+@media (max-width: 989px) {
+  .cthero__inner { gap: 28px; }
+  .cthero__formwrap { margin-top: 96px; }
 }
