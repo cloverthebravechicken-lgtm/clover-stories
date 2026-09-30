@@ -349,7 +349,7 @@ h1 em, h2 em, .h1 em, .h2 em, .hero__title em {
 }
 .hero__slide.is-active .hero__caption { animation: pop-in .5s .3s cubic-bezier(.3, 1.6, .5, 1) both; }
 @keyframes pop-in { from { transform: scale(.3); opacity: 0; } }
-.hero__dots { position: absolute; right: 14px; bottom: 18px; display: flex; gap: 6px; z-index: 2; }
+.hero__dots { position: absolute; right: 14px; bottom: 18px; display: flex; gap: 10px; z-index: 2; }
 .hero__dot { width: 10px; height: 10px; border-radius: 99px; border: 0; padding: 0; background: rgba(255,255,255,.7); box-shadow: 0 1px 3px rgba(0,0,0,.3); transition: width .3s ease; }
 .hero__dot.is-active { width: 26px; background: var(--c-primary); }
 .sticker--hero { top: -14px; right: -6px; }
@@ -1096,8 +1096,13 @@ flip-book { display: block; }
 /* ---------- Clothesline gallery ---------- */
 .line { overflow: hidden; overflow: clip; }
 .line__rows { display: grid; gap: 40px; }
-.line__rail[data-rail] { display: block; padding: 0 0 8px; }
-.line__row { position: relative; margin: 0 auto; width: max(100%, calc(var(--cols) * 44vw)); max-width: 1180px; }
+.line__rail { display: block; padding: 0 0 8px; }
+.line__row { position: relative; margin: 0 auto; width: 100%; max-width: 1180px; }
+.line__rows--desktop { display: none; }
+.line__rows--mobile { padding: 0 12px; gap: 28px; }
+.line__rows--mobile .line__swing { width: min(82%, 190px); }
+.line__rows--mobile .line__label { font-size: .8rem; padding: 3px 10px; }
+@media (min-width: 990px) { .line__rows--desktop { display: grid; } .line__rows--mobile { display: none; } }
 .line__list { position: relative; list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); }
 .line__rope { position: absolute; left: 0; top: 0; width: 100%; height: 80px; overflow: visible; z-index: 1; pointer-events: none; }
 .line__rope path { fill: none; stroke: #B08A63; stroke-width: 3; vector-effect: non-scaling-stroke; }
@@ -1138,7 +1143,7 @@ flip-book { display: block; }
 .line__item:nth-child(3n) .line__num { background: var(--c-primary-hover); }
 .line__label { margin-top: 12px; font-family: var(--f-heading); font-weight: 700; font-size: .92rem; text-align: center; background: #fff; padding: 4px 12px; border-radius: 99px; box-shadow: 0 2px 0 rgba(var(--c-text-rgb), .08); border: 2px solid #F2E8E2; }
 .line__hint { font-size: .85rem; color: var(--c-text-soft); margin-top: 12px; }
-@media (min-width: 990px) { .line__rail[data-rail] { overflow: visible; padding-left: 24px; padding-right: 24px; } .line__row { width: 100%; } }
+@media (min-width: 990px) { .line__rail { padding-left: 24px; padding-right: 24px; } }
 @media (prefers-reduced-motion: reduce) { .line__swing { animation: none; } }
 
 /* ---------- Steps ---------- */
@@ -1271,7 +1276,7 @@ flip-book { display: block; }
 .ahero--notebook .ahero__form { box-shadow: 0 20px 40px -20px rgba(40, 60, 90, .35); border-color: #fff; }
 @media (max-width: 989px) {
   .paper-notebook { --margin-x: 40px; --hole-x: 15px; --rule-gap: 28px; }
-  .ahero--notebook .ahero__inner { padding-left: 32px; }
+  .ahero--notebook .ahero__inner { padding-left: 48px; }
 }
 /* Signup card: content half is a notebook page */
 .signup-sec__card--notebook { background: #FFFEF7; }
@@ -1444,12 +1449,12 @@ flip-book { display: block; }
 @media (prefers-reduced-motion: reduce) { .cthero__mascot img, .cthero__bubble, .cthero__ok-emoji { animation: none; } }
 
 /* ---------- Farm friends peeking into sections ---------- */
-.critter { position: absolute; bottom: 0; z-index: 1; height: clamp(46px, 10vw, 150px); pointer-events: none; }
+.critter { position: absolute; bottom: 0; z-index: 1; height: clamp(58px, 10vw, 150px); pointer-events: none; }
 .critter--left { left: clamp(6px, 3vw, 48px); }
 .critter--right { right: clamp(6px, 3vw, 48px); }
 .critter img { display: block; height: 100%; width: auto; transform-origin: 50% 100%; }
 .critter--flip img { scale: -1 1; }
-.critter--chicks, .critter--cow { height: clamp(42px, 8.5vw, 124px); }
+.critter--chicks, .critter--cow { height: clamp(50px, 8.5vw, 124px); }
 .has-anim .anim .critter { translate: 0 40%; opacity: 0; transition: translate .7s cubic-bezier(.3, 1.5, .5, 1) .3s, opacity .4s ease .3s; }
 .has-anim .anim.is-inview .critter { translate: 0 0; opacity: 1; }
 .critter--horse img { animation: critter-trot 1.1s ease-in-out infinite; }
@@ -1465,3 +1470,13 @@ flip-book { display: block; }
 @media (prefers-reduced-motion: reduce) { .critter img { animation: none !important; } .has-anim .anim .critter { translate: none; opacity: 1; transition: none; } }
 .footer__grazer .critter { right: 7%; bottom: clamp(8px, 1.2vw, 16px); z-index: 3; height: clamp(58px, 6.6vw, 94px); opacity: 1; translate: none; }
 .nf__goat { display: block; width: 150px; height: auto; margin: 0 auto 12px; animation: critter-tilt 4.5s ease-in-out infinite; transform-origin: 50% 100%; }
+
+/* ---------- Mobile polish ---------- */
+.hero__dot { position: relative; }
+.hero__dot::before { content: ""; position: absolute; inset: -14px -6px; }
+.insup__row .input { flex: 1; min-width: 0; }
+@media (max-width: 559px) {
+  .cthero__formtitle { font-size: 1.25rem; }
+  .cart-page__actions { flex-direction: column-reverse; align-items: stretch; }
+  .cart-page__actions .btn { width: 100%; justify-content: center; }
+}

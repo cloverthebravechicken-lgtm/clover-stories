@@ -25,7 +25,7 @@
       <p class="insup__text">{{ settings.empty_cart_addon_label | default: 'Personalize & sign it by the author' }} <strong>+{{ iv.price | money_without_trailing_zeros }}</strong></p>
       <div class="insup__row">
         <label class="visually-hidden" for="InsupName">Name for the inscription</label>
-        <input id="InsupName" class="input" type="text" maxlength="60" placeholder="Who is it for? (e.g. “To Emma”)" data-insup-name>
+        <input id="InsupName" class="input" type="text" maxlength="60" placeholder="Name, e.g. “To Emma”" data-insup-name>
         <button type="button" class="btn btn--primary btn--sm" data-insup-add="{{ iv.id }}"><span class="btn__label">Add</span><span class="btn__spinner" aria-hidden="true"></span></button>
       </div>
       <p class="buy-form__error" role="alert" hidden data-insup-error></p>
