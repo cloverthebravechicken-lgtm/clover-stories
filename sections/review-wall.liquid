@@ -28,7 +28,7 @@
     <button type="button" class="round-btn" data-rail-next aria-label="Next review">{% render 'icon', name: 'arrow', size: 20 %}</button>
   </div>
   {%- if section.settings.button_label != blank -%}
-    <p class="center mt-l"><a href="{{ section.settings.button_link | default: '#top-buy' }}" class="btn btn--primary btn--lg">{{ section.settings.button_label }}</a></p>
+    <div class="container"><p class="center mt-l"><a href="{{ section.settings.button_link | default: '#top-buy' }}" class="btn btn--primary btn--lg">{{ section.settings.button_label }}</a></p></div>
   {%- endif -%}
 </section>
 
