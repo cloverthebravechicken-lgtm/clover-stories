@@ -1,27 +1,70 @@
+{%- liquid
+  assign source = section.settings.source_product | default: product
+  assign jm_reviews = blank
+  assign jm_count = 0
+  if section.settings.use_judgeme and source != blank
+    assign jm = source.metafields.judgeme.review_widget_json_ld.value
+    if jm.review.size > 0
+      assign jm_reviews = jm.review
+    endif
+    assign jm_count = source.metafields.reviews.rating_count.value | default: 0
+    assign jm_avg = source.metafields.reviews.rating.value.rating | default: 5
+  endif
+  assign min_len = section.settings.min_length
+-%}
 <section class="reviews section anim" id="reviews" style="--bg: {{ section.settings.bg }};">
   {% render 'deco', name: 'scallop', color: section.settings.bg, flip: true %}
   <div class="container">
     <div class="section-head">
       {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
       <h2 class="h2">{{ section.settings.heading }}</h2>
-      <p class="reviews__summary">{% render 'stars', rating: 5, size: 22 %} <span>{{ section.settings.summary }}</span></p>
+      <p class="reviews__summary">
+        {% render 'stars', rating: 5, size: 22 %}
+        <span>
+          {%- if jm_count > 0 -%}
+            {{ jm_avg | round: 1 }} out of 5 from {{ jm_count }} reviews
+          {%- else -%}
+            {{ section.settings.summary }}
+          {%- endif -%}
+        </span>
+      </p>
     </div>
   </div>
   <div class="reviews__rail" data-rail tabindex="0" aria-label="Customer reviews">
-    {%- for block in section.blocks -%}
-      <figure class="review card tilt-{{ forloop.index | modulo: 3 }}" {{ block.shopify_attributes }}>
-        {% render 'stars', rating: block.settings.rating, size: 16 %}
-        {%- if block.settings.title != blank -%}<p class="review__title">{{ block.settings.title }}</p>{%- endif -%}
-        <blockquote class="review__text">“{{ block.settings.text }}”</blockquote>
-        <figcaption class="review__author">
-          <span class="review__avatar" aria-hidden="true">{{ block.settings.author | slice: 0 }}</span>
-          <span>
-            <strong>{{ block.settings.author }}</strong>
-            {%- if block.settings.verified -%}<small class="review__verified">{% render 'icon', name: 'check', size: 12 %} Verified buyer</small>{%- endif -%}
-          </span>
-        </figcaption>
-      </figure>
-    {%- endfor -%}
+    {%- if jm_reviews != blank -%}
+      {%- assign shown = 0 -%}
+      {%- for r in jm_reviews -%}
+        {%- assign body = r.reviewBody | strip -%}
+        {%- if r.reviewRating.ratingValue >= 5 and body.size >= min_len and shown < section.settings.max_reviews -%}
+          {%- assign shown = shown | plus: 1 -%}
+          {%- assign author = r.author.name | default: 'Happy reader' -%}
+          {%- if author == 'Anonymous' -%}{%- assign author = 'Happy reader' -%}{%- endif -%}
+          <figure class="review card tilt-{{ shown | modulo: 3 }}">
+            {% render 'stars', rating: 5, size: 16 %}
+            <blockquote class="review__text">“{{ body | escape }}”</blockquote>
+            <figcaption class="review__author">
+              <span class="review__avatar" aria-hidden="true">{{ author | slice: 0 | upcase }}</span>
+              <span><strong>{{ author | capitalize }}</strong></span>
+            </figcaption>
+          </figure>
+        {%- endif -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for block in section.blocks -%}
+        <figure class="review card tilt-{{ forloop.index | modulo: 3 }}" {{ block.shopify_attributes }}>
+          {% render 'stars', rating: block.settings.rating, size: 16 %}
+          {%- if block.settings.title != blank -%}<p class="review__title">{{ block.settings.title }}</p>{%- endif -%}
+          <blockquote class="review__text">“{{ block.settings.text }}”</blockquote>
+          <figcaption class="review__author">
+            <span class="review__avatar" aria-hidden="true">{{ block.settings.author | slice: 0 }}</span>
+            <span>
+              <strong>{{ block.settings.author }}</strong>
+              {%- if block.settings.verified -%}<small class="review__verified">{% render 'icon', name: 'check', size: 12 %} Verified buyer</small>{%- endif -%}
+            </span>
+          </figcaption>
+        </figure>
+      {%- endfor -%}
+    {%- endif -%}
   </div>
   <div class="container peek__nav">
     <button type="button" class="round-btn" data-rail-prev aria-label="Previous review">{% render 'icon', name: 'arrow', size: 20 %}</button>
@@ -39,7 +82,11 @@
     { "type": "color", "id": "bg", "label": "Background", "default": "#FFF3ED" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Real families, real smiles" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "What people are saying" },
-    { "type": "text", "id": "summary", "label": "Summary text", "default": "5-star reviews from parents, grandparents & teachers" },
+    { "type": "checkbox", "id": "use_judgeme", "label": "Pull 5-star reviews from Judge.me automatically", "default": true, "info": "Falls back to the review blocks below if there are no Judge.me reviews." },
+    { "type": "product", "id": "source_product", "label": "Product to pull Judge.me reviews from", "info": "Defaults to the current product on product pages." },
+    { "type": "range", "id": "min_length", "label": "Hide reviews shorter than", "min": 0, "max": 120, "step": 5, "unit": "chr", "default": 40 },
+    { "type": "range", "id": "max_reviews", "label": "Maximum reviews", "min": 3, "max": 30, "step": 1, "default": 12 },
+    { "type": "text", "id": "summary", "label": "Summary text (manual reviews)", "default": "5-star reviews from parents, grandparents & teachers" },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Join the Clover fan club" },
     { "type": "url", "id": "button_link", "label": "Button link" }
   ],

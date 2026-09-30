@@ -57,7 +57,7 @@
       {%- endfor -%}
 
       {%- if section.settings.rating_text != blank -%}
-        <a href="#reviews" class="hero__rating">{% render 'stars', rating: 5, size: 18 %}<span>{{ section.settings.rating_text }}</span></a>
+        <a href="#reviews" class="hero__rating">{% render 'stars', rating: 5, size: 18 %}<span>{{ section.settings.rating_text }}{% assign rc = product.metafields.reviews.rating_count.value | default: 0 %}{% if rc > 0 %} · {{ rc }} reviews{% endif %}</span></a>
       {%- endif -%}
 
       <div class="pdp__price" data-live-price>

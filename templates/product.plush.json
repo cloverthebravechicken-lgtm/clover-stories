@@ -94,7 +94,8 @@
         "heading": "What people are saying",
         "summary": "5-star reviews from parents, grandparents & teachers",
         "button_label": "Add Clover to your bookshelf",
-        "button_link": ""
+        "button_link": "",
+        "source_product": "clover-the-brave-chicken"
       },
       "blocks": {
         "review_1": {
