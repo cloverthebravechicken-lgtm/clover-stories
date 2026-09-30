@@ -646,6 +646,52 @@
     start();
   });
 
+  /* ---------- Auto-scrolling rails (reviews): slow endless drift, pauses on hover/touch/focus ---------- */
+  $$('[data-autoscroll]').forEach((rail) => {
+    const speed = Number(rail.dataset.autoscroll) || 30;
+    const originals = Array.from(rail.children);
+    if (reduceMotion || originals.length < 2) return;
+    // Repeat the cards so the drift can loop without a visible jump (enough copies to fill a screen past one loop)
+    const addCopy = () => originals.forEach((el) => {
+      const c = el.cloneNode(true);
+      c.setAttribute('aria-hidden', 'true');
+      c.removeAttribute('id');
+      $$('a, button, [tabindex]', c).forEach((f) => f.setAttribute('tabindex', '-1'));
+      rail.appendChild(c);
+    });
+    addCopy();
+    rail.classList.add('is-auto');
+    const loopWidth = () => rail.children[originals.length].offsetLeft - originals[0].offsetLeft;
+    for (let n = 0; n < 6 && rail.scrollWidth - rail.clientWidth < loopWidth() + 40; n++) addCopy();
+    let pos = rail.scrollLeft, last = 0, hover = false, focus = false, touchUntil = 0, visible = true, holdUntil = 0;
+    rail.addEventListener('mouseenter', () => { hover = true; });
+    rail.addEventListener('mouseleave', () => { hover = false; pos = rail.scrollLeft; });
+    rail.addEventListener('focusin', () => { focus = true; });
+    rail.addEventListener('focusout', () => { focus = false; pos = rail.scrollLeft; });
+    rail.addEventListener('touchstart', () => { touchUntil = Infinity; }, { passive: true });
+    rail.addEventListener('touchend', () => { touchUntil = performance.now() + 3000; }, { passive: true });
+    const section = rail.closest('.shopify-section') || document;
+    $$('[data-rail-prev], [data-rail-next]', section).forEach((b) => b.addEventListener('click', () => { holdUntil = performance.now() + 2500; }));
+    if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(rail);
+    const tick = (t) => {
+      const dt = last ? Math.min(t - last, 64) / 1000 : 0;
+      last = t;
+      const paused = hover || focus || t < touchUntil || t < holdUntil || !visible || document.hidden;
+      const w = loopWidth();
+      if (paused) {
+        pos = rail.scrollLeft;
+      } else {
+        if (Math.abs(rail.scrollLeft - pos) > 3) pos = rail.scrollLeft; // someone scrolled by hand
+        pos += speed * dt;
+      }
+      if (w > 0 && pos >= w) pos -= w;
+      if (w > 0 && pos < 0) pos += w;
+      if (!paused || Math.abs(rail.scrollLeft - pos) > w / 2) rail.scrollLeft = pos;
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  });
+
   /* ---------- Rails (prev/next + product gallery thumbs) ---------- */
   $$('[data-rail]').forEach((rail) => {
     const section = rail.closest('.shopify-section') || document;

@@ -509,6 +509,7 @@ buy-form { display: block; }
   scrollbar-width: none;
 }
 [data-rail]::-webkit-scrollbar { display: none; }
+[data-rail].is-auto { scroll-snap-type: none; }
 .peek__page {
   position: relative; flex: 0 0 72vw; max-width: 420px; scroll-snap-align: start;
   padding: 0; border: 6px solid #fff; border-radius: 22px; overflow: hidden; background: #fff;
@@ -1462,5 +1463,5 @@ flip-book { display: block; }
 @keyframes critter-tilt { 0%, 70%, 100% { transform: rotate(0); } 78% { transform: rotate(-5deg); } 86% { transform: rotate(2deg); } }
 @keyframes critter-hop { 0%, 60%, 100% { transform: translateY(0); } 70% { transform: translateY(-9px); } 80% { transform: translateY(0); } 88% { transform: translateY(-4px); } }
 @media (prefers-reduced-motion: reduce) { .critter img { animation: none !important; } .has-anim .anim .critter { translate: none; opacity: 1; transition: none; } }
-.footer__grazer .critter { right: 7%; bottom: clamp(20px, 2.2vw, 30px); height: clamp(50px, 6vw, 84px); opacity: 1; translate: none; }
+.footer__grazer .critter { right: 7%; bottom: clamp(8px, 1.2vw, 16px); z-index: 3; height: clamp(58px, 6.6vw, 94px); opacity: 1; translate: none; }
 .nf__goat { display: block; width: 150px; height: auto; margin: 0 auto 12px; animation: critter-tilt 4.5s ease-in-out infinite; transform-origin: 50% 100%; }
