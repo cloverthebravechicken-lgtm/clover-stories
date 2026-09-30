@@ -216,7 +216,9 @@
         "eyebrow": "Why families love Clover",
         "heading": "More than a bedtime story",
         "button_label": "Get your copy",
-        "button_link": ""
+        "button_link": "",
+        "critter": "cow",
+        "critter_side": "left"
       },
       "blocks": {
         "benefit_1": {
@@ -297,7 +299,9 @@
         "end_heading": "Want to find out what Clover does next?",
         "product": "clover-the-brave-chicken",
         "end_button": "Add to cart",
-        "board_color": "#FFFFFF"
+        "board_color": "#FFFFFF",
+        "critter": "chicks",
+        "critter_side": "right"
       },
       "blocks": {
         "spread_1": {
@@ -334,7 +338,9 @@
         "summary": "5-star reviews from parents, grandparents & teachers",
         "button_label": "Add Clover to your bookshelf",
         "button_link": "",
-        "source_product": "clover-the-brave-chicken"
+        "source_product": "clover-the-brave-chicken",
+        "critter": "goat",
+        "critter_side": "right"
       },
       "blocks": {
         "review_1": {
@@ -432,7 +438,9 @@
         "heading": "Frequently asked questions",
         "open_first": true,
         "tight_top": false,
-        "spacing": "medium"
+        "spacing": "medium",
+        "critter": "horse",
+        "critter_side": "left"
       },
       "blocks": {
         "question_1": {
@@ -495,7 +503,9 @@
         "image": "shopify://shop_images/clovercoverupdated_merged_2.jpg",
         "heading": "Be brave. Be you. Bring Clover home.",
         "text": "<p>The story your little one will ask for again and again.</p>",
-        "button_label": "Add to cart"
+        "button_label": "Add to cart",
+        "critter": "duck",
+        "critter_side": "right"
       }
     }
   },

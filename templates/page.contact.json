@@ -65,7 +65,9 @@
         "heading": "Quick answers",
         "open_first": false,
         "tight_top": true,
-        "spacing": "normal"
+        "spacing": "normal",
+        "critter": "goat",
+        "critter_side": "right"
       },
       "blocks": {
         "question_3": {

@@ -13,7 +13,8 @@
         "menu_2_heading": "Help",
         "menu_2": "footer",
         "email": "hello@cloverstories.com",
-        "show_payment_icons": true
+        "show_payment_icons": true,
+        "grazer": "cow"
       }
     }
   },

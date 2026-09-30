@@ -160,7 +160,9 @@
         "end_heading": "Want to find out what Clover does next?",
         "product": "clover-the-brave-chicken",
         "end_button": "Add to cart",
-        "board_color": "#FFFFFF"
+        "board_color": "#FFFFFF",
+        "critter": "chicks",
+        "critter_side": "right"
       },
       "blocks": {
         "spread_1": {
@@ -195,7 +197,9 @@
         "eyebrow": "Why families love Clover",
         "heading": "More than a bedtime story",
         "button_label": "",
-        "button_link": ""
+        "button_link": "",
+        "critter": "duck",
+        "critter_side": "left"
       },
       "blocks": {
         "benefit_1": {
@@ -270,7 +274,9 @@
         "heading": "What people are saying",
         "summary": "5-star reviews from parents, grandparents & teachers",
         "button_label": "Add Clover to your bookshelf",
-        "button_link": ""
+        "button_link": "",
+        "critter": "goat",
+        "critter_side": "right"
       },
       "blocks": {
         "review_1": {

@@ -75,7 +75,9 @@
       "settings": {
         "bg": "#FFFFFF",
         "eyebrow": "Where Clover came from",
-        "heading": "How Clover hatched"
+        "heading": "How Clover hatched",
+        "critter": "cow",
+        "critter_side": "right"
       },
       "blocks": {
         "step_1": {
@@ -137,7 +139,9 @@
         "bg": "#FFFFFF",
         "anchor": "praise",
         "eyebrow": "Professionally reviewed",
-        "heading": "The critics are clucking about Clover"
+        "heading": "The critics are clucking about Clover",
+        "critter": "duck",
+        "critter_side": "right"
       },
       "blocks": {
         "review_1": {

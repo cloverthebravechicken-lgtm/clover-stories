@@ -172,7 +172,9 @@
         "eyebrow": "Learning through play",
         "heading": "Skills they'll practice",
         "button_label": "",
-        "button_link": ""
+        "button_link": "",
+        "critter": "chicks",
+        "critter_side": "right"
       },
       "blocks": {
         "benefit_1": {
@@ -244,7 +246,9 @@
       "settings": {
         "bg": "#FFF3ED",
         "eyebrow": "Easy as 1, 2, 3",
-        "heading": "How it works"
+        "heading": "How it works",
+        "critter": "horse",
+        "critter_side": "left"
       },
       "blocks": {
         "step_1": {

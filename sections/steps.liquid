@@ -30,12 +30,15 @@
       {%- endif -%}
     {%- endfor -%}
   </div>
+  {% render 'critter', name: section.settings.critter, side: section.settings.critter_side %}
 </section>
 
 {% schema %}
 {
   "name": "Steps",
   "settings": [
+    { "type": "select", "id": "critter", "label": "Farm friend peeking in", "options": [{ "value": "none", "label": "None" }, { "value": "horse", "label": "Horse" }, { "value": "cow", "label": "Cow" }, { "value": "duck", "label": "Duck" }, { "value": "goat", "label": "Goat" }, { "value": "chicks", "label": "Chicks" }], "default": "none" },
+    { "type": "select", "id": "critter_side", "label": "Farm friend side", "options": [{ "value": "left", "label": "Left" }, { "value": "right", "label": "Right" }], "default": "right" },
     { "type": "color", "id": "bg", "label": "Background", "default": "#FFF3ED" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Easy as 1, 2, 3" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "How it works" }

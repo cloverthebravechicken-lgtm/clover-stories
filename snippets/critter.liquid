@@ -1,0 +1,42 @@
+{%- comment -%}
+  A farm friend from the book peeking up from the bottom corner of a section.
+  Params: name (horse, cow, duck, goat, chicks, or none), side (left or right)
+  The art is flipped when needed so the animal always faces into the page.
+{%- endcomment -%}
+{%- if name != blank and name != 'none' -%}
+  {%- liquid
+    assign side = side | default: 'right'
+    case name
+      when 'horse'
+        assign w = 555
+        assign h = 600
+        assign faces = 'right'
+      when 'cow'
+        assign w = 600
+        assign h = 488
+        assign faces = 'left'
+      when 'duck'
+        assign w = 465
+        assign h = 600
+        assign faces = 'left'
+      when 'goat'
+        assign w = 524
+        assign h = 600
+        assign faces = 'right'
+      else
+        assign w = 600
+        assign h = 479
+        assign faces = 'none'
+    endcase
+    assign flip = false
+    if side == 'left' and faces == 'left'
+      assign flip = true
+    elsif side == 'right' and faces == 'right'
+      assign flip = true
+    endif
+    assign file = 'critter-' | append: name | append: '.webp'
+  -%}
+  <span class="critter critter--{{ side }} critter--{{ name }}{% if flip %} critter--flip{% endif %}" aria-hidden="true">
+    <img src="{{ file | asset_url }}" alt="" width="{{ w }}" height="{{ h }}" loading="lazy" decoding="async">
+  </span>
+{%- endif -%}
