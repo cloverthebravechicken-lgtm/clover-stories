@@ -569,8 +569,9 @@ buy-form { display: block; }
 .signup__err { color: #C62A1E; font-size: .9rem; margin-top: 8px; }
 
 /* ---------- FAQ / accordion ---------- */
-.section--compact { padding: clamp(28px, 4vw, 48px) 0; }
-.apps-sec { padding-bottom: clamp(20px, 3vw, 36px); }
+.section--compact { padding: clamp(24px, 3vw, 36px) 0; }
+.section--tight-top { padding-top: clamp(16px, 2vw, 28px); }
+.apps-sec { padding: 8px 0; }
 .section--compact .section-head { margin-bottom: 20px; }
 .faq__list, .accordion { display: grid; gap: 12px; }
 .accordion { margin-top: 22px; }

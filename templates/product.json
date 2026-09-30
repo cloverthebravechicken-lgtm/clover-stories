@@ -425,7 +425,8 @@
         "includes": "Coloring, Tracing, Maze, Sequencing, Counting, Drawing, Matching",
         "button_label": "Send my packet",
         "fine_print": "No spam, just farmyard fun. Unsubscribe anytime.",
-        "card_style": "notebook"
+        "card_style": "notebook",
+        "tight_top": true
       }
     }
   },
