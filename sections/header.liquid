@@ -1,6 +1,11 @@
 {%- liquid
   assign logo = settings.logo
+  assign promo = section.settings.promo_product
 -%}
+{%- capture link_emoji -%}
+  product:📖|clover:📖|activit:🖍️|author:✍️|about:✍️|contact:💌|touch:💌|blog:📰|faq:❓
+{%- endcapture -%}
+{%- assign emoji_pairs = link_emoji | strip | split: '|' -%}
 <sticky-header class="header{% if section.settings.sticky %} header--sticky{% endif %}">
   <div class="header__inner container">
     <button type="button" class="header__icon header__burger" aria-label="Open menu" aria-controls="MobileNav" aria-expanded="false" data-nav-open>
@@ -20,14 +25,21 @@
     <nav class="header__nav" aria-label="Main">
       <ul class="header__menu">
         {%- for link in section.settings.menu.links -%}
-          <li><a href="{{ link.url }}" class="header__link{% if link.active %} is-active{% endif %}">{{ link.title }}</a></li>
+          {%- if section.settings.hide_home and link.type == 'frontpage_link' -%}{%- continue -%}{%- endif -%}
+          {%- if section.settings.hide_duplicate and section.settings.cta_link != blank and link.url == section.settings.cta_link -%}{%- continue -%}{%- endif -%}
+          <li>
+            <a href="{{ link.url }}" class="header__link{% if link.active or link.child_active %} is-active{% endif %}"{% if link.active %} aria-current="page"{% endif %}>
+              <span>{{ link.title }}</span>
+              <svg class="header__squiggle" viewBox="0 0 100 10" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path d="M2 6c8-6 14 4 22 0s14-6 22 0 14 4 22 0 14-6 22 0" pathLength="1"/></svg>
+            </a>
+          </li>
         {%- endfor -%}
       </ul>
     </nav>
 
     <div class="header__actions">
       {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
-        <a href="{{ section.settings.cta_link }}" class="btn btn--primary btn--sm header__cta">{{ section.settings.cta_label }}</a>
+        <a href="{{ section.settings.cta_link }}" class="btn btn--primary btn--sm header__cta">{% render 'icon', name: 'book', size: 18 %} {{ section.settings.cta_label }}</a>
       {%- endif -%}
       <a href="{{ routes.cart_url }}" class="header__icon header__cart" data-cart-open aria-label="Cart ({{ cart.item_count }})">
         {% render 'icon', name: 'cart', size: 26 %}
@@ -36,20 +48,76 @@
     </div>
   </div>
 
-  <div class="mnav" id="MobileNav" hidden>
-    <div class="mnav__panel">
-      <button type="button" class="header__icon mnav__close" aria-label="Close menu" data-nav-close>{% render 'icon', name: 'close', size: 26 %}</button>
-      <ul class="mnav__list">
-        {%- for link in section.settings.menu.links -%}
-          <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-        {%- endfor -%}
-      </ul>
-      {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
-        <a href="{{ section.settings.cta_link }}" class="btn btn--primary btn--block">{{ section.settings.cta_label }}</a>
-      {%- endif -%}
-    </div>
-  </div>
 </sticky-header>
+
+<div class="mnav" id="MobileNav" hidden>
+  <div class="mnav__panel" role="dialog" aria-modal="true" aria-label="Menu">
+    <div class="mnav__top">
+      <a href="{{ routes.root_url }}" class="mnav__logo" aria-label="{{ shop.name }}">
+        {%- if logo != blank -%}
+          {{ logo | image_url: width: 300 | image_tag: loading: 'lazy', alt: shop.name, width: 140 }}
+        {%- else -%}
+          <span class="header__logo-text">{{ shop.name }}</span>
+        {%- endif -%}
+      </a>
+      <button type="button" class="header__icon mnav__close" aria-label="Close menu" data-nav-close>{% render 'icon', name: 'close', size: 26 %}</button>
+    </div>
+
+    <ul class="mnav__list" role="list">
+      {%- for link in section.settings.menu.links -%}
+        {%- liquid
+          assign key = link.url | append: ' ' | append: link.title | downcase
+          assign emoji = '🐔'
+          if link.type == 'frontpage_link'
+            assign emoji = '🏠'
+          else
+            for pair in emoji_pairs
+              assign kv = pair | split: ':'
+              if key contains kv[0]
+                assign emoji = kv[1]
+                break
+              endif
+            endfor
+          endif
+        -%}
+        <li style="--i: {{ forloop.index }};">
+          <a href="{{ link.url }}"{% if link.active %} class="is-active" aria-current="page"{% endif %}>
+            <span class="mnav__emoji" aria-hidden="true">{{ emoji }}</span>
+            <span class="mnav__title">{{ link.title }}</span>
+            <span class="mnav__arrow" aria-hidden="true">{% render 'icon', name: 'arrow', size: 18 %}</span>
+          </a>
+        </li>
+      {%- endfor -%}
+    </ul>
+
+    {%- if promo != blank -%}
+      {%- assign pv = promo.selected_or_first_available_variant -%}
+      <a href="{{ promo.url }}" class="mnav__promo">
+        {%- if promo.featured_image -%}
+          <span class="mnav__promo-img">{{ promo.featured_image | image_url: width: 200 | image_tag: loading: 'lazy', alt: promo.title, width: 72, height: 72 }}</span>
+        {%- endif -%}
+        <span class="mnav__promo-body">
+          <span class="mnav__promo-stars">{% render 'stars', rating: 5, size: 14 %}</span>
+          <strong class="mnav__promo-title">{{ promo.title }}</strong>
+          <span class="mnav__promo-meta">{{ pv.price | money }}{% if section.settings.promo_note != blank %} · {{ section.settings.promo_note }}{% endif %}</span>
+        </span>
+      </a>
+    {%- endif -%}
+
+    {%- if section.settings.cta_label != blank and section.settings.cta_link != blank -%}
+      <a href="{{ section.settings.cta_link }}" class="btn btn--primary btn--block btn--lg">{% render 'icon', name: 'book', size: 18 %} {{ section.settings.cta_label }}</a>
+    {%- endif -%}
+
+    {%- if settings.social_instagram != blank or settings.social_facebook != blank or settings.social_tiktok != blank or settings.social_pinterest != blank -%}
+      <ul class="mnav__social" role="list">
+        {%- if settings.social_instagram != blank -%}<li><a href="{{ settings.social_instagram }}" target="_blank" rel="noopener" aria-label="Instagram">{% render 'icon', name: 'instagram', size: 22 %}</a></li>{%- endif -%}
+        {%- if settings.social_facebook != blank -%}<li><a href="{{ settings.social_facebook }}" target="_blank" rel="noopener" aria-label="Facebook">{% render 'icon', name: 'facebook', size: 22 %}</a></li>{%- endif -%}
+        {%- if settings.social_tiktok != blank -%}<li><a href="{{ settings.social_tiktok }}" target="_blank" rel="noopener" aria-label="TikTok">{% render 'icon', name: 'tiktok', size: 22 %}</a></li>{%- endif -%}
+        {%- if settings.social_pinterest != blank -%}<li><a href="{{ settings.social_pinterest }}" target="_blank" rel="noopener" aria-label="Pinterest">{% render 'icon', name: 'pinterest', size: 22 %}</a></li>{%- endif -%}
+      </ul>
+    {%- endif -%}
+  </div>
+</div>
 
 {% schema %}
 {
@@ -58,8 +126,13 @@
   "settings": [
     { "type": "link_list", "id": "menu", "label": "Menu", "default": "main-menu" },
     { "type": "checkbox", "id": "sticky", "label": "Sticky header", "default": true },
+    { "type": "checkbox", "id": "hide_home", "label": "Hide \"Home\" link on desktop (the logo links home)", "default": true },
+    { "type": "checkbox", "id": "hide_duplicate", "label": "Hide the menu link that matches the button on desktop", "default": true },
     { "type": "text", "id": "cta_label", "label": "Button label", "default": "Get the book" },
-    { "type": "url", "id": "cta_link", "label": "Button link" }
+    { "type": "url", "id": "cta_link", "label": "Button link" },
+    { "type": "header", "content": "Mobile menu" },
+    { "type": "product", "id": "promo_product", "label": "Featured book" },
+    { "type": "text", "id": "promo_note", "label": "Featured book note", "default": "Free shipping" }
   ]
 }
 {% endschema %}
