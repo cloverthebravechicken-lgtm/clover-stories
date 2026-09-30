@@ -155,7 +155,7 @@
         "text": "<p>Open the book and turn the pages.</p>",
         "cover": "shopify://shop_images/clovercoverupdated_merged_2.jpg",
         "page_ratio": 1,
-        "auto_open": true,
+        "auto_open": false,
         "teaser": "To be continued…",
         "end_heading": "Want to find out what Clover does next?",
         "product": "clover-the-brave-chicken",

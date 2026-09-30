@@ -475,6 +475,15 @@
         if (e.key === 'ArrowRight') this.next();
         if (e.key === 'ArrowLeft') this.prev();
       });
+      // Load every page before anyone turns to it so no page flashes blank mid-turn
+      if ('IntersectionObserver' in window) {
+        const pre = new IntersectionObserver(([en]) => {
+          if (!en.isIntersecting) return;
+          pre.disconnect();
+          $$('img', this).forEach((img) => { img.loading = 'eager'; if (img.decode) img.decode().catch(() => {}); });
+        }, { rootMargin: '600px 0px' });
+        pre.observe(stage);
+      }
       if (this.dataset.autoplay === 'true' && 'IntersectionObserver' in window && !reduceMotion) {
         const io = new IntersectionObserver(([en]) => {
           if (en.isIntersecting) {
@@ -488,12 +497,26 @@
     }
 
     settle(leaf, i) {
+      clearTimeout(leaf._settleTimer);
+      if (leaf._onEnd) leaf.removeEventListener('transitionend', leaf._onEnd);
       const done = () => {
+        clearTimeout(leaf._settleTimer);
+        leaf.removeEventListener('transitionend', leaf._onEnd);
         leaf.classList.remove('is-turning');
         leaf.style.zIndex = leaf.classList.contains('is-flipped') ? 10 + i : 10 + this.total - i;
       };
-      leaf.addEventListener('transitionend', done, { once: true });
-      setTimeout(done, reduceMotion ? 0 : 1200);
+      // Only the leaf's own transform finishing counts, not transitions bubbling up from inside it
+      leaf._onEnd = (e) => { if (e.target === leaf && e.propertyName === 'transform') done(); };
+      leaf.addEventListener('transitionend', leaf._onEnd);
+      leaf._settleTimer = setTimeout(done, reduceMotion ? 0 : 1400);
+    }
+
+    // Ignore extra taps while a page is mid-turn so pages can't pile up and flicker
+    lock() {
+      if (this.busy) return false;
+      this.busy = true;
+      setTimeout(() => { this.busy = false; }, reduceMotion ? 0 : 550);
+      return true;
     }
 
     flip(i, flipped) {
@@ -506,14 +529,14 @@
     }
 
     next() {
-      if (this.current >= this.total) return;
+      if (this.current >= this.total || !this.lock()) return;
       this.flip(this.current, true);
       this.current++;
       this.update();
     }
 
-    prev() {
-      if (this.current <= 0) return;
+    prev(force) {
+      if (this.current <= 0 || (!force && !this.lock())) return;
       this.current--;
       this.flip(this.current, false);
       this.update();
@@ -521,7 +544,7 @@
 
     restart() {
       const steps = this.current;
-      for (let n = 0; n < steps; n++) setTimeout(() => this.prev(), n * 250);
+      for (let n = 0; n < steps; n++) setTimeout(() => this.prev(true), n * 250);
     }
 
     zoom() {

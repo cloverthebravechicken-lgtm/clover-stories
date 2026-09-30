@@ -787,6 +787,8 @@ flip-book { display: block; }
 .fb__leaf {
   transform-origin: left center;
   transform-style: preserve-3d;
+  -webkit-transform-style: preserve-3d;
+  will-change: transform;
   transition: transform 1s cubic-bezier(.645, .045, .355, 1);
   cursor: pointer;
 }
