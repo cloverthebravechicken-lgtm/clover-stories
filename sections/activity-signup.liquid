@@ -1,6 +1,9 @@
 <section class="signup-sec section anim" id="{{ section.settings.anchor | default: 'clovers-club' }}" style="--bg: {{ section.settings.bg }};">
   <div class="container">
+    <div class="signup-sec__wrap">
+    {%- if section.settings.show_crayons -%}{% render 'crayons', part: 'outside' %}{%- endif -%}
     <div class="signup-sec__card">
+      {%- if section.settings.show_crayons -%}{% render 'crayons', part: 'doodles' %}{%- endif -%}
       <div class="signup-sec__media">
         {%- if section.settings.image != blank -%}
           {% render 'img', image: section.settings.image, sizes: '(min-width: 990px) 40vw, 100vw' %}
@@ -21,6 +24,7 @@
         {%- if section.settings.fine_print != blank -%}<p class="fine">{{ section.settings.fine_print }}</p>{%- endif -%}
       </div>
     </div>
+    </div>
   </div>
 </section>
 
@@ -30,6 +34,7 @@
   "settings": [
     { "type": "color", "id": "bg", "label": "Background", "default": "#EAFBFF" },
     { "type": "text", "id": "anchor", "label": "Anchor id", "default": "clovers-club" },
+    { "type": "checkbox", "id": "show_crayons", "label": "Show animated crayons & doodles", "default": true },
     { "type": "image_picker", "id": "image", "label": "Image" },
     { "type": "text", "id": "sticker", "label": "Sticker", "default": "FREE!" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "10 pages, free to download" },

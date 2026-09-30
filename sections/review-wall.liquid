@@ -1,14 +1,11 @@
 {%- liquid
   assign source = section.settings.source_product | default: product
   assign jm_reviews = blank
-  assign jm_count = 0
   if section.settings.use_judgeme and source != blank
     assign jm = source.metafields.judgeme.review_widget_json_ld.value
     if jm.review.size > 0
       assign jm_reviews = jm.review
     endif
-    assign jm_count = source.metafields.reviews.rating_count.value | default: 0
-    assign jm_avg = source.metafields.reviews.rating.value.rating | default: 5
   endif
   assign min_len = section.settings.min_length
 -%}
@@ -21,11 +18,7 @@
       <p class="reviews__summary">
         {% render 'stars', rating: 5, size: 22 %}
         <span>
-          {%- if jm_count > 0 -%}
-            {{ jm_avg | round: 1 }} out of 5 from {{ jm_count }} reviews
-          {%- else -%}
-            {{ section.settings.summary }}
-          {%- endif -%}
+          {{ section.settings.summary }}
         </span>
       </p>
     </div>
@@ -86,7 +79,7 @@
     { "type": "product", "id": "source_product", "label": "Product to pull Judge.me reviews from", "info": "Defaults to the current product on product pages." },
     { "type": "range", "id": "min_length", "label": "Hide reviews shorter than", "min": 0, "max": 120, "step": 5, "unit": "chr", "default": 40 },
     { "type": "range", "id": "max_reviews", "label": "Maximum reviews", "min": 3, "max": 30, "step": 1, "default": 12 },
-    { "type": "text", "id": "summary", "label": "Summary text (manual reviews)", "default": "5-star reviews from parents, grandparents & teachers" },
+    { "type": "text", "id": "summary", "label": "Summary text", "default": "5-star reviews from parents, grandparents & teachers" },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Join the Clover fan club" },
     { "type": "url", "id": "button_link", "label": "Button link" }
   ],

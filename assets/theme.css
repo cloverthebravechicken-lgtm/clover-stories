@@ -326,7 +326,7 @@ h1 em, h2 em, .h1 em, .h2 em, .hero__title em {
 .hero__text { font-size: 1.12rem; margin-bottom: 1rem; }
 .checks { list-style: none; padding: 0; margin: 0 0 1.25rem; display: grid; gap: 8px; }
 .checks li { display: flex; align-items: flex-start; gap: 10px; font-weight: 500; }
-.checks__i { flex: 0 0 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; background: var(--c-green); color: #fff; margin-top: 1px; }
+.checks__i { flex: 0 0 24px; height: 24px; display: grid; place-items: center; border-radius: 50%; background: var(--c-primary-hover); color: #fff; margin-top: 1px; }
 .hero__buy { padding: 20px; border: 3px solid #fff; }
 .hero__price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
 .hero__price { font-family: var(--f-heading); font-weight: var(--f-heading-weight); font-size: 2rem; line-height: 1; }
@@ -432,8 +432,8 @@ buy-form { display: block; }
 @media (min-width: 900px) { .press__grid { grid-template-columns: 1fr 1fr; } }
 
 /* ---------- Marquee ---------- */
-.section-marquee { overflow: hidden; padding: 14px 0; }
-.marquee { background: var(--bg); color: var(--fg); overflow: hidden; padding: 16px 0; transform: rotate(-1.5deg); width: 106%; margin-left: -3%; }
+.section-marquee { overflow: hidden; }
+.marquee { background: var(--bg); color: var(--fg); overflow: hidden; padding: 16px 0; }
 .marquee__track { display: flex; width: max-content; animation: marquee 40s linear infinite; }
 .marquee__list { display: flex; align-items: center; gap: 22px; list-style: none; margin: 0; padding: 0 11px; font-family: var(--f-heading); font-weight: 700; font-size: 1.25rem; white-space: nowrap; }
 .marquee__dot { color: var(--c-sun); }
@@ -522,8 +522,9 @@ buy-form { display: block; }
 .imgtext__frame--polaroid { background: #fff; padding: 12px 12px 48px; border-radius: 6px; box-shadow: 0 20px 40px -16px rgba(0,0,0,.35); transform: rotate(-3deg); }
 .sticker--img { top: 4%; right: 2%; background: var(--c-primary); color: #fff; }
 .sticker--img::before { border-color: rgba(255,255,255,.5); }
-.signature { font-family: var(--f-heading); font-size: 1.4rem; color: var(--c-primary); transform: rotate(-3deg); display: inline-block; }
+.signature { font-family: var(--f-heading); font-size: 1.4rem; color: var(--c-primary); transform: rotate(-3deg); display: block; width: max-content; margin: .5rem 0 1.25rem; }
 .imgtext__content .btn { margin-top: 1rem; }
+.imgtext__content .signature + .btn { margin-top: 0; }
 @media (min-width: 900px) {
   .imgtext__inner { grid-template-columns: 1fr 1fr; gap: 64px; }
   .imgtext--reverse .imgtext__media { order: 2; }
@@ -927,3 +928,44 @@ flip-book { display: block; }
   .hero__price { font-size: 1.75rem; }
   .hero__price-row { margin-bottom: 8px; }
 }
+
+/* ---------- Activity signup: animated crayons & doodles ---------- */
+.signup-sec { overflow: hidden; overflow: clip; }
+.signup-sec__wrap { position: relative; }
+.signup-sec__card { position: relative; z-index: 1; }
+.signup-sec__content, .signup-sec__media { position: relative; z-index: 1; }
+/* Crayons lie behind the card and peek out from its edges */
+.crayons { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.crayon, .pencil { position: absolute; width: 30px; filter: drop-shadow(0 6px 6px rgba(0,0,0,.18)); }
+.crayon svg, .pencil svg { width: 100%; height: auto; display: block; }
+.crayon > svg, .pencil > svg { animation: crayon-wobble 4.5s ease-in-out infinite; transform-origin: 50% 60%; }
+.crayon--1 { top: -58px; left: 7%; rotate: -24deg; }
+.crayon--2 { top: -64px; left: calc(7% + 42px); rotate: 12deg; }
+.crayon--3 { top: 22%; right: -64px; rotate: 70deg; }
+.crayon--4 { bottom: -60px; right: 14%; rotate: 200deg; }
+.crayon--5 { bottom: 18%; left: -62px; rotate: -76deg; }
+.pencil { width: 24px; top: -70px; right: 12%; rotate: 32deg; }
+.crayon--2 > svg { animation-delay: .7s; } .crayon--3 > svg { animation-delay: 1.4s; }
+.crayon--4 > svg { animation-delay: 2.1s; } .crayon--5 > svg { animation-delay: 1s; } .pencil > svg { animation: pencil-bob 3s ease-in-out infinite; }
+@keyframes crayon-wobble { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-10px) rotate(4deg); } }
+@keyframes pencil-bob { 0%, 100% { transform: translateY(0) rotate(0); } 30% { transform: translateY(-8px) rotate(-6deg); } 60% { transform: translateY(-3px) rotate(5deg); } }
+/* Hand-drawn doodles inside the card, in empty corners */
+.doodles { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+.doodle { position: absolute; fill: none; stroke-linecap: round; stroke-linejoin: round; stroke-width: 3; }
+.doodle path { stroke-dasharray: 220; stroke-dashoffset: 220; animation: doodle-draw 6s ease-in-out infinite; }
+.doodle--star { top: 7%; right: 5%; width: 38px; stroke: var(--c-sun); }
+.doodle--heart { top: 18%; right: 11%; width: 26px; stroke: #E86AA6; }
+.doodle--squiggle { bottom: 5%; right: 5%; width: 76px; stroke: var(--c-primary); }
+.doodle--swirl { bottom: 7%; left: 4%; width: 46px; stroke: var(--c-green); }
+.doodle--heart path { animation-delay: 1.5s; } .doodle--squiggle path { animation-delay: .8s; } .doodle--swirl path { animation-delay: 2.2s; }
+@keyframes doodle-draw { 0% { stroke-dashoffset: 220; opacity: 1; } 35%, 80% { stroke-dashoffset: 0; opacity: 1; } 100% { stroke-dashoffset: 0; opacity: 0; } }
+@media (max-width: 899px) {
+  .crayon, .pencil { width: 22px; }
+  .crayon--1 { top: -44px; } .crayon--2 { top: -50px; left: calc(7% + 32px); }
+  .crayon--3 { right: -48px; } .crayon--5 { left: -48px; }
+  .pencil { top: -52px; width: 18px; }
+  .crayon--4 { bottom: -46px; }
+  .doodles { display: none; }
+  .signup-sec .container { padding-top: 24px; padding-bottom: 24px; }
+}
+@media (prefers-reduced-motion: reduce) { .doodle path { stroke-dashoffset: 0; } }

@@ -5,7 +5,7 @@
     "announcement": {
       "type": "announcement-bar",
       "settings": {
-        "bg": "#518339",
+        "bg": "#FF5757",
         "fg": "#FFFFFF",
         "speed": 4
       },
