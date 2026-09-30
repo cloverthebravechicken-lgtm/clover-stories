@@ -1215,3 +1215,7 @@ flip-book { display: block; }
 @media (max-width: 899px) {
   .signup-sec__card--notebook .signup-sec__content { --margin-x: 38px; --hole-x: 14px; padding-left: 54px; }
 }
+
+/* Video section: breathing room between the story text and the button */
+.video-story__content .rte { margin-bottom: 1.75rem; }
+.video-story__content .btn { margin-top: 0; }
