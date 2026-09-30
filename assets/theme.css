@@ -912,3 +912,18 @@ flip-book { display: block; }
   78% { transform: rotate(-14deg) translateY(4px); } 84% { transform: rotate(0); }
 }
 @media (min-width: 990px) { .hero__mascot { left: -40px; bottom: -28px; } }
+
+/* ---------- Hero balance ---------- */
+.hero__rating { flex-wrap: nowrap; gap: 10px; margin-bottom: .75rem; }
+.hero__rating-link { text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 2px; text-decoration-color: rgba(var(--c-text-rgb), .25); font-weight: 600; }
+.hero__rating:hover .hero__rating-link { text-decoration-color: var(--c-primary); color: var(--c-primary); }
+.hero .pill { margin-bottom: .75rem; }
+.hero__title { margin-bottom: .3em; }
+@media (min-width: 990px) {
+  .hero__inner { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+  .hero__buy { padding: 18px 20px; }
+  .hero__buy .offers { gap: 8px; }
+  .hero__buy .offer { padding: 9px 12px; }
+  .hero__price { font-size: 1.75rem; }
+  .hero__price-row { margin-bottom: 8px; }
+}

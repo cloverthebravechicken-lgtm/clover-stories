@@ -62,7 +62,7 @@
       {%- if section.settings.rating_text != blank -%}
         <a href="#reviews" class="hero__rating">
           {% render 'stars', rating: 5, size: 20 %}
-          <span>{{ section.settings.rating_text }}{% assign rc = product.metafields.reviews.rating_count.value | default: 0 %}{% if rc > 0 %} · {{ rc }} reviews{% endif %}</span>
+          <span class="hero__rating-link">{{ section.settings.rating_text }}</span>
         </a>
       {%- endif -%}
 
@@ -110,9 +110,9 @@
     { "type": "product", "id": "product", "label": "Main product" },
     { "type": "color", "id": "bg", "label": "Background", "default": "#EAFBFF" },
     { "type": "color", "id": "next_bg", "label": "Wave color (next section background)", "default": "#FFFFFF" },
-    { "type": "text", "id": "badge", "label": "Badge", "default": "Available now in hardcover" },
+    { "type": "text", "id": "badge", "label": "Badge", "default": "Available in premium hardcover" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Meet Clover, the <em>Brave</em> Chicken" },
-    { "type": "text", "id": "rating_text", "label": "Rating text", "default": "Loved by parents, grandparents & teachers" },
+    { "type": "text", "id": "rating_text", "label": "Rating link text", "default": "Read reviews" },
     { "type": "richtext", "id": "text", "label": "Text", "default": "<p>A heartwarming rhyming farm adventure that reminds children the bravest thing they can be is <strong>themselves</strong>.</p>" },
     { "type": "text", "id": "price_note", "label": "Price note", "default": "Free shipping" },
     { "type": "text", "id": "sticker", "label": "Round sticker text", "default": "Ages 3–5" },

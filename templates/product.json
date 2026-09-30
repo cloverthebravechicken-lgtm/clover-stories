@@ -4,7 +4,7 @@
       "type": "main-product",
       "settings": {
         "badge": "Free shipping + free activity packet",
-        "rating_text": "Loved by parents & teachers",
+        "rating_text": "Read reviews",
         "blurb": "",
         "button_label": "Add to cart",
         "show_buy_now": false,
@@ -15,8 +15,8 @@
         "perk_1": "Free shipping on all books",
         "perk_2": "Free 10-page printable activity packet",
         "perk_3": "Secure checkout",
-        "quote": "As a mom to a 2 year old, we were SO excited to read this book. I really appreciate how it rhymes and has a great rhythm when I read it out loud.",
-        "quote_author": "Kelsey, mom"
+        "quote": "",
+        "quote_author": ""
       },
       "blocks": {
         "offer_1": {

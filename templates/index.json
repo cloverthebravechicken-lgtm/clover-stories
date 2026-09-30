@@ -6,9 +6,9 @@
         "product": "clover-the-brave-chicken",
         "bg": "#EAFBFF",
         "next_bg": "#FFFFFF",
-        "badge": "Available now in premium hardcover",
+        "badge": "Available in premium hardcover",
         "heading": "Meet Clover, the <em>Brave</em> Chicken",
-        "rating_text": "Loved by parents & teachers",
+        "rating_text": "Read reviews",
         "text": "<p>A rhyming farm adventure that shows little ones the bravest thing they can be is <strong>themselves</strong>.</p>",
         "price_note": "Free shipping",
         "sticker": "Ages 3–5",
@@ -19,8 +19,8 @@
         "addon_product": "personalized-author-inscription",
         "addon_label": "Personalize & sign it by the author",
         "addon_placeholder": "Who is it for? (e.g. “To Emma”)",
-        "quote": "This book is absolutely adorable! My three year old loves it!",
-        "quote_author": "Kathryn, mom",
+        "quote": "",
+        "quote_author": "",
         "mascot_animation": "bob",
         "mascot": "shopify://shop_images/Written_by_Melanie_Dieas_-_2_97c8c5fe-2952-4c29-b9c5-003b8a38daf7.png",
         "mascot_trim": true
@@ -30,28 +30,28 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/Copy_of_Kids_Holding_Books_Canva_Mockup_Templates_-_by_SCD-2.png",
-            "caption": "Brave chicken 🐔"
+            "caption": ""
           }
         },
         "image_2": {
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/Untitled_design-64.png",
-            "caption": "Kind friend 💛"
+            "caption": ""
           }
         },
         "image_3": {
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/0065_Mother_and_son_square_book_close_up.png",
-            "caption": "Helpful hero ⭐"
+            "caption": ""
           }
         },
         "image_4": {
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/boybookmock.png",
-            "caption": "Curious explorer 🔎"
+            "caption": ""
           }
         },
         "bullet_5": {

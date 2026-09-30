@@ -57,7 +57,7 @@
       {%- endfor -%}
 
       {%- if section.settings.rating_text != blank -%}
-        <a href="#reviews" class="hero__rating">{% render 'stars', rating: 5, size: 18 %}<span>{{ section.settings.rating_text }}{% assign rc = product.metafields.reviews.rating_count.value | default: 0 %}{% if rc > 0 %} · {{ rc }} reviews{% endif %}</span></a>
+        <a href="#reviews" class="hero__rating">{% render 'stars', rating: 5, size: 18 %}<span class="hero__rating-link">{{ section.settings.rating_text }}</span></a>
       {%- endif -%}
 
       <div class="pdp__price" data-live-price>
@@ -154,7 +154,7 @@
   "class": "section-main-product",
   "settings": [
     { "type": "text", "id": "badge", "label": "Badge", "default": "Free shipping + free activity packet" },
-    { "type": "text", "id": "rating_text", "label": "Rating text", "default": "Loved by parents & teachers" },
+    { "type": "text", "id": "rating_text", "label": "Rating link text", "default": "Read reviews" },
     { "type": "richtext", "id": "blurb", "label": "Short pitch (above buy box)" },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Add to cart" },
     { "type": "checkbox", "id": "show_buy_now", "label": "Show \"Buy it now\" button", "default": false },
