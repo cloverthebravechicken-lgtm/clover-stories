@@ -407,24 +407,6 @@
         "review_6"
       ]
     },
-    "author": {
-      "type": "image-text",
-      "settings": {
-        "bg": "#FFFFFF",
-        "anchor": "author",
-        "image": "shopify://shop_images/Untitled_design-92.png",
-        "frame": "blob",
-        "reverse": false,
-        "sticker": "Hi!",
-        "eyebrow": "Meet the author",
-        "heading": "Hi! I'm Melanie.",
-        "text": "<p>I'm a writer and farm-loving mom who lives on a little patch of land with my family and animals (including a flock of spirited chickens!). Inspired by my son and everyday moments in the countryside, I wrote <em>Clover, the Brave Chicken</em> to celebrate courage, curiosity, and the quiet strength that lives inside every child.</p><p>I'm a big believer in muddy boots, bedtime stories, and raising kids to be both kind and brave. Thank you for supporting my dreams with Clover!</p>",
-        "signature": "Melanie",
-        "button_label": "Bring Clover home",
-        "button_link": "",
-        "use_signature_asset": true
-      }
-    },
     "signup": {
       "type": "activity-signup",
       "settings": {
@@ -523,7 +505,6 @@
     "benefits",
     "peek",
     "reviews",
-    "author",
     "signup",
     "faq",
     "final"
