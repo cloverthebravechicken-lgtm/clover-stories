@@ -1,3 +1,9 @@
+{%- liquid
+  assign spreads = section.blocks | where: 'type', 'spread'
+  assign leaf_count = spreads.size | plus: 1
+  assign cover = section.settings.cover
+  assign cta_product = section.settings.product
+-%}
 <section class="peek section anim" style="--bg: {{ section.settings.bg }};">
   <div class="container">
     <div class="section-head">
@@ -5,50 +11,116 @@
       <h2 class="h2">{{ section.settings.heading }}</h2>
       {%- if section.settings.text != blank -%}<div class="rte section-head__text">{{ section.settings.text }}</div>{%- endif -%}
     </div>
-  </div>
 
-  <div class="peek__rail" data-rail tabindex="0" aria-label="Pages from the book">
-    {%- for block in section.blocks -%}
-      {%- if block.settings.image != blank -%}
-        <button type="button" class="peek__page{% if block.settings.wide %} peek__page--wide{% endif %}" data-lightbox="{{ block.settings.image | image_url: width: 2400 }}" data-lightbox-alt="{{ block.settings.caption | escape }}" {{ block.shopify_attributes }}>
-          {% render 'img', image: block.settings.image, sizes: '(min-width: 990px) 60vw, 90vw', alt: block.settings.caption %}
-          {%- if block.settings.caption != blank -%}<span class="peek__caption">{{ block.settings.caption }}</span>{%- endif -%}
-          <span class="peek__zoom" aria-hidden="true">{% render 'icon', name: 'plus', size: 18 %}</span>
+    <flip-book class="fb is-closed" style="--ratio: {{ section.settings.page_ratio }};" data-autoplay="{{ section.settings.auto_open }}">
+      <div class="fb__stage" data-fb-stage>
+        {%- comment -%} Base page shown on the right once every leaf has turned {%- endcomment -%}
+        <div class="fb__base fb__paper">
+          <div class="fb__end">
+            <p class="fb__end-kicker">{% render 'icon', name: 'feather', size: 22 %}</p>
+            <p class="fb__end-title">{{ section.settings.end_heading }}</p>
+            {%- if cta_product != blank -%}
+              {%- assign v = cta_product.selected_or_first_available_variant -%}
+              <button type="button" class="btn btn--primary btn--sm" data-quick-add="{{ v.id }}" {% unless v.available %}disabled{% endunless %}>
+                {{ section.settings.end_button }} · {{ v.price | money }}
+              </button>
+            {%- endif -%}
+          </div>
+        </div>
+
+        {%- for i in (0..spreads.size) -%}
+          {%- liquid
+            assign has_front = false
+            assign has_back = false
+            if i > 0
+              assign fi = i | minus: 1
+              assign front_spread = spreads[fi].settings.image
+              if front_spread != blank
+                assign has_front = true
+              endif
+            endif
+            if i < spreads.size
+              assign back_spread = spreads[i].settings.image
+              if back_spread != blank
+                assign has_back = true
+              endif
+            endif
+          -%}
+          <div class="fb__leaf" data-leaf="{{ i }}" style="z-index: {{ leaf_count | minus: i | plus: 10 }};">
+            <div class="fb__face fb__face--front{% if i == 0 %} fb__face--cover{% endif %}">
+              {%- if i == 0 -%}
+                {%- if cover != blank -%}
+                  {{ cover | image_url: width: 1200 | image_tag: loading: 'lazy', alt: 'Book cover', widths: '400, 600, 800, 1200', sizes: '(min-width: 990px) 440px, 50vw' }}
+                {%- endif -%}
+                <span class="fb__open-hint" aria-hidden="true">Tap to open</span>
+              {%- elsif has_front -%}
+                <span class="fb__half fb__half--r">
+                  {{ front_spread | image_url: width: 2000 | image_tag: loading: 'lazy', alt: '', widths: '800, 1200, 1600, 2000', sizes: '(min-width: 990px) 880px, 100vw' }}
+                </span>
+              {%- endif -%}
+            </div>
+            <div class="fb__face fb__face--back">
+              {%- if has_back -%}
+                <span class="fb__half fb__half--l">
+                  {{ back_spread | image_url: width: 2000 | image_tag: loading: 'lazy', alt: '', widths: '800, 1200, 1600, 2000', sizes: '(min-width: 990px) 880px, 100vw' }}
+                </span>
+              {%- else -%}
+                <div class="fb__paper fb__end fb__end--quiet">
+                  <p class="fb__end-title">{{ section.settings.teaser }}</p>
+                </div>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <div class="fb__controls">
+        <button type="button" class="round-btn" data-fb-prev aria-label="Previous page">{% render 'icon', name: 'arrow', size: 20 %}</button>
+        <button type="button" class="btn btn--primary fb__main-btn" data-fb-next>
+          <span data-fb-label-open>Open the book</span>
+          <span data-fb-label-next hidden>Turn the page</span>
+          <span data-fb-label-restart hidden>Read it again</span>
         </button>
-      {%- endif -%}
-    {%- endfor -%}
-  </div>
-  <div class="container peek__nav">
-    <button type="button" class="round-btn" data-rail-prev aria-label="Previous page">{% render 'icon', name: 'arrow', size: 20 %}</button>
-    <button type="button" class="round-btn" data-rail-next aria-label="Next page">{% render 'icon', name: 'arrow', size: 20 %}</button>
+        <button type="button" class="round-btn" data-fb-zoom aria-label="Zoom in on these pages" hidden>{% render 'icon', name: 'plus', size: 20 %}</button>
+      </div>
+
+      <script type="application/json" data-fb-spreads>
+        [{%- for s in spreads -%}{{ s.settings.image | image_url: width: 2400 | json }}{% unless forloop.last %},{% endunless %}{%- endfor -%}]
+      </script>
+    </flip-book>
   </div>
 
   <dialog class="lightbox" data-lightbox-dialog>
     <button type="button" class="lightbox__close round-btn" aria-label="Close" data-lightbox-close>{% render 'icon', name: 'close', size: 22 %}</button>
-    <img alt="" width="1600" height="1000" data-lightbox-img>
+    <img alt="" width="1600" height="800" data-lightbox-img>
   </dialog>
 </section>
 
 {% schema %}
 {
-  "name": "Peek inside",
+  "name": "Peek inside (flipbook)",
   "settings": [
-    { "type": "color", "id": "bg", "label": "Background", "default": "#FFFFFF" },
+    { "type": "color", "id": "bg", "label": "Background", "default": "#EAFBFF" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Hand-drawn & full color" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Take a peek inside the book" },
-    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Tap a page to take a closer look.</p>" }
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Open the book and turn the pages.</p>" },
+    { "type": "image_picker", "id": "cover", "label": "Front cover" },
+    { "type": "range", "id": "page_ratio", "label": "Page shape (width ÷ height)", "min": 0.6, "max": 1.4, "step": 0.1, "default": 1 },
+    { "type": "checkbox", "id": "auto_open", "label": "Open the cover automatically when scrolled into view", "default": true },
+    { "type": "text", "id": "teaser", "label": "Last left page text", "default": "To be continued…" },
+    { "type": "text", "id": "end_heading", "label": "Last page heading", "default": "Want to find out what Clover does next?" },
+    { "type": "product", "id": "product", "label": "Last page product" },
+    { "type": "text", "id": "end_button", "label": "Last page button", "default": "Add to cart" }
   ],
   "blocks": [
     {
-      "type": "page",
-      "name": "Page",
+      "type": "spread",
+      "name": "Two-page spread",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Image" },
-        { "type": "text", "id": "caption", "label": "Caption" },
-        { "type": "checkbox", "id": "wide", "label": "Two-page spread (wide)", "default": true }
+        { "type": "image_picker", "id": "image", "label": "Spread image (both pages side by side)" }
       ]
     }
   ],
-  "presets": [{ "name": "Peek inside", "blocks": [{ "type": "page" }, { "type": "page" }] }]
+  "presets": [{ "name": "Peek inside (flipbook)", "blocks": [{ "type": "spread" }, { "type": "spread" }] }]
 }
 {% endschema %}

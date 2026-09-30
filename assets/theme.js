@@ -336,6 +336,110 @@
   }
   customElements.define('sticky-atc', StickyAtc);
 
+  /* ---------- Flipbook ---------- */
+  class FlipBook extends HTMLElement {
+    connectedCallback() {
+      this.leaves = $$('.fb__leaf', this);
+      this.total = this.leaves.length;
+      this.current = 0;
+      try { this.spreads = JSON.parse($('[data-fb-spreads]', this).textContent); } catch (e) { this.spreads = []; }
+      this.btnNext = $('[data-fb-next]', this);
+      this.btnPrev = $('[data-fb-prev]', this);
+      this.btnZoom = $('[data-fb-zoom]', this);
+      this.btnNext.addEventListener('click', () => (this.current >= this.total ? this.restart() : this.next()));
+      this.btnPrev.addEventListener('click', () => this.prev());
+      this.btnZoom.addEventListener('click', () => this.zoom());
+      this.leaves.forEach((leaf, i) => {
+        leaf.addEventListener('click', (e) => {
+          if (e.target.closest('button, a')) return;
+          i < this.current ? this.prev() : this.next();
+        });
+      });
+      const stage = $('[data-fb-stage]', this);
+      let x0 = null;
+      stage.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; }, { passive: true });
+      stage.addEventListener('touchend', (e) => {
+        if (x0 === null) return;
+        const dx = e.changedTouches[0].clientX - x0;
+        if (Math.abs(dx) > 40) (dx < 0 ? this.next() : this.prev());
+        x0 = null;
+      });
+      this.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') this.next();
+        if (e.key === 'ArrowLeft') this.prev();
+      });
+      if (this.dataset.autoplay === 'true' && 'IntersectionObserver' in window && !reduceMotion) {
+        const io = new IntersectionObserver(([en]) => {
+          if (en.isIntersecting) {
+            io.disconnect();
+            setTimeout(() => { if (this.current === 0) this.next(); }, 500);
+          }
+        }, { threshold: 0.6 });
+        io.observe(stage);
+      }
+      this.update();
+    }
+
+    settle(leaf, i) {
+      const done = () => {
+        leaf.classList.remove('is-turning');
+        leaf.style.zIndex = leaf.classList.contains('is-flipped') ? 10 + i : 10 + this.total - i;
+      };
+      leaf.addEventListener('transitionend', done, { once: true });
+      setTimeout(done, reduceMotion ? 0 : 1200);
+    }
+
+    flip(i, flipped) {
+      const leaf = this.leaves[i];
+      if (!leaf) return;
+      leaf.style.zIndex = 100;
+      leaf.classList.add('is-turning');
+      leaf.classList.toggle('is-flipped', flipped);
+      this.settle(leaf, i);
+    }
+
+    next() {
+      if (this.current >= this.total) return;
+      this.flip(this.current, true);
+      this.current++;
+      this.update();
+    }
+
+    prev() {
+      if (this.current <= 0) return;
+      this.current--;
+      this.flip(this.current, false);
+      this.update();
+    }
+
+    restart() {
+      const steps = this.current;
+      for (let n = 0; n < steps; n++) setTimeout(() => this.prev(), n * 250);
+    }
+
+    zoom() {
+      const idx = this.current - 1;
+      const src = this.spreads[idx];
+      const dlg = $('[data-lightbox-dialog]', this.closest('.shopify-section') || document);
+      if (!src || !dlg || !dlg.showModal) return;
+      const img = $('[data-lightbox-img]', dlg);
+      img.src = src;
+      img.alt = 'Pages from the book';
+      dlg.showModal();
+    }
+
+    update() {
+      this.classList.toggle('is-closed', this.current === 0);
+      this.leaves.forEach((l, i) => l.classList.toggle('is-next', i === this.current));
+      $('[data-fb-label-open]', this).hidden = this.current !== 0;
+      $('[data-fb-label-next]', this).hidden = this.current === 0 || this.current >= this.total;
+      $('[data-fb-label-restart]', this).hidden = this.current < this.total;
+      this.btnPrev.disabled = this.current === 0;
+      this.btnZoom.hidden = !(this.current >= 1 && this.current <= this.spreads.length);
+    }
+  }
+  customElements.define('flip-book', FlipBook);
+
   /* ---------- Sticky header shadow ---------- */
   class StickyHeader extends HTMLElement {
     connectedCallback() {

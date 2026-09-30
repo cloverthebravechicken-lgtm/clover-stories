@@ -152,56 +152,32 @@
         "bg": "#FFFFFF",
         "eyebrow": "Hand-drawn & full color",
         "heading": "Take a peek inside the book",
-        "text": "<p>Tap a page to take a closer look.</p>"
+        "text": "<p>Open the book and turn the pages.</p>",
+        "cover": "shopify://shop_images/clovercoverupdated_merged_2.jpg",
+        "page_ratio": 1,
+        "auto_open": true,
+        "teaser": "To be continued…",
+        "end_heading": "Want to find out what Clover does next?",
+        "product": "clover-the-brave-chicken",
+        "end_button": "Add to cart"
       },
       "blocks": {
-        "page_1": {
-          "type": "page",
+        "spread_1": {
+          "type": "spread",
           "settings": {
-            "image": "shopify://shop_images/clovercoverupdated_merged_2.jpg",
-            "caption": "The cover",
-            "wide": false
+            "image": "shopify://shop_images/cloverpg8.png"
           }
         },
-        "page_2": {
-          "type": "page",
+        "spread_2": {
+          "type": "spread",
           "settings": {
-            "image": "shopify://shop_images/cloverpg8.png",
-            "caption": "",
-            "wide": true
-          }
-        },
-        "page_3": {
-          "type": "page",
-          "settings": {
-            "image": "shopify://shop_images/cloverpg11.png",
-            "caption": "",
-            "wide": true
-          }
-        },
-        "page_4": {
-          "type": "page",
-          "settings": {
-            "image": "shopify://shop_images/innerpages.jpg",
-            "caption": "",
-            "wide": true
-          }
-        },
-        "page_5": {
-          "type": "page",
-          "settings": {
-            "image": "shopify://shop_images/innerpages2.jpg",
-            "caption": "",
-            "wide": true
+            "image": "shopify://shop_images/cloverpg11.png"
           }
         }
       },
       "block_order": [
-        "page_1",
-        "page_2",
-        "page_3",
-        "page_4",
-        "page_5"
+        "spread_1",
+        "spread_2"
       ]
     },
     "benefits": {
