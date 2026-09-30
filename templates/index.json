@@ -424,42 +424,6 @@
         "button_link": ""
       }
     },
-    "collection": {
-      "type": "product-cards",
-      "settings": {
-        "bg": "#EAFBFF",
-        "eyebrow": "The Clover collection",
-        "heading": "Storytime, snuggle time, gift time"
-      },
-      "blocks": {
-        "product_1": {
-          "type": "product",
-          "settings": {
-            "product": "clover-the-brave-chicken",
-            "badge": "Bestseller"
-          }
-        },
-        "product_2": {
-          "type": "product",
-          "settings": {
-            "product": "clover-book-plush-bundle",
-            "badge": "Best gift"
-          }
-        },
-        "product_3": {
-          "type": "product",
-          "settings": {
-            "product": "clover-plush",
-            "badge": ""
-          }
-        }
-      },
-      "block_order": [
-        "product_1",
-        "product_2",
-        "product_3"
-      ]
-    },
     "signup": {
       "type": "activity-signup",
       "settings": {
@@ -558,7 +522,6 @@
     "peek",
     "reviews",
     "author",
-    "collection",
     "signup",
     "faq",
     "final"
