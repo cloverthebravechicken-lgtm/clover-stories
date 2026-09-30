@@ -1,0 +1,36 @@
+{%- comment -%}
+  Grassy hill with blades that sway in the wind (homepage hero bottom edge).
+  Blade positions/heights are generated deterministically so the hill looks natural.
+{%- endcomment -%}
+<div class="grass" aria-hidden="true">
+  <svg class="grass__svg" viewBox="0 0 1440 110" preserveAspectRatio="xMidYMax slice" focusable="false">
+    <path class="grass__hill grass__hill--back" d="M0 70 C180 44 360 44 540 62 S900 88 1080 64 S1340 40 1440 56 V110 H0 Z"/>
+    {%- for i in (0..95) -%}
+      {%- liquid
+        assign x = i | times: 15 | plus: 0
+        assign jitter = i | times: 7 | modulo: 9
+        assign x = x | plus: jitter
+        assign h = i | times: 37 | modulo: 26 | plus: 16
+        assign lean = i | times: 13 | modulo: 11 | minus: 5
+        assign base = i | times: 11 | modulo: 10 | plus: 70
+        assign tipx = x | plus: lean
+        assign tipy = base | minus: h
+        assign w = i | modulo: 3 | plus: 3
+        assign x2 = x | plus: w
+        assign d = i | times: 17 | modulo: 30 | divided_by: 10.0
+        assign shade = i | modulo: 3
+      -%}
+      <path class="blade blade--{{ shade }}" style="animation-delay: -{{ d }}s" d="M{{ x }} {{ base }} Q{{ x | plus: lean }} {{ base | minus: h | plus: 8 }} {{ tipx }} {{ tipy }} Q{{ x2 | plus: lean }} {{ base | minus: h | plus: 10 }} {{ x2 }} {{ base }} Z"/>
+    {%- endfor -%}
+    <path class="grass__hill grass__hill--front" d="M0 84 C220 70 420 74 640 84 S1040 96 1240 82 S1400 74 1440 78 V110 H0 Z"/>
+    {%- assign flowers = '120,300,520,700,860,1010,1190,1330' | split: ',' -%}
+    {%- for fx in flowers -%}
+      {%- assign fxn = fx | plus: 0 -%}
+      <g class="flower" style="animation-delay: -{{ forloop.index | times: 0.4 }}s">
+        <path d="M{{ fxn }} 88 Q{{ fxn | plus: 2 }} 76 {{ fxn }} 64" stroke="#4E8A36" stroke-width="2" fill="none"/>
+        <circle cx="{{ fxn }}" cy="62" r="5" fill="{% cycle 'fl': '#FFFFFF', '#FFD45C', '#FF9EB5' %}"/>
+        <circle cx="{{ fxn }}" cy="62" r="2" fill="#FFB800"/>
+      </g>
+    {%- endfor -%}
+  </svg>
+</div>

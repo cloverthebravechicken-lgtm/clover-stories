@@ -3,11 +3,15 @@
   assign images = section.blocks | where: 'type', 'image'
   assign bullets = section.blocks | where: 'type', 'bullet'
 -%}
-<section class="hero" id="top-buy" style="--hero-bg: {{ section.settings.bg }};">
+<section class="hero{% if section.settings.show_grass %} hero--grass{% endif %}" id="top-buy" style="--hero-bg: {{ section.settings.bg }};">
   <div class="hero__sky" aria-hidden="true">
     <span class="hero__sun">{% render 'deco', name: 'sunburst', color: '#FFD45C' %}</span>
     <span class="hero__cloud hero__cloud--1">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
     <span class="hero__cloud hero__cloud--2">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
+    <span class="hero__cloud hero__cloud--3">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
+    <span class="hero__cloud hero__cloud--4">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
+    <span class="hero__cloud hero__cloud--5">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
+    <span class="hero__cloud hero__cloud--6">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
   </div>
 
   <div class="hero__inner container">
@@ -99,7 +103,11 @@
       {%- endif -%}
     </div>
   </div>
-  {% render 'deco', name: 'wave', color: section.settings.next_bg %}
+  {%- if section.settings.show_grass -%}
+    {% render 'grass' %}
+  {%- else -%}
+    {% render 'deco', name: 'wave', color: section.settings.next_bg %}
+  {%- endif -%}
 </section>
 
 {% schema %}
@@ -110,6 +118,7 @@
     { "type": "product", "id": "product", "label": "Main product" },
     { "type": "color", "id": "bg", "label": "Background", "default": "#EAFBFF" },
     { "type": "color", "id": "next_bg", "label": "Wave color (next section background)", "default": "#FFFFFF" },
+    { "type": "checkbox", "id": "show_grass", "label": "Grassy hill with blowing grass at the bottom", "default": true },
     { "type": "text", "id": "badge", "label": "Badge", "default": "Available in premium hardcover" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Meet Clover, the <em>Brave</em> Chicken" },
     { "type": "text", "id": "rating_text", "label": "Rating link text", "default": "Read reviews" },

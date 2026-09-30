@@ -1,0 +1,85 @@
+{%- liquid
+  assign pages = section.blocks | where: 'type', 'page'
+  assign perks = section.settings.perks | split: ','
+-%}
+<section class="ahero" style="--bg: {{ section.settings.bg }};">
+  <div class="ahero__bg" aria-hidden="true">
+    <span class="ahero__blob ahero__blob--1"></span>
+    <span class="ahero__blob ahero__blob--2"></span>
+  </div>
+  <div class="container ahero__inner">
+    <div class="ahero__media">
+      <div class="fan" data-fan>
+        {%- for block in pages -%}
+          {%- if block.settings.image != blank -%}
+            <button type="button" class="fan__page" style="--i: {{ forloop.index0 }}; --n: {{ pages.size }};" data-lightbox="{{ block.settings.image | image_url: width: 1600 }}" data-lightbox-alt="{{ block.settings.label | escape }}" {{ block.shopify_attributes }}>
+              {{ block.settings.image | image_url: width: 700 | image_tag: loading: 'eager', alt: block.settings.label, widths: '300, 450, 600, 700', sizes: '(min-width: 990px) 260px, 45vw' }}
+              {%- if block.settings.label != blank -%}<span class="fan__tag">{{ block.settings.label }}</span>{%- endif -%}
+            </button>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+      {%- if section.settings.sticker != blank -%}
+        <span class="sticker sticker--ahero" aria-hidden="true">{{ section.settings.sticker }}</span>
+      {%- endif -%}
+    </div>
+
+    <div class="ahero__content">
+      {%- if section.settings.eyebrow != blank -%}
+        <p class="pill pill--sun">{% render 'icon', name: 'pencil', size: 14 %} {{ section.settings.eyebrow }}</p>
+      {%- endif -%}
+      <h1 class="ahero__title">{{ section.settings.heading }}</h1>
+      {%- if section.settings.text != blank -%}<div class="ahero__text rte">{{ section.settings.text }}</div>{%- endif -%}
+
+      <div class="ahero__form card" id="get-packet">
+        <svg class="ahero__arrow" viewBox="0 0 120 70" aria-hidden="true" focusable="false"><path d="M6 10 C40 0, 80 8, 96 40 M96 40 L84 34 M96 40 L100 27"/></svg>
+        <span class="ahero__arrow-label" aria-hidden="true">{{ section.settings.arrow_label }}</span>
+        {% render 'signup-form', form_id: 'ActivityHeroSignup', button: section.settings.button_label, placeholder: 'Your email address', success: section.settings.success_text %}
+        {%- if perks.size > 0 -%}
+          <ul class="ahero__perks" role="list">
+            {%- for perk in perks -%}
+              <li>{% render 'icon', name: 'check', size: 14 %} {{ perk | strip }}</li>
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+  {% render 'deco', name: 'wave', color: section.settings.next_bg %}
+</section>
+
+<dialog class="lightbox" data-lightbox-dialog>
+  <button type="button" class="lightbox__close round-btn" aria-label="Close" data-lightbox-close>{% render 'icon', name: 'close', size: 22 %}</button>
+  <img alt="" width="1545" height="2000" data-lightbox-img>
+</dialog>
+
+{% schema %}
+{
+  "name": "Activity packet hero",
+  "class": "section-ahero",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Background", "default": "#EAFBFF" },
+    { "type": "color", "id": "next_bg", "label": "Wave color (next section background)", "default": "#FFFFFF" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Free printable · 10 pages" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Clover's <em>free</em> activity packet" },
+    { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Coloring, mazes, tracing, counting and more — 10 pages of farmyard fun starring Clover and her friends. Print it at home or in the classroom.</p>" },
+    { "type": "text", "id": "sticker", "label": "Sticker", "default": "FREE!" },
+    { "type": "text", "id": "arrow_label", "label": "Doodle arrow label", "default": "It's free!" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Send my packet" },
+    { "type": "text", "id": "success_text", "label": "Success message", "default": "You're in! Check your inbox for Clover's activity packet." },
+    { "type": "text", "id": "perks", "label": "Perks (comma separated)", "default": "Instant email delivery, Print as many as you like, Bonus parent & teacher sheet" }
+  ],
+  "blocks": [
+    {
+      "type": "page",
+      "name": "Fanned page",
+      "limit": 5,
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Page image" },
+        { "type": "text", "id": "label", "label": "Label" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Activity packet hero" }]
+}
+{% endschema %}

@@ -1,0 +1,67 @@
+<section class="steps section anim" style="--bg: {{ section.settings.bg }};">
+  <div class="container">
+    <div class="section-head">
+      {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
+      <h2 class="h2">{{ section.settings.heading }}</h2>
+    </div>
+    <ol class="steps__list" role="list">
+      {%- for block in section.blocks -%}
+        {%- if block.type == 'step' -%}
+          <li class="step card" {{ block.shopify_attributes }} style="--accent: {{ block.settings.accent }};">
+            <span class="step__num">{{ forloop.index }}</span>
+            <span class="step__emoji" aria-hidden="true">{{ block.settings.emoji }}</span>
+            <h3 class="step__title">{{ block.settings.title }}</h3>
+            <p class="step__text">{{ block.settings.text }}</p>
+          </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ol>
+
+    {%- for block in section.blocks -%}
+      {%- if block.type == 'bonus' -%}
+        <div class="bonus" {{ block.shopify_attributes }}>
+          <span class="bonus__ribbon">{{ block.settings.ribbon }}</span>
+          <div class="bonus__icon" aria-hidden="true">{% render 'icon', name: 'chat', size: 34 %}</div>
+          <div class="bonus__body">
+            <p class="bonus__title">{{ block.settings.title }}</p>
+            <div class="rte">{{ block.settings.text }}</div>
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Steps",
+  "settings": [
+    { "type": "color", "id": "bg", "label": "Background", "default": "#FFF3ED" },
+    { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Easy as 1, 2, 3" },
+    { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "How it works" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "emoji", "label": "Emoji", "default": "✉️" },
+        { "type": "color", "id": "accent", "label": "Accent", "default": "#FF5757" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Enter your email" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Join Clover's Club in seconds." }
+      ]
+    },
+    {
+      "type": "bonus",
+      "name": "Bonus card",
+      "limit": 1,
+      "settings": [
+        { "type": "text", "id": "ribbon", "label": "Ribbon", "default": "Bonus" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Clover's Story Chat" },
+        { "type": "richtext", "id": "text", "label": "Text", "default": "<p>A parent & teacher discussion sheet.</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Steps", "blocks": [{ "type": "step" }, { "type": "step" }, { "type": "step" }] }]
+}
+{% endschema %}

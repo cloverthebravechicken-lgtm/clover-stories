@@ -1,5 +1,294 @@
 {
   "sections": {
+    "hero": {
+      "type": "activity-hero",
+      "settings": {
+        "bg": "#EAFBFF",
+        "next_bg": "#FFFFFF",
+        "eyebrow": "Free printable · 10 pages",
+        "heading": "Clover's <em>free</em> activity packet",
+        "text": "<p>Coloring, mazes, tracing, counting and more: 10 pages of farmyard fun starring Clover and her friends. Print it at home or in the classroom.</p>",
+        "sticker": "FREE!",
+        "arrow_label": "It's free!",
+        "button_label": "Send my packet",
+        "success_text": "You're in! Check your inbox for Clover's activity packet.",
+        "perks": "Instant email delivery, Print as many as you like, Bonus parent & teacher sheet"
+      },
+      "blocks": {
+        "page_1": {
+          "type": "page",
+          "settings": {
+            "image": "shopify://shop_images/Clover_-_10_Page_Printable_Activity_Packet-10.png",
+            "label": "Drawing"
+          }
+        },
+        "page_2": {
+          "type": "page",
+          "settings": {
+            "image": "shopify://shop_images/Clover_-_10_Page_Printable_Activity_Packet-2.png",
+            "label": "Maze"
+          }
+        },
+        "page_3": {
+          "type": "page",
+          "settings": {
+            "image": "shopify://shop_images/Clover_-_10_Page_Printable_Activity_Packet.png",
+            "label": "Coloring"
+          }
+        },
+        "page_4": {
+          "type": "page",
+          "settings": {
+            "image": "shopify://shop_images/Clover_-_10_Page_Printable_Activity_Packet-7.png",
+            "label": "Counting"
+          }
+        },
+        "page_5": {
+          "type": "page",
+          "settings": {
+            "image": "shopify://shop_images/Clover_-_10_Page_Printable_Activity_Packet-6.png",
+            "label": "Reading Certificate"
+          }
+        }
+      },
+      "block_order": [
+        "page_1",
+        "page_2",
+        "page_3",
+        "page_4",
+        "page_5"
+      ]
+    },
+    "line": {
+      "type": "clothesline",
+      "settings": {
+        "bg": "#FFFFFF",
+        "eyebrow": "What's inside",
+        "heading": "10 pages of farmyard fun",
+        "text": "<p>Every page stars Clover and her farm friends, made to practice early skills while little ones play.</p>",
+        "button_label": "Get all 10 pages free",
+        "button_link": ""
+      },
+      "blocks": {
+        "page_1": {
+          "type": "page",
+          "settings": {
+            "image": "shopify://shop_images/Clover_-_10_Page_Printable_Activity_Packet.png",
+            "label": "Coloring",
+            "emoji": "🖍️"
+          }
+        },
+        "page_2": {
+          "type": "page",
+          "settings": {
+            "image": "shopify://shop_images/Clover_-_10_Page_Printable_Activity_Packet-2.png",
+            "label": "Maze",
+            "emoji": "🌀"
+          }
+        },
+        "page_3": {
+          "type": "page",
+          "settings": {
+            "image": "shopify://shop_images/ChatGPT_Image_Jul_10_2026_at_10_18_45_AM.png",
+            "label": "Tracing",
+            "emoji": "✏️"
+          }
+        },
+        "page_4": {
+          "type": "page",
+          "settings": {
+            "image": "shopify://shop_images/Clover_-_10_Page_Printable_Activity_Packet-4.png",
+            "label": "Sequencing",
+            "emoji": "🔢"
+          }
+        },
+        "page_5": {
+          "type": "page",
+          "settings": {
+            "image": "shopify://shop_images/Clover_-_10_Page_Printable_Activity_Packet-5.png",
+            "label": "Bravery Prompt",
+            "emoji": "💪"
+          }
+        },
+        "page_6": {
+          "type": "page",
+          "settings": {
+            "image": "shopify://shop_images/Clover_-_10_Page_Printable_Activity_Packet-6.png",
+            "label": "Reading Certificate",
+            "emoji": "🏅"
+          }
+        },
+        "page_7": {
+          "type": "page",
+          "settings": {
+            "image": "shopify://shop_images/Clover_-_10_Page_Printable_Activity_Packet-7.png",
+            "label": "Counting",
+            "emoji": "🐣"
+          }
+        },
+        "page_8": {
+          "type": "page",
+          "settings": {
+            "image": "shopify://shop_images/Clover_-_10_Page_Printable_Activity_Packet-8.png",
+            "label": "Matching",
+            "emoji": "🧩"
+          }
+        },
+        "page_9": {
+          "type": "page",
+          "settings": {
+            "image": "shopify://shop_images/Clover_-_10_Page_Printable_Activity_Packet-9.png",
+            "label": "Spot the Difference",
+            "emoji": "🔍"
+          }
+        },
+        "page_10": {
+          "type": "page",
+          "settings": {
+            "image": "shopify://shop_images/Clover_-_10_Page_Printable_Activity_Packet-10.png",
+            "label": "Drawing",
+            "emoji": "🎨"
+          }
+        }
+      },
+      "block_order": [
+        "page_1",
+        "page_2",
+        "page_3",
+        "page_4",
+        "page_5",
+        "page_6",
+        "page_7",
+        "page_8",
+        "page_9",
+        "page_10"
+      ]
+    },
+    "skills": {
+      "type": "benefits",
+      "settings": {
+        "bg": "#EAFBFF",
+        "eyebrow": "Learning through play",
+        "heading": "Skills they'll practice",
+        "button_label": "",
+        "button_link": ""
+      },
+      "blocks": {
+        "benefit_1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "pencil",
+            "accent": "#FF5757",
+            "title": "Fine motor skills",
+            "text": "Tracing, coloring and mazes build pencil control for little hands."
+          }
+        },
+        "benefit_2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "sparkle",
+            "accent": "#FFB800",
+            "title": "Counting & numbers",
+            "text": "Count the farm animals and put the story in order."
+          }
+        },
+        "benefit_3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "book",
+            "accent": "#518339",
+            "title": "Early reading",
+            "text": "Matching and sequencing support story comprehension."
+          }
+        },
+        "benefit_4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "heart",
+            "accent": "#E86AA6",
+            "title": "Bravery & confidence",
+            "text": "The bravery prompt helps kids share what makes them brave."
+          }
+        },
+        "benefit_5": {
+          "type": "benefit",
+          "settings": {
+            "icon": "feather",
+            "accent": "#FE924E",
+            "title": "Creativity",
+            "text": "Draw, color and imagine new adventures for Clover."
+          }
+        },
+        "benefit_6": {
+          "type": "benefit",
+          "settings": {
+            "icon": "gift",
+            "accent": "#6C8CFF",
+            "title": "A proud finish",
+            "text": "A reading certificate to celebrate finishing the story."
+          }
+        }
+      },
+      "block_order": [
+        "benefit_1",
+        "benefit_2",
+        "benefit_3",
+        "benefit_4",
+        "benefit_5",
+        "benefit_6"
+      ]
+    },
+    "steps": {
+      "type": "steps",
+      "settings": {
+        "bg": "#FFF3ED",
+        "eyebrow": "Easy as 1, 2, 3",
+        "heading": "How it works"
+      },
+      "blocks": {
+        "step_1": {
+          "type": "step",
+          "settings": {
+            "emoji": "✉️",
+            "accent": "#FF5757",
+            "title": "Enter your email",
+            "text": "Join Clover's Club. It's free and takes 5 seconds."
+          }
+        },
+        "step_2": {
+          "type": "step",
+          "settings": {
+            "emoji": "📬",
+            "accent": "#FFB800",
+            "title": "Check your inbox",
+            "text": "Your 10-page packet lands in your inbox right away."
+          }
+        },
+        "step_3": {
+          "type": "step",
+          "settings": {
+            "emoji": "🖨️",
+            "accent": "#518339",
+            "title": "Print & play",
+            "text": "Print as many copies as you like for home, homeschool or the classroom."
+          }
+        },
+        "bonus_4": {
+          "type": "bonus",
+          "settings": {
+            "ribbon": "Bonus",
+            "title": "Clover's Story Chat",
+            "text": "<p>Included in your email, along with the packet: a simple parent and teacher discussion sheet with kid-friendly questions to help little readers reflect on Clover's story, feelings, bravery, and what makes them unique.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "step_1",
+        "step_2",
+        "step_3",
+        "bonus_4"
+      ]
+    },
     "signup": {
       "type": "activity-signup",
       "settings": {
@@ -8,16 +297,12 @@
         "image": "shopify://shop_images/Copy_of_CV_of_30_coloring_pages_mockup_V1.png",
         "sticker": "FREE!",
         "eyebrow": "10 pages, free to download",
-        "heading": "Get Clover's free activity packet",
+        "heading": "Ready to color with Clover?",
         "text": "<p>Join Clover's Club and we'll send the printable packet straight to your inbox, plus a bonus parent & teacher discussion sheet.</p>",
         "includes": "Coloring, Tracing, Maze, Sequencing, Counting, Drawing, Matching",
         "button_label": "Send my packet",
         "fine_print": "No spam, just farmyard fun. Unsubscribe anytime."
       }
-    },
-    "main": {
-      "type": "main-page",
-      "settings": {}
     },
     "final": {
       "type": "final-cta",
@@ -25,15 +310,18 @@
         "bg": "#FF5757",
         "product": "clover-the-brave-chicken",
         "image": "shopify://shop_images/clovercoverupdated_merged_2.jpg",
-        "heading": "Be brave. Be you. Bring Clover home.",
-        "text": "<p>The story your little one will ask for again and again.</p>",
+        "heading": "Read the story that started it all",
+        "text": "<p>The activity packet pairs perfectly with <em>Clover, the Brave Chicken</em>, the rhyming picture book about courage and being yourself.</p>",
         "button_label": "Add to cart"
       }
     }
   },
   "order": [
+    "hero",
+    "line",
+    "skills",
+    "steps",
     "signup",
-    "main",
     "final"
   ]
 }
