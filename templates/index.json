@@ -503,9 +503,7 @@
         "image": "shopify://shop_images/clovercoverupdated_merged_2.jpg",
         "heading": "Be brave. Be you. Bring Clover home.",
         "text": "<p>The story your little one will ask for again and again.</p>",
-        "button_label": "Add to cart",
-        "critter": "duck",
-        "critter_side": "right"
+        "button_label": "Add to cart"
       }
     }
   },
