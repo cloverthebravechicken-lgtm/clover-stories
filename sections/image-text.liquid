@@ -12,7 +12,13 @@
       {%- if section.settings.eyebrow != blank -%}<p class="eyebrow">{{ section.settings.eyebrow }}</p>{%- endif -%}
       <h2 class="h2">{{ section.settings.heading }}</h2>
       <div class="rte">{{ section.settings.text }}</div>
-      {%- if section.settings.signature != blank -%}<p class="signature">{{ section.settings.signature }}</p>{%- endif -%}
+      {%- if section.settings.signature_image != blank -%}
+        <p class="signature signature--img">{{ section.settings.signature_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: section.settings.signature | default: 'Signature', widths: '300, 450, 600' }}</p>
+      {%- elsif section.settings.use_signature_asset -%}
+        <p class="signature signature--img"><img src="{{ 'signature.png' | asset_url }}" alt="{{ section.settings.signature | default: 'Signature' | escape }}" width="1000" height="319" loading="lazy"></p>
+      {%- elsif section.settings.signature != blank -%}
+        <p class="signature">{{ section.settings.signature }}</p>
+      {%- endif -%}
       {%- if section.settings.button_label != blank -%}
         <a href="{{ section.settings.button_link | default: '#top-buy' }}" class="btn btn--primary btn--lg">{{ section.settings.button_label }}</a>
       {%- endif -%}
@@ -33,7 +39,9 @@
     { "type": "text", "id": "eyebrow", "label": "Eyebrow" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Image with text" },
     { "type": "richtext", "id": "text", "label": "Text", "default": "<p>Tell your story.</p>" },
-    { "type": "text", "id": "signature", "label": "Signature" },
+    { "type": "text", "id": "signature", "label": "Signature text", "info": "Shown if no signature image is used; also used as the image's alt text." },
+    { "type": "checkbox", "id": "use_signature_asset", "label": "Use handwritten signature (theme file signature.png)", "default": false },
+    { "type": "image_picker", "id": "signature_image", "label": "Or upload a signature image (transparent PNG)" },
     { "type": "text", "id": "button_label", "label": "Button label" },
     { "type": "url", "id": "button_link", "label": "Button link" }
   ],

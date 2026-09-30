@@ -3,10 +3,7 @@
   assign perks = section.settings.perks | split: ','
 -%}
 <section class="ahero" style="--bg: {{ section.settings.bg }};">
-  <div class="ahero__bg" aria-hidden="true">
-    <span class="ahero__blob ahero__blob--1"></span>
-    <span class="ahero__blob ahero__blob--2"></span>
-  </div>
+  {% render 'art-supplies' %}
   <div class="container ahero__inner">
     <div class="ahero__media">
       <div class="fan" data-fan>

@@ -1,0 +1,30 @@
+{%- comment -%}
+  Floating crayons, pencils, markers and self-drawing doodles for page backgrounds.
+  Each item: kind, color, position classes are set in CSS (.art--N).
+{%- endcomment -%}
+<div class="art" aria-hidden="true">
+  {%- assign items = 'crayon:#FF5757,marker:#6C8CFF,pencil:#FFB800,crayon:#FFB800,marker:#518339,crayon:#9B6CFF,pencil:#FF8FA3,marker:#FE924E,crayon:#3FB5D9' | split: ',' -%}
+  {%- for it in items -%}
+    {%- assign parts = it | split: ':' -%}
+    {%- assign kind = parts[0] -%}
+    {%- assign c = parts[1] -%}
+    <span class="art__item art--{{ forloop.index }} art__{{ kind }}">
+      {%- case kind -%}
+        {%- when 'crayon' -%}
+          <svg viewBox="0 0 24 120" focusable="false"><path d="M6 22 L12 2 L18 22 Z" fill="{{ c }}"/><path d="M10 8 L12 2 L14 8 Z" fill="rgba(0,0,0,.25)"/><rect x="4" y="22" width="16" height="96" rx="3" fill="{{ c }}"/><rect x="4" y="34" width="16" height="52" fill="rgba(255,255,255,.3)"/><rect x="4" y="38" width="16" height="3" fill="rgba(0,0,0,.18)"/><rect x="4" y="79" width="16" height="3" fill="rgba(0,0,0,.18)"/><rect x="6" y="24" width="3" height="92" rx="1.5" fill="rgba(255,255,255,.35)"/></svg>
+        {%- when 'pencil' -%}
+          <svg viewBox="0 0 20 140" focusable="false"><path d="M4 28 L10 4 L16 28 Z" fill="#F3D2A2"/><path d="M8 12 L10 4 L12 12 Z" fill="#3a3a3a"/><rect x="4" y="28" width="12" height="92" fill="{{ c }}"/><rect x="8" y="28" width="4" height="92" fill="rgba(255,255,255,.3)"/><rect x="4" y="120" width="12" height="8" fill="#b8b8b8"/><rect x="4" y="128" width="12" height="10" rx="3" fill="#FF8FA3"/></svg>
+        {%- when 'marker' -%}
+          <svg viewBox="0 0 28 130" focusable="false"><path d="M10 14 L14 2 L18 14 Z" fill="{{ c }}"/><rect x="8" y="14" width="12" height="10" rx="2" fill="#e8e8e8"/><rect x="4" y="24" width="20" height="74" rx="6" fill="#ffffff" stroke="rgba(0,0,0,.08)"/><rect x="4" y="46" width="20" height="18" fill="{{ c }}"/><rect x="3" y="96" width="22" height="32" rx="7" fill="{{ c }}"/><rect x="7" y="100" width="4" height="24" rx="2" fill="rgba(255,255,255,.35)"/></svg>
+      {%- endcase -%}
+    </span>
+  {%- endfor -%}
+  <svg class="art__doodle art-d--star" viewBox="0 0 40 40" focusable="false"><path d="M20 3 L24.5 15 L37 15.5 L27 23.5 L30.5 36 L20 28.5 L9.5 36 L13 23.5 L3 15.5 L15.5 15 Z"/></svg>
+  <svg class="art__doodle art-d--heart" viewBox="0 0 32 30" focusable="false"><path d="M16 27 C4 18, 2 10, 6 5.5 C10 1.5, 15 4, 16 8 C17 4, 22 1.5, 26 5.5 C30 10, 28 18, 16 27 Z"/></svg>
+  <svg class="art__doodle art-d--swirl" viewBox="0 0 48 48" focusable="false"><path d="M24 24 C24 20, 30 20, 30 25 C30 31, 20 32, 18 25 C16 16, 30 12, 35 20 C40 30, 30 40, 20 38 C8 36, 6 20, 14 12"/></svg>
+  <svg class="art__doodle art-d--zigzag" viewBox="0 0 90 24" focusable="false"><path d="M3 20 L15 4 L27 20 L39 4 L51 20 L63 4 L75 20 L87 4"/></svg>
+  <svg class="art__doodle art-d--sun" viewBox="0 0 50 50" focusable="false"><path d="M25 16 A9 9 0 1 0 25.1 16 M25 2 V9 M25 41 V48 M2 25 H9 M41 25 H48 M8.7 8.7 L13.6 13.6 M36.4 36.4 L41.3 41.3 M8.7 41.3 L13.6 36.4 M36.4 13.6 L41.3 8.7"/></svg>
+  <svg class="art__doodle art-d--squiggle" viewBox="0 0 80 24" focusable="false"><path d="M3 14 C10 2, 16 2, 20 12 S30 22, 36 12 S46 2, 52 12 S62 22, 68 12 S76 6, 78 10"/></svg>
+  <svg class="art__doodle art-d--flower" viewBox="0 0 44 44" focusable="false"><path d="M22 22 C14 10, 30 10, 22 22 C34 14, 34 30, 22 22 C30 34, 14 34, 22 22 C10 30, 10 14, 22 22 Z"/></svg>
+  <svg class="art__doodle art-d--loop" viewBox="0 0 90 30" focusable="false"><path d="M3 22 C14 22, 16 4, 26 8 C34 12, 22 26, 32 24 C44 20, 42 4, 54 8 C62 12, 50 26, 60 24 C72 20, 74 10, 87 12"/></svg>
+</div>

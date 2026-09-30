@@ -1115,3 +1115,47 @@ flip-book { display: block; }
 @keyframes blow { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(9deg); } }
 .flower { transform-box: fill-box; transform-origin: 50% 100%; animation: blow 3.6s ease-in-out infinite; }
 @media (prefers-reduced-motion: reduce) { .blade, .flower { animation: none; } }
+
+/* Handwritten signature image, revealed like it's being written */
+.signature--img { transform: rotate(-3deg); margin: .75rem 0 1.25rem; width: min(240px, 60%); }
+.signature--img img { width: 100%; height: auto; display: block; }
+.has-anim .anim .signature--img img { clip-path: inset(0 100% 0 0); transition: clip-path 1.8s cubic-bezier(.45, .05, .35, 1) .5s; }
+.has-anim .anim.is-inview .signature--img img { clip-path: inset(0 0 0 0); }
+.shopify-design-mode .signature--img img { clip-path: none !important; }
+@media (prefers-reduced-motion: reduce) { .signature--img img { clip-path: none !important; } }
+
+/* ---------- Floating art supplies background (activities hero) ---------- */
+.art { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+.ahero__inner { z-index: 1; }
+.art__item { position: absolute; width: 24px; filter: drop-shadow(0 6px 6px rgba(0,0,0,.14)); }
+.art__item svg { width: 100%; height: auto; display: block; animation: art-float 7s ease-in-out infinite; }
+.art__marker { width: 28px; } .art__pencil { width: 20px; }
+@keyframes art-float { 0%, 100% { transform: translateY(0) rotate(0); } 50% { transform: translateY(-14px) rotate(6deg); } }
+.art--1 { top: 7%; left: 2.5%; rotate: 32deg; }
+.art--2 { top: 64%; left: 3%; rotate: -18deg; } .art--2 svg { animation-delay: -1.5s; }
+.art--3 { bottom: 16%; left: 41%; rotate: 72deg; } .art--3 svg { animation-delay: -3s; }
+.art--4 { top: 3%; left: 42%; rotate: -58deg; } .art--4 svg { animation-delay: -4.5s; }
+.art--5 { top: 5%; right: 3%; rotate: 22deg; } .art--5 svg { animation-delay: -2s; }
+.art--6 { bottom: 18%; right: 3.5%; rotate: 38deg; } .art--6 svg { animation-delay: -5s; }
+.art--7 { top: 42%; right: 1%; rotate: -80deg; } .art--7 svg { animation-delay: -6s; }
+.art--8 { top: 36%; left: 1%; rotate: 100deg; } .art--8 svg { animation-delay: -2.5s; }
+.art--9 { bottom: 12%; left: 20%; rotate: -64deg; } .art--9 svg { animation-delay: -3.8s; }
+.art__doodle { position: absolute; fill: none; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; opacity: .9; }
+.art__doodle path { stroke-dasharray: 260; stroke-dashoffset: 260; animation: doodle-draw 7s ease-in-out infinite; }
+.art-d--star { top: 16%; left: 16%; width: 40px; stroke: var(--c-sun); }
+.art-d--heart { top: 6%; right: 16%; width: 30px; stroke: #E86AA6; } .art-d--heart path { animation-delay: 1s; }
+.art-d--swirl { bottom: 24%; left: 7%; width: 46px; stroke: var(--c-green); } .art-d--swirl path { animation-delay: 2.2s; }
+.art-d--zigzag { bottom: 9%; right: 20%; width: 86px; stroke: #6C8CFF; } .art-d--zigzag path { animation-delay: 3s; }
+.art-d--sun { top: 4%; left: 26%; width: 44px; stroke: #FFB800; } .art-d--sun path { animation-delay: .5s; }
+.art-d--squiggle { top: 30%; right: 6%; width: 70px; stroke: var(--c-primary); } .art-d--squiggle path { animation-delay: 1.6s; }
+.art-d--flower { bottom: 30%; left: 32%; width: 38px; stroke: #9B6CFF; } .art-d--flower path { animation-delay: 4s; }
+.art-d--loop { bottom: 6%; left: 50%; width: 90px; stroke: #FE924E; } .art-d--loop path { animation-delay: 2.6s; }
+@media (max-width: 989px) {
+  .art__item { width: 18px; } .art__marker { width: 21px; } .art__pencil { width: 15px; }
+  .art--3, .art--4, .art--7, .art--9, .art-d--flower, .art-d--squiggle, .art-d--loop, .art-d--zigzag { display: none; }
+  .art--2, .art--6, .art-d--swirl, .art-d--heart { display: none; }
+  .art--8 { top: 24%; left: -2px; }
+  .art-d--star { top: 2%; left: 18%; }
+  .art-d--sun { top: 3%; left: auto; right: 22%; }
+}
+@media (prefers-reduced-motion: reduce) { .art__doodle path { stroke-dashoffset: 0; } .art__item svg { animation: none; } }
