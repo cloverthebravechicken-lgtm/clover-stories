@@ -2,7 +2,7 @@
   assign pages = section.blocks | where: 'type', 'page'
   assign perks = section.settings.perks | split: ','
 -%}
-<section class="ahero" style="--bg: {{ section.settings.bg }};">
+<section class="ahero{% if section.settings.surface == 'wood' %} ahero--wood{% endif %}" style="--bg: {{ section.settings.bg }};">
   {% render 'art-supplies' %}
   <div class="container ahero__inner">
     <div class="ahero__media">
@@ -55,7 +55,11 @@
   "name": "Activity packet hero",
   "class": "section-ahero",
   "settings": [
-    { "type": "color", "id": "bg", "label": "Background", "default": "#EAFBFF" },
+    {
+      "type": "select", "id": "surface", "label": "Background style", "default": "wood",
+      "options": [{ "value": "wood", "label": "Wooden desk" }, { "value": "color", "label": "Solid color" }]
+    },
+    { "type": "color", "id": "bg", "label": "Background color (solid style)", "default": "#EAFBFF" },
     { "type": "color", "id": "next_bg", "label": "Wave color (next section background)", "default": "#FFFFFF" },
     { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Free printable · 10 pages" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Clover's <em>free</em> activity packet" },

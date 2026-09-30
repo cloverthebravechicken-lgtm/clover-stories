@@ -12,7 +12,8 @@
         "arrow_label": "It's free!",
         "button_label": "Send my packet",
         "success_text": "You're in! Check your inbox for Clover's activity packet.",
-        "perks": "Instant email delivery, Print as many as you like, Bonus parent & teacher sheet"
+        "perks": "Instant email delivery, Print as many as you like, Bonus parent & teacher sheet",
+        "surface": "wood"
       },
       "blocks": {
         "page_1": {
