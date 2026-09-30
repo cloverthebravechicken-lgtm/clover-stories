@@ -5,7 +5,15 @@
     "footer": {
       "type": "footer",
       "settings": {
-        "menu": "footer"
+        "bg": "#5FA044",
+        "bg_deep": "#3F7A2C",
+        "mascot": "shopify://shop_images/Written_by_Melanie_Dieas_-_2_97c8c5fe-2952-4c29-b9c5-003b8a38daf7.png",
+        "menu_heading": "Explore",
+        "menu": "main-menu",
+        "menu_2_heading": "Help",
+        "menu_2": "footer",
+        "email": "hello@cloverstories.com",
+        "show_payment_icons": true
       }
     }
   },
