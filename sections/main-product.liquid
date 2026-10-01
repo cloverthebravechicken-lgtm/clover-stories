@@ -7,9 +7,16 @@
     <div class="pdp__gallery">
       <div class="pdp__main" data-rail data-gallery>
         {%- for media in product.media -%}
-          <div class="pdp__slide" data-media-id="{{ media.id }}">
+          <div class="pdp__slide{% if media.media_type == 'image' %} pdp__slide--scene{% endif %}" data-media-id="{{ media.id }}">
             {%- case media.media_type -%}
               {%- when 'image' -%}
+                  <div class="pdp__scene" aria-hidden="true">
+                    <span class="pdp__sun">{% render 'deco', name: 'sunburst', color: '#FFD45C' %}</span>
+                    <span class="hero__cloud hero__cloud--1">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
+                    <span class="hero__cloud hero__cloud--3">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
+                    <span class="hero__cloud hero__cloud--5">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
+                    {% render 'grass' %}
+                  </div>
                 <button type="button" class="pdp__zoom" data-lightbox="{{ media | image_url: width: 2400 }}" data-lightbox-alt="{{ media.alt | escape }}" aria-label="Zoom image {{ forloop.index }}">
                   {%- if forloop.first -%}
                     {% render 'img', image: media, sizes: '(min-width: 990px) 55vw, 100vw', eager: true, alt: media.alt %}
