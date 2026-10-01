@@ -1498,16 +1498,11 @@ flip-book { display: block; }
 .pdp__scene { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
 .pdp__scene .grass { height: 24%; }
 .pdp__sun { position: absolute; top: -12%; right: -8%; width: 34%; opacity: .9; animation: spin 60s linear infinite; }
-.pdp__scene .hero__cloud { width: 22%; }
-.pdp__scene .hero__cloud--1 { top: 8%; }
-.pdp__scene .hero__cloud--3 { top: 22%; width: 14%; }
-.pdp__scene .hero__cloud--5 { top: 40%; width: 17%; }
-.pdp__slide--scene .pdp__zoom { position: relative; z-index: 1; }
-.pdp__slide--scene .pdp__zoom img { filter: drop-shadow(0 16px 18px rgba(30, 60, 20, .25)); }
-.pdp__scene .hero__cloud { left: -25%; animation: pdp-drift 46s linear infinite; }
-.pdp__scene .hero__cloud--1 { animation-delay: -6s; }
-.pdp__scene .hero__cloud--3 { animation-duration: 60s; animation-delay: -32s; }
-.pdp__scene .hero__cloud--5 { animation-duration: 54s; animation-delay: -18s; }
+.pdp__scene .hero__cloud { width: 22%; left: -25%; animation: pdp-drift 46s linear infinite; }
+.pdp__scene .hero__cloud--1 { top: 8%; animation-delay: -6s; }
+.pdp__scene .hero__cloud--3 { top: 22%; width: 14%; animation-duration: 60s; animation-delay: -32s; }
+.pdp__scene .hero__cloud--5 { top: 40%; width: 17%; animation-duration: 54s; animation-delay: -18s; }
 @keyframes pdp-drift { from { transform: translateX(0); } to { transform: translateX(720%); } }
+.pdp__slide--scene .pdp__zoom { position: relative; z-index: 1; }
+.pdp__slide--scene .pdp__zoom img { object-position: 50% 80%; filter: drop-shadow(0 16px 18px rgba(30, 60, 20, .25)); }
 @media (prefers-reduced-motion: reduce) { .pdp__scene .hero__cloud, .pdp__sun { animation: none; } }
-.pdp__slide--scene .pdp__zoom img { object-position: 50% 80%; }
