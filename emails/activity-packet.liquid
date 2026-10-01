@@ -186,7 +186,8 @@
           <tr>
             <td align="center" style="padding:22px 20px 0;text-align:center;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:19px;color:#6F8791;">
               <p style="margin:0 0 6px;text-align:center;"><a href="{{ shop.url }}" target="_blank" style="color:#518339;font-weight:bold;text-decoration:none;">cloverstories.com</a></p>
-              <p style="margin:0;text-align:center;">You're getting this because you joined Clover's Club at {{ shop.name }}.</p>
+              <p style="margin:0 0 6px;text-align:center;">You're getting this because you joined Clover's Club at {{ shop.name }}.</p>
+              <p style="margin:0;text-align:center;">{{ unsubscribe_link }}</p>
             </td>
           </tr>
 
@@ -194,5 +195,6 @@
       </td>
     </tr>
   </table>
+  {{ open_tracking_block }}
 </body>
 </html>
