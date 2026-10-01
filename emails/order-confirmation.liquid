@@ -22,12 +22,6 @@
   {% endif %}
 {% endcapture %}
 
-{% assign has_plush = false %}
-{% for line in line_items %}
-  {% assign lt = line.title | downcase %}
-  {% if lt contains 'plush' %}{% assign has_plush = true %}{% endif %}
-{% endfor %}
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -316,33 +310,6 @@
                     </table>
                   </td>
                 </tr>
-
-                <!-- Plush cross-sell (hidden if they already bought a plush) -->
-                {% unless has_plush %}
-                <tr>
-                  <td class="px" style="padding:24px 36px 6px;font-family:'Trebuchet MS',Arial,Helvetica,sans-serif;">
-                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:#F1FAEA;border-radius:24px;">
-                      <tr>
-                        <td class="stack stack-img" width="38%" valign="middle" style="padding:20px 0 20px 20px;">
-                          <a href="{{ shop.url }}/products/clover-plush" target="_blank"><img src="https://cdn.shopify.com/s/files/1/0828/6594/6879/files/Untitleddesign-84_1a8d20d3-9079-498e-943b-ca6c509e5a6c.png?v=1785417791&amp;width=500" width="180" alt="Clover chicken plush" style="display:block;width:100%;max-width:180px;height:auto;border:0;border-radius:18px;"></a>
-                        </td>
-                        <td class="stack stack-c" valign="middle" style="padding:20px 22px 20px 18px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:22px;color:#5E5652;">
-                          <p style="margin:0 0 4px;font-family:'Trebuchet MS',Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;letter-spacing:1px;color:#518339;">NEW &middot; LIMITED STOCK</p>
-                          <p style="margin:0 0 6px;font-family:'Trebuchet MS',Arial,Helvetica,sans-serif;font-size:20px;line-height:25px;font-weight:bold;color:#2B1D14;">Give Clover a cuddle</p>
-                          <p style="margin:0 0 14px;">Our soft 8-inch Clover plush is the perfect storytime buddy, and a sweet gift for the holidays.</p>
-                          <table role="presentation" class="btn" cellpadding="0" cellspacing="0" border="0">
-                            <tr>
-                              <td align="center" bgcolor="#518339" style="text-align:center;background-color:#518339;border-radius:99px;">
-                                <a href="{{ shop.url }}/products/clover-plush" target="_blank" style="display:inline-block;background-color:#518339;border-bottom:4px solid #3A6327;padding:12px 24px;font-family:'Trebuchet MS',Arial,Helvetica,sans-serif;font-size:15px;font-weight:bold;color:#FFFFFF;text-decoration:none;border-radius:99px;">Meet the plush</a>
-                              </td>
-                            </tr>
-                          </table>
-                        </td>
-                      </tr>
-                    </table>
-                  </td>
-                </tr>
-                {% endunless %}
 
                 <!-- Sign-off -->
                 <tr>
