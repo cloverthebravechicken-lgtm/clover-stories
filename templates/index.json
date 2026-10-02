@@ -104,9 +104,10 @@
           "settings": {
             "product": "clover-book-plush-bundle",
             "title": "Book + Clover plush",
-            "subtitle": "Story time with a cuddly 8\" friend",
+            "subtitle": "Your $6.99 savings more than cover plush shipping",
             "badge": "Best gift",
-            "preview_as": "bundle"
+            "preview_as": "bundle",
+            "note": "Book ships free · plush just $4.99"
           }
         }
       },
@@ -486,7 +487,7 @@
           "type": "question",
           "settings": {
             "question": "Is shipping really free?",
-            "answer": "<p>Yes! Shipping is free on all books. You'll see your delivery options at checkout.</p>"
+            "answer": "<p>Yes, on the book! Every book ships free. Orders with Clover plush ship for a flat $4.99, and the book in your order still ships free. You'll see your delivery options at checkout.</p>"
           }
         },
         "question_4": {

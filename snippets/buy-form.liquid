@@ -11,6 +11,8 @@
   - addon_product, addon_label, addon_placeholder
   - button_label, show_buy_now, show_payment_buttons
   Offer blocks (type "offer"): product, title, subtitle, badge, layout (card/compact), preview_as
+  Optional per-offer "note" replaces the section's price note while that offer is selected
+  (e.g. plush shipping on the bundle).
   Cards show "Save $X" when the variant has a compare-at price (the bundle).
   With Theme settings → Launch preview on, an offer whose product isn't live yet (draft) still
   shows, using the preview title/price/image, but can't be added to the cart.
@@ -114,6 +116,7 @@
                   name="offer-{{ form_id }}"
                   value="{{ o_value }}"
                   data-price="{{ o_price | money }}"
+                  {% if block.settings.note != blank %}data-note="{{ block.settings.note | escape }}"{% endif %}
                   {% if o_preview %}data-preview="{{ pk }}"{% endif %}
                   {% if o_checked %}checked{% endif %}
                 >

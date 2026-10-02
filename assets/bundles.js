@@ -1,5 +1,16 @@
-/* Cart drawer: swap the book for the book + plush bundle in one tap. */
+/* Bundle & plush helpers:
+   - buy box: show the selected option's price note (e.g. plush shipping on the bundle)
+   - cart drawer: swap the book for the book + plush bundle in one tap */
 (() => {
+  document.addEventListener('change', (e) => {
+    const radio = e.target.closest('.offer input');
+    if (!radio) return;
+    const scope = radio.closest('.shopify-section') || document;
+    scope.querySelectorAll('[data-price-note]').forEach((el) => {
+      el.textContent = radio.dataset.note || el.dataset.default || '';
+    });
+  });
+
   const routes = (window.Clover && Clover.routes) || { cartAdd: '/cart/add', cartChange: '/cart/change' };
   const post = async (url, body) => {
     const res = await fetch(url + '.js', {

@@ -10,8 +10,20 @@
       {%- if cart.item_count == 0 -%}
         <div class="drawer__empty">{% render 'empty-basket' %}</div>
       {%- else -%}
-        {%- if settings.cart_perk_text != blank -%}
-          <p class="drawer__perk">{{ settings.cart_perk_text }}</p>
+        {%- comment -%} Plush shipping isn't free, so swap the perk message when the plush or bundle is in the basket. {%- endcomment -%}
+        {%- liquid
+          assign perk = settings.cart_perk_text
+          for item in cart.items
+            if settings.cart_upsell_product != blank and item.product_id == settings.cart_upsell_product.id
+              assign perk = settings.cart_perk_text_plush
+            endif
+            if settings.cart_bundle_product != blank and item.product_id == settings.cart_bundle_product.id
+              assign perk = settings.cart_perk_text_plush
+            endif
+          endfor
+        -%}
+        {%- if perk != blank -%}
+          <p class="drawer__perk">{{ perk }}</p>
         {%- endif -%}
 
         <ul class="cart-lines" role="list">

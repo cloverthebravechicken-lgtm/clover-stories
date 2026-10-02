@@ -1,0 +1,36 @@
+{%- comment -%}
+  Sky layers for the homepage hero's fall loop: warm golden light, falling leaves and a V of geese.
+  Everything fades in and out on one shared cycle (see assets/fall.css).
+{%- endcomment -%}
+<span class="fall__glow"></span>
+
+<span class="fall__geese">
+  <span class="fall__geese-bob">
+    <svg viewBox="0 0 200 80" focusable="false">
+      {%- assign geese = '20,40|44,30|68,20|92,10|44,50|68,60|92,70' | split: '|' -%}
+      {%- for g in geese -%}
+        {%- assign xy = g | split: ',' -%}
+        <g transform="translate({{ xy[0] }} {{ xy[1] }})">
+          <path class="fall__wing" style="animation-delay: -{{ forloop.index | times: 0.13 }}s" d="M0 6 Q6 0 12 6 Q18 0 24 6" fill="none" stroke="#5A4632" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+      {%- endfor -%}
+    </svg>
+  </span>
+</span>
+
+<span class="fall__leaves">
+  {%- assign colors = '#E8762D,#C8462B,#F2B33D,#B5532A,#E39B2F' | split: ',' -%}
+  {%- for i in (0..27) -%}
+    {%- liquid
+      assign lx = i | times: 37 | modulo: 100
+      assign ls = i | times: 11 | modulo: 12 | plus: 18
+      assign ld = i | times: 17 | modulo: 50 | divided_by: 10.0 | plus: 7
+      assign ldel = i | times: 29 | modulo: 100 | divided_by: 10.0
+      assign ci = i | modulo: 5
+      assign lalt = i | modulo: 2
+    -%}
+    <i class="fall__leaf{% if lalt == 1 %} fall__leaf--alt{% endif %}" style="left: {{ lx }}%; width: {{ ls }}px; animation-duration: {{ ld }}s; animation-delay: -{{ ldel }}s">
+      <svg viewBox="0 0 24 24" focusable="false"><path fill="{{ colors[ci] }}" d="M12 1 C15 5 21 6 22 12 C18 12 17 15 19 19 C15 18 13 20 12 23 C11 20 9 18 5 19 C7 15 6 12 2 12 C3 6 9 5 12 1 Z"/><path d="M12 6 V22" stroke="rgba(90,50,20,.45)" stroke-width="1.2" fill="none"/></svg>
+    </i>
+  {%- endfor -%}
+</span>
