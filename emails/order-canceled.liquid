@@ -245,12 +245,3 @@
   </table>
 </body>
 </html>
-
-{%- if billing_address.country_code == 'DE' or billing_address.country_code == 'DK' -%}
-  {%- if shop.terms_of_service.body != blank -%}
-    {{ shop.terms_of_service | attach_as_pdf: "Terms of service" }}
-  {%- endif -%}
-  {%- if shop.refund_policy.body != blank -%}
-    {{ shop.refund_policy | attach_as_pdf: "Refund policy" }}
-  {%- endif -%}
-{%- endif -%}
