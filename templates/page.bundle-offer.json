@@ -343,13 +343,33 @@
             "title": "A bedtime buddy",
             "text": "Read the story, then Clover stays for snuggles after lights out."
           }
+        },
+        "b5": {
+          "type": "benefit",
+          "settings": {
+            "icon": "book",
+            "accent": "#518339",
+            "title": "A keepsake hardcover",
+            "text": "A premium hardcover with hand-drawn illustrations, made to be treasured for years."
+          }
+        },
+        "b6": {
+          "type": "benefit",
+          "settings": {
+            "icon": "pencil",
+            "accent": "#FE924E",
+            "title": "Personalized & signed",
+            "text": "Add an inscription and Melanie will sign the book to your little one by name."
+          }
         }
       },
       "block_order": [
         "b1",
         "b2",
         "b3",
-        "b4"
+        "b4",
+        "b5",
+        "b6"
       ]
     },
     "faq": {
