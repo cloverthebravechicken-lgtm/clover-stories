@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Melanie's Email Signature</title>
+<style>
+  body { margin: 0; background: #EAFBFF; font-family: Arial, Helvetica, sans-serif; color: #2B1D14; }
+  .wrap { max-width: 640px; margin: 0 auto; padding: 32px 16px 48px; }
+  h1 { font-family: 'Trebuchet MS', Arial, sans-serif; font-size: 24px; margin: 0 0 6px; }
+  .lead { margin: 0 0 20px; color: #5E5652; font-size: 15px; line-height: 23px; }
+  .card { background: #FFFFFF; border-radius: 20px; padding: 28px 24px; box-shadow: 0 10px 26px rgba(43,29,20,.08); }
+  .card .label { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #8A817C; margin: 0 0 14px; }
+  .mock { color: #5E5652; font-size: 14px; margin: 0 0 18px; line-height: 21px; }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 22px; }
+  button { font: bold 16px 'Trebuchet MS', Arial, sans-serif; color: #fff; background: #FF5757; border: 0; border-bottom: 4px solid #C62A1E; border-radius: 99px; padding: 13px 26px; cursor: pointer; }
+  button:focus-visible { outline: 3px solid #518339; outline-offset: 3px; }
+  #status { font-size: 14px; color: #518339; font-weight: bold; }
+  .steps { margin-top: 26px; font-size: 15px; line-height: 23px; color: #5E5652; }
+  .steps h2 { font-family: 'Trebuchet MS', Arial, sans-serif; font-size: 18px; color: #2B1D14; margin: 18px 0 6px; }
+  .steps ol { margin: 0; padding-left: 20px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Your Clover email signature</h1>
+  <p class="lead">Click "Copy signature", then paste it into your email app's signature settings. The steps for Gmail, Apple Mail and Outlook are below.</p>
+
+  <div class="card">
+    <p class="label">Preview</p>
+    <p class="mock">Hi there,<br>Thanks so much for reaching out! I'll get back to you soon.</p>
+
+    <!-- SIGNATURE START -->
+    <div id="signature">
+<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;color:#2B1D14;">
+  <tr>
+    <td style="padding:0 0 10px 0;">
+      <img src="https://cdn.shopify.com/s/files/1/0828/6594/6879/files/email-signature.png?v=1790891320&amp;width=360" width="150" alt="Melanie" style="display:block;width:150px;height:auto;border:0;">
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:0;">
+      <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
+        <tr>
+          <td valign="middle" style="padding:0 14px 0 0;">
+            <a href="https://cloverstories.com" target="_blank" style="text-decoration:none;"><img src="https://cdn.shopify.com/s/files/1/0828/6594/6879/files/Written_by_Melanie_Dieas_-_2_97c8c5fe-2952-4c29-b9c5-003b8a38daf7.png?v=1790787242&amp;width=200" width="72" height="72" alt="Clover the chicken" style="display:block;width:72px;height:72px;border:0;border-radius:50%;background-color:#D6F4FF;"></a>
+          </td>
+          <td valign="middle" style="padding:0 0 0 14px;border-left:2px dashed #FFB800;">
+            <p style="margin:0;font-family:'Trebuchet MS',Arial,Helvetica,sans-serif;font-size:16px;line-height:21px;font-weight:bold;color:#2B1D14;">Melanie</p>
+            <p style="margin:0 0 6px;font-size:13px;line-height:18px;color:#5E5652;">Author of <em style="color:#FF5757;font-style:italic;">Clover, the Brave Chicken</em></p>
+            <p style="margin:0;font-size:13px;line-height:19px;color:#5E5652;">
+              <a href="https://cloverstories.com" target="_blank" style="color:#518339;font-weight:bold;text-decoration:none;">cloverstories.com</a>
+              <span style="color:#C9BFB8;">&nbsp;|&nbsp;</span>
+              <a href="mailto:hello@cloverstories.com" style="color:#518339;text-decoration:none;">hello@cloverstories.com</a>
+            </p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td style="padding:12px 0 0 0;">
+      <a href="https://cloverstories.com/products/clover-the-brave-chicken" target="_blank" style="display:inline-block;background-color:#FFF3ED;color:#C62A1E;font-family:'Trebuchet MS',Arial,Helvetica,sans-serif;font-size:12px;font-weight:bold;text-decoration:none;padding:6px 12px;border-radius:99px;">&#128020; The bravest thing you can be is yourself &rarr;</a>
+    </td>
+  </tr>
+</table>
+    </div>
+    <!-- SIGNATURE END -->
+
+    <div class="actions">
+      <button type="button" id="copyBtn">Copy signature</button>
+      <span id="status" role="status"></span>
+    </div>
+  </div>
+
+  <div class="steps">
+    <h2>Gmail</h2>
+    <ol>
+      <li>Click the gear icon, then <strong>See all settings</strong>.</li>
+      <li>On the General tab, scroll to <strong>Signature</strong> and click <strong>Create new</strong>.</li>
+      <li>Paste into the signature box (Cmd+V on Mac, Ctrl+V on Windows).</li>
+      <li>Scroll to the bottom and click <strong>Save Changes</strong>.</li>
+    </ol>
+    <h2>Apple Mail (Mac)</h2>
+    <ol>
+      <li>Open Mail, then <strong>Settings</strong> &rarr; <strong>Signatures</strong>.</li>
+      <li>Click <strong>+</strong>, then paste into the right-hand box.</li>
+      <li>Untick "Always match my default message font" so the colors stay.</li>
+    </ol>
+    <h2>Outlook</h2>
+    <ol>
+      <li>Go to <strong>Settings</strong> &rarr; <strong>Mail</strong> &rarr; <strong>Compose and reply</strong>.</li>
+      <li>Paste into the signature box and click <strong>Save</strong>.</li>
+    </ol>
+  </div>
+</div>
+<script>
+  document.getElementById('copyBtn').addEventListener('click', async function () {
+    var sig = document.getElementById('signature');
+    var status = document.getElementById('status');
+    try {
+      var html = sig.innerHTML;
+      var item = new ClipboardItem({
+        'text/html': new Blob([html], { type: 'text/html' }),
+        'text/plain': new Blob([sig.innerText], { type: 'text/plain' })
+      });
+      await navigator.clipboard.write([item]);
+      status.textContent = 'Copied! Now paste it into your signature settings.';
+    } catch (e) {
+      var range = document.createRange();
+      range.selectNodeContents(sig);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      try { document.execCommand('copy'); status.textContent = 'Copied! Now paste it into your signature settings.'; }
+      catch (e2) { status.textContent = 'The signature is selected. Press Cmd+C (Mac) or Ctrl+C (Windows) to copy it.'; }
+    }
+  });
+</script>
+</body>
+</html>
