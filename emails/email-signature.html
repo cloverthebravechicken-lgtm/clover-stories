@@ -9,13 +9,14 @@
   .wrap { max-width: 640px; margin: 0 auto; padding: 32px 16px 48px; }
   h1 { font-family: 'Trebuchet MS', Arial, sans-serif; font-size: 24px; margin: 0 0 6px; }
   .lead { margin: 0 0 20px; color: #5E5652; font-size: 15px; line-height: 23px; }
+  .card + .card { margin-top: 18px; }
   .card { background: #FFFFFF; border-radius: 20px; padding: 28px 24px; box-shadow: 0 10px 26px rgba(43,29,20,.08); }
   .card .label { font-size: 12px; letter-spacing: 1px; text-transform: uppercase; color: #8A817C; margin: 0 0 14px; }
   .mock { color: #5E5652; font-size: 14px; margin: 0 0 18px; line-height: 21px; }
   .actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 22px; }
   button { font: bold 16px 'Trebuchet MS', Arial, sans-serif; color: #fff; background: #FF5757; border: 0; border-bottom: 4px solid #C62A1E; border-radius: 99px; padding: 13px 26px; cursor: pointer; }
   button:focus-visible { outline: 3px solid #518339; outline-offset: 3px; }
-  #status { font-size: 14px; color: #518339; font-weight: bold; }
+  .status { font-size: 14px; color: #518339; font-weight: bold; }
   .steps { margin-top: 26px; font-size: 15px; line-height: 23px; color: #5E5652; }
   .steps h2 { font-family: 'Trebuchet MS', Arial, sans-serif; font-size: 18px; color: #2B1D14; margin: 18px 0 6px; }
   .steps ol { margin: 0; padding-left: 20px; }
@@ -24,14 +25,13 @@
 <body>
 <div class="wrap">
   <h1>Your Clover email signature</h1>
-  <p class="lead">Click "Copy signature", then paste it into your email app's signature settings. The steps for Gmail, Apple Mail and Outlook are below.</p>
+  <p class="lead">Pick the one you like, click "Copy this signature", then paste it into your email app's signature settings. The steps for Gmail, Apple Mail and Outlook are below.</p>
 
   <div class="card">
-    <p class="label">Preview</p>
+    <p class="label">Option 1: Clover</p>
     <p class="mock">Hi there,<br>Thanks so much for reaching out! I'll get back to you soon.</p>
-
     <!-- SIGNATURE START -->
-    <div id="signature">
+    <div class="sig" id="sigClover">
 <table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;color:#2B1D14;">
   <tr>
     <td valign="middle" style="padding:0 16px 0 0;">
@@ -52,8 +52,38 @@
     <!-- SIGNATURE END -->
 
     <div class="actions">
-      <button type="button" id="copyBtn">Copy signature</button>
-      <span id="status" role="status"></span>
+      <button type="button" data-copy="sigClover">Copy this signature</button>
+      <span class="status" role="status"></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="label">Option 2: Your book</p>
+    <p class="mock">Hi there,<br>Thanks so much for reaching out! I'll get back to you soon.</p>
+    <!-- SIGNATURE START -->
+    <div class="sig" id="sigBook">
+<table cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;font-family:Arial,Helvetica,sans-serif;color:#2B1D14;">
+  <tr>
+    <td valign="middle" style="padding:0 16px 0 0;">
+      <a href="https://cloverstories.com/products/clover-the-brave-chicken" target="_blank" style="text-decoration:none;"><img src="https://cdn.shopify.com/s/files/1/0828/6594/6879/files/clovercoverupdated_merged_2.jpg?v=1783625495&amp;width=200" width="60" alt="Clover, the Brave Chicken book cover" style="display:block;width:60px;height:auto;border:0;border-radius:4px;"></a>
+    </td>
+    <td valign="middle" style="padding:2px 0 2px 16px;border-left:1px solid #E6DDD6;">
+      <p style="margin:0;font-family:'Trebuchet MS',Arial,Helvetica,sans-serif;font-size:15px;line-height:20px;font-weight:bold;color:#2B1D14;">Melanie</p>
+      <p style="margin:0 0 6px;font-size:13px;line-height:18px;color:#6F6560;">Author, <em>Clover, the Brave Chicken</em></p>
+      <p style="margin:0;font-size:13px;line-height:18px;">
+        <a href="https://cloverstories.com" target="_blank" style="color:#5E5652;text-decoration:none;">cloverstories.com</a>
+        <span style="color:#CFC5BE;">&nbsp;&middot;&nbsp;</span>
+        <a href="mailto:hello@cloverstories.com" style="color:#5E5652;text-decoration:none;">hello@cloverstories.com</a>
+      </p>
+    </td>
+  </tr>
+</table>
+    </div>
+    <!-- SIGNATURE END -->
+
+    <div class="actions">
+      <button type="button" data-copy="sigBook">Copy this signature</button>
+      <span class="status" role="status"></span>
     </div>
   </div>
 
@@ -79,26 +109,27 @@
   </div>
 </div>
 <script>
-  document.getElementById('copyBtn').addEventListener('click', async function () {
-    var sig = document.getElementById('signature');
-    var status = document.getElementById('status');
-    try {
-      var html = sig.innerHTML;
-      var item = new ClipboardItem({
-        'text/html': new Blob([html], { type: 'text/html' }),
-        'text/plain': new Blob([sig.innerText], { type: 'text/plain' })
-      });
-      await navigator.clipboard.write([item]);
-      status.textContent = 'Copied! Now paste it into your signature settings.';
-    } catch (e) {
-      var range = document.createRange();
-      range.selectNodeContents(sig);
-      var sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
-      try { document.execCommand('copy'); status.textContent = 'Copied! Now paste it into your signature settings.'; }
-      catch (e2) { status.textContent = 'The signature is selected. Press Cmd+C (Mac) or Ctrl+C (Windows) to copy it.'; }
-    }
+  document.querySelectorAll('[data-copy]').forEach(function (btn) {
+    btn.addEventListener('click', async function () {
+      var sig = document.getElementById(btn.getAttribute('data-copy'));
+      var status = btn.parentNode.querySelector('.status');
+      try {
+        var item = new ClipboardItem({
+          'text/html': new Blob([sig.innerHTML], { type: 'text/html' }),
+          'text/plain': new Blob([sig.innerText], { type: 'text/plain' })
+        });
+        await navigator.clipboard.write([item]);
+        status.textContent = 'Copied! Now paste it into your signature settings.';
+      } catch (e) {
+        var range = document.createRange();
+        range.selectNodeContents(sig);
+        var sel = window.getSelection();
+        sel.removeAllRanges();
+        sel.addRange(range);
+        try { document.execCommand('copy'); status.textContent = 'Copied! Now paste it into your signature settings.'; }
+        catch (e2) { status.textContent = 'The signature is selected. Press Cmd+C (Mac) or Ctrl+C (Windows) to copy it.'; }
+      }
+    });
   });
 </script>
 </body>
