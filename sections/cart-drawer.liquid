@@ -52,10 +52,61 @@
 
         {% render 'inscription-upsell' %}
 
+        {%- comment -%}
+          Bundle upgrade: when the book is in the basket without the bundle, offer to swap it
+          for the bundle for the price difference, pictured with the plush (the part they're adding).
+          While it shows, the plush upsell is hidden.
+        {%- endcomment -%}
         {%- liquid
+          assign bundle = settings.cart_bundle_product
+          assign bundle_book = settings.cart_bundle_book
           assign upsell = settings.cart_upsell_product
+          assign book_item = nil
+          assign has_bundle = false
+          assign has_plush = false
+          for item in cart.items
+            if upsell != blank and item.product_id == upsell.id
+              assign has_plush = true
+            endif
+            if bundle_book != blank and item.product_id == bundle_book.id and book_item == nil
+              assign book_item = item
+            endif
+            if bundle != blank and item.product_id == bundle.id
+              assign has_bundle = true
+            endif
+          endfor
+          assign up_mode = ''
+          if book_item and has_bundle == false and has_plush == false
+            if bundle != blank and bundle.available
+              assign up_mode = 'live'
+              assign up_variant = bundle.selected_or_first_available_variant
+              assign up_price = up_variant.price
+              assign up_img = ''
+              if upsell != blank and upsell.featured_image
+                assign up_img = upsell.featured_image | image_url: width: 160
+              elsif bundle.featured_image
+                assign up_img = bundle.featured_image | image_url: width: 160
+              endif
+            elsif settings.launch_preview
+              assign up_mode = 'preview'
+              capture up_price
+                render 'preview-field', key: 'bundle', field: 'cents'
+              endcapture
+              assign up_price = up_price | plus: 0
+              capture up_img
+                render 'preview-field', key: 'plush', field: 'image_url'
+              endcapture
+            endif
+          endif
+          if up_mode != ''
+            assign up_diff = up_price | minus: book_item.final_price
+            if up_diff <= 0
+              assign up_mode = ''
+            endif
+          endif
+
           assign show_upsell = false
-          if upsell != blank and upsell.available
+          if upsell != blank and upsell.available and up_mode == '' and has_bundle == false
             assign show_upsell = true
             for item in cart.items
               if item.product_id == upsell.id
@@ -64,6 +115,26 @@
             endfor
           endif
         -%}
+        {%- if up_mode != '' -%}
+          {%- capture up_diff_text -%}<strong>{{ up_diff | money_without_trailing_zeros }}</strong>{%- endcapture -%}
+          <div class="upsell upsell--bundle">
+            <p class="upsell__heading">{{ settings.cart_bundle_heading }}</p>
+            <div class="upsell__card">
+              {%- if up_img != blank -%}
+                <img src="{{ up_img }}" alt="" width="72" height="72" loading="lazy" class="upsell__img">
+              {%- endif -%}
+              <div class="upsell__info">
+                <p class="upsell__title">{{ settings.cart_bundle_text | escape | replace: '[diff]', up_diff_text }}</p>
+                <p class="upsell__price">Book + Clover plush for {{ up_price | money }}</p>
+              </div>
+              {%- if up_mode == 'live' -%}
+                <button type="button" class="btn btn--primary btn--sm" data-bundle-upgrade data-key="{{ book_item.key }}" data-qty="{{ book_item.quantity }}" data-variant="{{ up_variant.id }}">{{ settings.cart_bundle_button }}</button>
+              {%- else -%}
+                <button type="button" class="btn btn--primary btn--sm" data-preview-add>{{ settings.cart_bundle_button }}</button>
+              {%- endif -%}
+            </div>
+          </div>
+        {%- endif -%}
         {%- if show_upsell -%}
           {%- assign uv = upsell.selected_or_first_available_variant -%}
           <div class="upsell">
@@ -79,7 +150,7 @@
               <button type="button" class="btn btn--primary btn--sm" data-quick-add="{{ uv.id }}">Add</button>
             </div>
           </div>
-        {%- elsif settings.launch_preview -%}
+        {%- elsif settings.launch_preview and up_mode == '' and has_bundle == false -%}
           {%- liquid
             assign upsell_live = false
             if upsell != blank and upsell.available

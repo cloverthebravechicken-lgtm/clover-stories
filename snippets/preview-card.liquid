@@ -4,6 +4,12 @@
 {%- endcomment -%}
 {%- capture pv_img -%}{% render 'preview-field', key: key, field: 'image_url' %}{%- endcapture -%}
 {%- capture pv_title -%}{% render 'preview-field', key: key, field: 'title' %}{%- endcapture -%}
+{%- capture pv_cents -%}{% render 'preview-field', key: key, field: 'cents' %}{%- endcapture -%}
+{%- capture pv_compare -%}{% render 'preview-field', key: key, field: 'compare_cents' %}{%- endcapture -%}
+{%- liquid
+  assign pv_cents = pv_cents | plus: 0
+  assign pv_compare = pv_compare | plus: 0
+-%}
 <div class="pcard card pcard--preview">
   {%- if badge != blank -%}<span class="pcard__badge">{{ badge }}</span>{%- endif -%}
   <span class="pcard__media">
@@ -13,7 +19,13 @@
   </span>
   <div class="pcard__body">
     <span class="pcard__title">{{ pv_title }}</span>
-    <span class="price"><span class="price__now">{% render 'preview-field', key: key, field: 'price' %}</span></span>
+    <span class="price">
+      <span class="price__now">{{ pv_cents | money }}</span>
+      {%- if pv_compare > pv_cents -%}
+        <s class="price__was">{{ pv_compare | money }}</s>
+        <span class="price__save">Save {{ pv_compare | minus: pv_cents | money_without_trailing_zeros }}</span>
+      {%- endif -%}
+    </span>
     <button type="button" class="btn btn--primary btn--block" data-preview-add>Add to cart</button>
   </div>
 </div>

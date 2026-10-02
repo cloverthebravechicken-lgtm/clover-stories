@@ -10,7 +10,8 @@
   Section settings used:
   - addon_product, addon_label, addon_placeholder
   - button_label, show_buy_now, show_payment_buttons
-  Offer blocks (type "offer"): product, title, subtitle, badge, preview_as
+  Offer blocks (type "offer"): product, title, subtitle, badge, layout (card/compact), preview_as
+  Cards show "Save $X" when the variant has a compare-at price (the bundle).
   With Theme settings → Launch preview on, an offer whose product isn't live yet (draft) still
   shows, using the preview title/price/image, but can't be added to the cart.
 {%- endcomment -%}
@@ -50,65 +51,92 @@
         <legend class="offers__legend">Choose your Clover</legend>
         {%- for block in section.blocks -%}
           {%- if block.type == 'offer' -%}
-            {%- assign op = block.settings.product -%}
-            {%- if op != blank and op.available -%}
-              {%- assign ov = op.selected_or_first_available_variant -%}
-              <label class="offer{% if block.settings.badge != blank %} offer--badged{% endif %}" {{ block.shopify_attributes }}>
+            {%- liquid
+              assign op = block.settings.product
+              assign o_live = false
+              assign o_preview = false
+              if op != blank and op.available
+                assign o_live = true
+              elsif settings.launch_preview and block.settings.preview_as != blank and block.settings.preview_as != 'none'
+                assign o_preview = true
+              endif
+            -%}
+            {%- if o_live or o_preview -%}
+              {%- liquid
+                assign o_compact = false
+                if block.settings.layout == 'compact'
+                  assign o_compact = true
+                endif
+                assign o_checked = false
+                assign o_img = blank
+                if o_live
+                  assign ov = op.selected_or_first_available_variant
+                  assign o_value = ov.id
+                  assign o_price = ov.price
+                  assign o_compare = ov.compare_at_price | default: 0
+                  assign o_title = block.settings.title | default: op.title
+                  if op.featured_image
+                    assign o_img = op.featured_image | image_url: width: 160
+                  endif
+                  if op.id == checked_id
+                    assign o_checked = true
+                  endif
+                else
+                  assign pk = block.settings.preview_as
+                  assign o_value = ''
+                  capture o_price
+                    render 'preview-field', key: pk, field: 'cents'
+                  endcapture
+                  capture o_compare
+                    render 'preview-field', key: pk, field: 'compare_cents'
+                  endcapture
+                  assign o_price = o_price | plus: 0
+                  assign o_compare = o_compare | plus: 0
+                  capture o_title
+                    if block.settings.title != blank
+                      echo block.settings.title
+                    else
+                      render 'preview-field', key: pk, field: 'title'
+                    endif
+                  endcapture
+                  capture o_img
+                    render 'preview-field', key: pk, field: 'image_url'
+                  endcapture
+                endif
+                assign o_save = 0
+                if o_compare > o_price
+                  assign o_save = o_compare | minus: o_price
+                endif
+              -%}
+              <label class="offer{% if o_compact %} offer--compact{% endif %}{% if o_preview %} offer--preview{% endif %}{% if block.settings.badge != blank and o_compact == false %} offer--badged{% endif %}" {{ block.shopify_attributes }}>
                 <input
                   type="radio"
                   name="offer-{{ form_id }}"
-                  value="{{ ov.id }}"
-                  data-price="{{ ov.price | money }}"
-                  {% if op.id == checked_id %}checked{% endif %}
+                  value="{{ o_value }}"
+                  data-price="{{ o_price | money }}"
+                  {% if o_preview %}data-preview="{{ pk }}"{% endif %}
+                  {% if o_checked %}checked{% endif %}
                 >
-                {%- if block.settings.badge != blank -%}
+                {%- if block.settings.badge != blank and o_compact == false -%}
                   <span class="offer__badge">{{ block.settings.badge }}</span>
                 {%- endif -%}
                 <span class="offer__radio" aria-hidden="true"></span>
-                {%- if op.featured_image -%}
-                  <span class="offer__img">
-                    {{ op.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: op.title, width: 80, height: 80 }}
-                  </span>
+                {%- if o_img != blank and o_compact == false -%}
+                  <span class="offer__img"><img src="{{ o_img }}" alt="" width="80" height="80" loading="lazy"></span>
                 {%- endif -%}
                 <span class="offer__body">
-                  <span class="offer__title">{{ block.settings.title | default: op.title }}</span>
+                  <span class="offer__title">{{ o_title }}</span>
                   {%- if block.settings.subtitle != blank -%}
                     <span class="offer__sub">{{ block.settings.subtitle }}</span>
                   {%- endif -%}
                 </span>
                 <span class="offer__price">
-                  <strong>{{ ov.price | money }}</strong>
-                  {%- if ov.compare_at_price > ov.price -%}
-                    <s>{{ ov.compare_at_price | money }}</s>
+                  <strong>{{ o_price | money }}</strong>
+                  {%- if o_save > 0 and o_compact == false -%}
+                    <s>{{ o_compare | money }}</s>
+                    <span class="offer__save">Save {{ o_save | money }}</span>
                   {%- endif -%}
                 </span>
-              </label>
-            {%- elsif settings.launch_preview and block.settings.preview_as != blank and block.settings.preview_as != 'none' -%}
-              {%- liquid
-                assign pk = block.settings.preview_as
-                capture pv_price
-                  render 'preview-field', key: pk, field: 'price'
-                endcapture
-                capture pv_img
-                  render 'preview-field', key: pk, field: 'image_url'
-                endcapture
-              -%}
-              <label class="offer offer--preview{% if block.settings.badge != blank %} offer--badged{% endif %}" {{ block.shopify_attributes }}>
-                <input type="radio" name="offer-{{ form_id }}" value="" data-price="{{ pv_price | escape }}" data-preview="{{ pk }}">
-                {%- if block.settings.badge != blank -%}
-                  <span class="offer__badge">{{ block.settings.badge }}</span>
-                {%- endif -%}
-                <span class="offer__radio" aria-hidden="true"></span>
-                {%- if pv_img != blank -%}
-                  <span class="offer__img"><img src="{{ pv_img }}" alt="" width="80" height="80" loading="lazy"></span>
-                {%- endif -%}
-                <span class="offer__body">
-                  <span class="offer__title">{% if block.settings.title != blank %}{{ block.settings.title }}{% else %}{% render 'preview-field', key: pk, field: 'title' %}{% endif %}</span>
-                  {%- if block.settings.subtitle != blank -%}
-                    <span class="offer__sub">{{ block.settings.subtitle }}</span>
-                  {%- endif -%}
-                </span>
-                <span class="offer__price"><strong>{{ pv_price }}</strong></span>
               </label>
             {%- endif -%}
           {%- endif -%}

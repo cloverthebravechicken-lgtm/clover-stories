@@ -23,7 +23,10 @@
     "preview_plush_price": "19.99",
     "preview_bundle_image": "shopify://shop_images/Untitleddesign-87.png",
     "preview_bundle_title": "Clover Book & Plush Bundle",
-    "preview_bundle_price": "29.99"
+    "preview_bundle_price": "29.99",
+    "preview_bundle_compare_price": "36.98",
+    "cart_bundle_book": "clover-the-brave-chicken",
+    "cart_bundle_product": "clover-book-plush-bundle"
   },
   "presets": {
     "Default": {}

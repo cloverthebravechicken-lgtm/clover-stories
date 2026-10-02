@@ -176,6 +176,43 @@
         "default": "Make storytime extra snuggly"
       },
       {
+        "type": "header",
+        "content": "Bundle upgrade"
+      },
+      {
+        "type": "paragraph",
+        "content": "When the book is in the basket on its own, offer to swap it for the bundle for the difference in price. Replaces the plush upsell while it shows."
+      },
+      {
+        "type": "product",
+        "id": "cart_bundle_book",
+        "label": "Book"
+      },
+      {
+        "type": "product",
+        "id": "cart_bundle_product",
+        "label": "Bundle"
+      },
+      {
+        "type": "text",
+        "id": "cart_bundle_heading",
+        "label": "Heading",
+        "default": "Make it the bundle 🎁"
+      },
+      {
+        "type": "text",
+        "id": "cart_bundle_text",
+        "label": "Text",
+        "default": "Add Clover plush for just [diff] more",
+        "info": "[diff] is replaced with the price difference."
+      },
+      {
+        "type": "text",
+        "id": "cart_bundle_button",
+        "label": "Button",
+        "default": "Upgrade"
+      },
+      {
         "type": "text",
         "id": "empty_cart_title",
         "label": "Empty cart title",
@@ -269,6 +306,12 @@
         "id": "preview_bundle_price",
         "label": "Price",
         "default": "29.99"
+      },
+      {
+        "type": "text",
+        "id": "preview_bundle_compare_price",
+        "label": "Compare-at price (for the \"Save\" tag)",
+        "default": "36.98"
       }
     ]
   },

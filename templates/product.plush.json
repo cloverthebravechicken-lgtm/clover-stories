@@ -33,9 +33,33 @@
             "content": "<p>Every order includes a free 10-page printable activity packet and a parent & teacher discussion sheet, delivered to your inbox.</p>",
             "open": false
           }
+        },
+        "offer_plush": {
+          "type": "offer",
+          "settings": {
+            "product": "clover-plush",
+            "title": "Clover plush",
+            "subtitle": "Already have the book? Bring Clover to life",
+            "badge": "",
+            "layout": "card",
+            "preview_as": "plush"
+          }
+        },
+        "offer_bundle": {
+          "type": "offer",
+          "settings": {
+            "product": "clover-book-plush-bundle",
+            "title": "Book + Clover plush",
+            "subtitle": "New to Clover? Get both and save",
+            "badge": "Best value",
+            "layout": "card",
+            "preview_as": "bundle"
+          }
         }
       },
       "block_order": [
+        "offer_plush",
+        "offer_bundle",
         "description_1",
         "collapsible_2"
       ]

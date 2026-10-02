@@ -60,11 +60,23 @@
             "content": "<p>Shipping is free on all books. Every order also includes a free 10-page printable activity packet and a parent & teacher discussion sheet, delivered to your inbox.</p>",
             "open": false
           }
+        },
+        "offer_6": {
+          "type": "offer",
+          "settings": {
+            "product": "clover-plush",
+            "title": "Already have the book? Get Clover plush on her own",
+            "subtitle": "",
+            "badge": "",
+            "layout": "compact",
+            "preview_as": "plush"
+          }
         }
       },
       "block_order": [
         "offer_1",
         "offer_2",
+        "offer_6",
         "description_3",
         "collapsible_4",
         "collapsible_5"

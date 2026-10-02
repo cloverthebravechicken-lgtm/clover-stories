@@ -61,7 +61,9 @@
     </style>
 
     {{ 'theme.css' | asset_url | stylesheet_tag }}
+    {{ 'bundles.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'theme.js' | asset_url }}" defer></script>
+    <script src="{{ 'bundles.js' | asset_url }}" defer></script>
     {%- if settings.launch_preview -%}
       <script>window.CloverPreviewMessage = {{ settings.preview_message | json }};</script>
       <script src="{{ 'launch-preview.js' | asset_url }}" defer></script>
