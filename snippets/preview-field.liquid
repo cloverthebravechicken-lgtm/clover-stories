@@ -1,0 +1,27 @@
+{%- comment -%}
+  Launch preview: prints one field of a not-yet-live product from Theme settings → Launch preview.
+  Usage: {% render 'preview-field', key: 'plush', field: 'title' %}
+  - key: 'plush' or 'bundle'
+  - field: 'title', 'price' (formatted money) or 'image_url'
+{%- endcomment -%}
+{%- liquid
+  if key == 'bundle'
+    assign pv_title = settings.preview_bundle_title
+    assign pv_price = settings.preview_bundle_price
+    assign pv_image = settings.preview_bundle_image
+  else
+    assign pv_title = settings.preview_plush_title
+    assign pv_price = settings.preview_plush_price
+    assign pv_image = settings.preview_plush_image
+  endif
+  case field
+    when 'title'
+      echo pv_title | escape
+    when 'price'
+      echo pv_price | times: 100 | round | money
+    when 'image_url'
+      if pv_image != blank
+        echo pv_image | image_url: width: 800
+      endif
+  endcase
+-%}

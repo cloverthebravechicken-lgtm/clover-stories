@@ -1,0 +1,19 @@
+{%- comment -%}
+  Launch preview version of the product card, for a product that's still a draft.
+  Usage: {% render 'preview-card', key: 'plush', badge: 'New!' %}
+{%- endcomment -%}
+{%- capture pv_img -%}{% render 'preview-field', key: key, field: 'image_url' %}{%- endcapture -%}
+{%- capture pv_title -%}{% render 'preview-field', key: key, field: 'title' %}{%- endcapture -%}
+<div class="pcard card pcard--preview">
+  {%- if badge != blank -%}<span class="pcard__badge">{{ badge }}</span>{%- endif -%}
+  <span class="pcard__media">
+    {%- if pv_img != blank -%}
+      <img src="{{ pv_img }}" alt="{{ pv_title }}" width="800" height="800" loading="lazy">
+    {%- endif -%}
+  </span>
+  <div class="pcard__body">
+    <span class="pcard__title">{{ pv_title }}</span>
+    <span class="price"><span class="price__now">{% render 'preview-field', key: key, field: 'price' %}</span></span>
+    <button type="button" class="btn btn--primary btn--block" data-preview-add>Add to cart</button>
+  </div>
+</div>

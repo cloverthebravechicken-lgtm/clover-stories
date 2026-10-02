@@ -6,7 +6,11 @@
     </div>
     <div class="pcards__grid">
       {%- for block in section.blocks -%}
-        {%- if block.settings.product != blank -%}
+        {%- if block.settings.product != blank and block.settings.product.available -%}
+          <div {{ block.shopify_attributes }}>{% render 'product-card', product: block.settings.product, badge: block.settings.badge %}</div>
+        {%- elsif settings.launch_preview and block.settings.preview_as != blank and block.settings.preview_as != 'none' -%}
+          <div {{ block.shopify_attributes }}>{% render 'preview-card', key: block.settings.preview_as, badge: block.settings.badge %}</div>
+        {%- elsif block.settings.product != blank -%}
           <div {{ block.shopify_attributes }}>{% render 'product-card', product: block.settings.product, badge: block.settings.badge %}</div>
         {%- endif -%}
       {%- endfor -%}
@@ -28,7 +32,8 @@
       "name": "Product",
       "settings": [
         { "type": "product", "id": "product", "label": "Product" },
-        { "type": "text", "id": "badge", "label": "Badge" }
+        { "type": "text", "id": "badge", "label": "Badge" },
+        { "type": "select", "id": "preview_as", "label": "Launch preview: show as", "default": "none", "options": [{ "value": "none", "label": "Nothing" }, { "value": "plush", "label": "Clover Plush" }, { "value": "bundle", "label": "Book & Plush Bundle" }], "info": "Used while the product is still a draft and Theme settings → Launch preview is on." }
       ]
     }
   ],

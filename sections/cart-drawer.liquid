@@ -79,6 +79,31 @@
               <button type="button" class="btn btn--primary btn--sm" data-quick-add="{{ uv.id }}">Add</button>
             </div>
           </div>
+        {%- elsif settings.launch_preview -%}
+          {%- liquid
+            assign upsell_live = false
+            if upsell != blank and upsell.available
+              assign upsell_live = true
+            endif
+            capture pv_img
+              render 'preview-field', key: 'plush', field: 'image_url'
+            endcapture
+          -%}
+          {%- unless upsell_live -%}
+            <div class="upsell">
+              <p class="upsell__heading">{{ settings.cart_upsell_heading }}</p>
+              <div class="upsell__card">
+                {%- if pv_img != blank -%}
+                  <img src="{{ pv_img }}" alt="" width="72" height="72" loading="lazy" class="upsell__img">
+                {%- endif -%}
+                <div class="upsell__info">
+                  <p class="upsell__title">{% render 'preview-field', key: 'plush', field: 'title' %}</p>
+                  <p class="upsell__price">{% render 'preview-field', key: 'plush', field: 'price' %}</p>
+                </div>
+                <button type="button" class="btn btn--primary btn--sm" data-preview-add>Add</button>
+              </div>
+            </div>
+          {%- endunless -%}
         {%- endif -%}
       {%- endif -%}
     </div>

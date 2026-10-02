@@ -1,0 +1,95 @@
+{%- comment -%}
+  Night-time layers for the homepage hero's holiday loop: dark sky, stars, moon,
+  falling snow and Santa's sleigh. Everything fades in and out on one shared cycle
+  (see assets/holiday.css), so the hero goes sunny → snowy night → sunny again.
+{%- endcomment -%}
+<span class="hol__night"></span>
+
+<span class="hol__stars">
+  {%- for i in (0..27) -%}
+    {%- liquid
+      assign sx = i | times: 37 | modulo: 100
+      assign sy = i | times: 23 | modulo: 52 | plus: 2
+      assign ss = i | modulo: 3 | plus: 2
+      assign sd = i | times: 7 | modulo: 30 | divided_by: 10.0
+    -%}
+    <i style="left: {{ sx }}%; top: {{ sy }}%; width: {{ ss }}px; height: {{ ss }}px; animation-delay: -{{ sd }}s"></i>
+  {%- endfor -%}
+</span>
+
+<span class="hol__moon">
+  <svg viewBox="0 0 120 120" focusable="false">
+    <circle cx="60" cy="60" r="44" fill="#FFF6D6"/>
+    <circle cx="44" cy="48" r="8" fill="#F1E3B2"/>
+    <circle cx="72" cy="74" r="11" fill="#F1E3B2"/>
+    <circle cx="76" cy="40" r="5" fill="#F1E3B2"/>
+  </svg>
+</span>
+
+<span class="hol__santa">
+  <span class="hol__santa-bob">
+    <svg viewBox="0 0 340 110" focusable="false">
+      <g class="hol__trail" fill="#FFF6D6">
+        <circle cx="-6" cy="70" r="2.5"/><circle cx="-22" cy="62" r="1.8"/><circle cx="-40" cy="74" r="1.5"/><circle cx="-58" cy="66" r="1.2"/>
+      </g>
+      {%- comment -%} Reins {%- endcomment -%}
+      <path d="M92 47 Q126 64 150 52 L222 52 L292 52" fill="none" stroke="#7A4B22" stroke-width="1.6"/>
+
+      {%- comment -%} Sleigh {%- endcomment -%}
+      <ellipse cx="26" cy="44" rx="17" ry="19" fill="#8A5A35"/>
+      <path d="M20 27 Q26 22 32 27" fill="none" stroke="#5E3B1F" stroke-width="3" stroke-linecap="round"/>
+      <rect x="18" y="30" width="10" height="9" rx="2" fill="#2E8B57"/>
+      <rect x="26" y="34" width="9" height="8" rx="2" fill="#FFD45C"/>
+      <ellipse cx="64" cy="54" rx="16" ry="14" fill="#D62828"/>
+      <circle cx="68" cy="33" r="9" fill="#F6C9A6"/>
+      <ellipse cx="68" cy="42" rx="9.5" ry="8" fill="#FFFFFF"/>
+      <path d="M59 30 Q61 14 77 17 Q85 21 88 31" fill="#D62828"/>
+      <rect x="57.5" y="26.5" width="21" height="5.5" rx="2.75" fill="#FFFFFF"/>
+      <circle cx="88" cy="31" r="3.4" fill="#FFFFFF"/>
+      <circle cx="71" cy="31" r="1.2" fill="#3B2412"/>
+      <path d="M72 50 L92 47" stroke="#D62828" stroke-width="5" stroke-linecap="round"/>
+      <circle cx="93" cy="47" r="3.2" fill="#2E2E2E"/>
+      <path d="M8 50 Q4 86 34 86 H96 Q106 86 108 70 L110 58 Q96 64 84 62 L80 50 Z" fill="#D62828" stroke="#E9B949" stroke-width="2.5" stroke-linejoin="round"/>
+      <path d="M16 66 Q40 74 70 70" fill="none" stroke="#E9B949" stroke-width="2" stroke-linecap="round"/>
+      <path d="M30 86 V94 M80 86 V94" stroke="#E9B949" stroke-width="3"/>
+      <path d="M2 94 H98 Q114 94 114 80" fill="none" stroke="#E9B949" stroke-width="4" stroke-linecap="round"/>
+
+      {%- comment -%} Reindeer team (front one has the glowing nose) {%- endcomment -%}
+      {%- assign team = '122,192,262' | split: ',' -%}
+      {%- for ox in team -%}
+        <g transform="translate({{ ox }} 0)" class="hol__deer">
+          <g class="hol__legs hol__legs--back"><path d="M18 62 L12 82 M24 63 L22 84" stroke="#6B4220" stroke-width="4" stroke-linecap="round"/></g>
+          <g class="hol__legs hol__legs--front"><path d="M38 62 L44 80 M44 60 L52 76" stroke="#6B4220" stroke-width="4" stroke-linecap="round"/></g>
+          <circle cx="8" cy="50" r="4" fill="#F3E3C8"/>
+          <ellipse cx="30" cy="54" rx="22" ry="11" fill="#9A6634"/>
+          <path d="M33 44 V65" stroke="#D62828" stroke-width="3.5"/>
+          <circle cx="33" cy="66" r="2.4" fill="#FFD45C"/>
+          <path d="M44 50 L54 34" stroke="#9A6634" stroke-width="9" stroke-linecap="round"/>
+          <path d="M54 25 L50 12 M51 17 L45 13 M50 12 L52 6 M58 25 L60 10 M59 15 L65 11 M60 10 L58 4" fill="none" stroke="#6B4220" stroke-width="2.5" stroke-linecap="round"/>
+          <ellipse cx="51" cy="27" rx="3.5" ry="2" fill="#7E5128"/>
+          <ellipse cx="58" cy="32" rx="9" ry="7" fill="#9A6634"/>
+          <ellipse cx="66" cy="35" rx="5" ry="4" fill="#B07A44"/>
+          <circle cx="58" cy="29" r="1.4" fill="#222222"/>
+          {%- if forloop.last -%}
+            <circle class="hol__nose" cx="70" cy="34" r="3.6" fill="#FF3B30"/>
+          {%- else -%}
+            <circle cx="70" cy="34" r="2.8" fill="#3B2412"/>
+          {%- endif -%}
+        </g>
+      {%- endfor -%}
+    </svg>
+  </span>
+</span>
+
+<span class="hol__snow">
+  {%- for i in (0..39) -%}
+    {%- liquid
+      assign fx = i | times: 41 | modulo: 100
+      assign fs = i | times: 13 | modulo: 5 | plus: 4
+      assign fd = i | times: 17 | modulo: 60 | divided_by: 10.0 | plus: 6
+      assign fdel = i | times: 29 | modulo: 90 | divided_by: 10.0
+      assign fsw = i | modulo: 2
+    -%}
+    <i class="hol__flake{% if fsw == 1 %} hol__flake--alt{% endif %}" style="left: {{ fx }}%; width: {{ fs }}px; height: {{ fs }}px; animation-duration: {{ fd }}s; animation-delay: -{{ fdel }}s"></i>
+  {%- endfor -%}
+</span>

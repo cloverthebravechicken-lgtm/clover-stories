@@ -62,6 +62,10 @@
 
     {{ 'theme.css' | asset_url | stylesheet_tag }}
     <script src="{{ 'theme.js' | asset_url }}" defer></script>
+    {%- if settings.launch_preview -%}
+      <script>window.CloverPreviewMessage = {{ settings.preview_message | json }};</script>
+      <script src="{{ 'launch-preview.js' | asset_url }}" defer></script>
+    {%- endif -%}
     <script>
       document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
       window.Clover = {

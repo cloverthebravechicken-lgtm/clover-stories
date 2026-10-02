@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -23,7 +32,14 @@
         "quote_author": "",
         "mascot_animation": "bob",
         "mascot": "shopify://shop_images/Written_by_Melanie_Dieas_-_2_97c8c5fe-2952-4c29-b9c5-003b8a38daf7.png",
-        "mascot_trim": true
+        "mascot_trim": true,
+        "show_grass": true,
+        "sky_mode": "holiday",
+        "holiday_cycle": 36,
+        "hat_x": 50,
+        "hat_y": -12,
+        "hat_size": 64,
+        "hat_tilt": 12
       },
       "blocks": {
         "image_1": {
@@ -93,7 +109,8 @@
             "product": "clover-book-plush-bundle",
             "title": "Book + Clover plush",
             "subtitle": "Story time with a cuddly 8\" friend",
-            "badge": "Best gift"
+            "badge": "Best gift",
+            "preview_as": "bundle"
           }
         }
       },
@@ -162,7 +179,9 @@
         "bg": "#FFFFFF",
         "anchor": "praise",
         "eyebrow": "Professionally reviewed",
-        "heading": "The critics are clucking about Clover"
+        "heading": "The critics are clucking about Clover",
+        "critter": "none",
+        "critter_side": "right"
       },
       "blocks": {
         "review_1": {
@@ -301,7 +320,8 @@
         "end_button": "Add to cart",
         "board_color": "#FFFFFF",
         "critter": "chicks",
-        "critter_side": "right"
+        "critter_side": "right",
+        "paper_color": "#fffdf7"
       },
       "blocks": {
         "spread_1": {
@@ -340,7 +360,12 @@
         "button_link": "",
         "source_product": "clover-the-brave-chicken",
         "critter": "goat",
-        "critter_side": "right"
+        "critter_side": "right",
+        "autoscroll": true,
+        "autoscroll_speed": 30,
+        "use_judgeme": true,
+        "min_length": 40,
+        "max_reviews": 12
       },
       "blocks": {
         "review_1": {
@@ -427,7 +452,11 @@
         "button_label": "Send my packet",
         "fine_print": "No spam, just farmyard fun. Unsubscribe anytime.",
         "card_style": "notebook",
-        "tight_bottom": true
+        "tight_bottom": true,
+        "critter": "none",
+        "critter_side": "right",
+        "tight_top": false,
+        "show_crayons": true
       }
     },
     "faq": {
@@ -503,7 +532,48 @@
         "image": "shopify://shop_images/clovercoverupdated_merged_2.jpg",
         "heading": "Be brave. Be you. Bring Clover home.",
         "text": "<p>The story your little one will ask for again and again.</p>",
-        "button_label": "Add to cart"
+        "button_label": "Add to cart",
+        "critter": "none",
+        "critter_side": "right"
+      }
+    },
+    "collection": {
+      "type": "product-cards",
+      "blocks": {
+        "product_book": {
+          "type": "product",
+          "settings": {
+            "product": "clover-the-brave-chicken",
+            "badge": "Bestseller",
+            "preview_as": "none"
+          }
+        },
+        "product_bundle": {
+          "type": "product",
+          "settings": {
+            "product": "clover-book-plush-bundle",
+            "badge": "Best gift",
+            "preview_as": "bundle"
+          }
+        },
+        "product_plush": {
+          "type": "product",
+          "settings": {
+            "product": "clover-plush",
+            "badge": "New!",
+            "preview_as": "plush"
+          }
+        }
+      },
+      "block_order": [
+        "product_book",
+        "product_bundle",
+        "product_plush"
+      ],
+      "settings": {
+        "bg": "#eafbff",
+        "eyebrow": "New! The Clover collection",
+        "heading": "Storytime, snuggle time, gift time"
       }
     }
   },
@@ -516,6 +586,7 @@
     "benefits",
     "peek",
     "reviews",
+    "collection",
     "signup",
     "faq",
     "final"

@@ -10,7 +10,9 @@
   Section settings used:
   - addon_product, addon_label, addon_placeholder
   - button_label, show_buy_now, show_payment_buttons
-  Offer blocks (type "offer"): product, title, subtitle, badge
+  Offer blocks (type "offer"): product, title, subtitle, badge, preview_as
+  With Theme settings → Launch preview on, an offer whose product isn't live yet (draft) still
+  shows, using the preview title/price/image, but can't be added to the cart.
 {%- endcomment -%}
 {%- liquid
   assign offers_count = 0
@@ -26,6 +28,10 @@
         assign offer_match = true
         assign checked_id = product.id
       endif
+    elsif block.type == 'offer' and settings.launch_preview and block.settings.preview_as != blank and block.settings.preview_as != 'none'
+      unless block.settings.product != blank and block.settings.product.available
+        assign offers_count = offers_count | plus: 1
+      endunless
     endif
   endfor
   if require_match and offer_match == false
@@ -76,6 +82,33 @@
                     <s>{{ ov.compare_at_price | money }}</s>
                   {%- endif -%}
                 </span>
+              </label>
+            {%- elsif settings.launch_preview and block.settings.preview_as != blank and block.settings.preview_as != 'none' -%}
+              {%- liquid
+                assign pk = block.settings.preview_as
+                capture pv_price
+                  render 'preview-field', key: pk, field: 'price'
+                endcapture
+                capture pv_img
+                  render 'preview-field', key: pk, field: 'image_url'
+                endcapture
+              -%}
+              <label class="offer offer--preview{% if block.settings.badge != blank %} offer--badged{% endif %}" {{ block.shopify_attributes }}>
+                <input type="radio" name="offer-{{ form_id }}" value="" data-price="{{ pv_price | escape }}" data-preview="{{ pk }}">
+                {%- if block.settings.badge != blank -%}
+                  <span class="offer__badge">{{ block.settings.badge }}</span>
+                {%- endif -%}
+                <span class="offer__radio" aria-hidden="true"></span>
+                {%- if pv_img != blank -%}
+                  <span class="offer__img"><img src="{{ pv_img }}" alt="" width="80" height="80" loading="lazy"></span>
+                {%- endif -%}
+                <span class="offer__body">
+                  <span class="offer__title">{% if block.settings.title != blank %}{{ block.settings.title }}{% else %}{% render 'preview-field', key: pk, field: 'title' %}{% endif %}</span>
+                  {%- if block.settings.subtitle != blank -%}
+                    <span class="offer__sub">{{ block.settings.subtitle }}</span>
+                  {%- endif -%}
+                </span>
+                <span class="offer__price"><strong>{{ pv_price }}</strong></span>
               </label>
             {%- endif -%}
           {%- endif -%}

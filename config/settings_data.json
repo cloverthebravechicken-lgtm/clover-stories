@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "logo": "shopify://shop_images/Untitled_design-63.png",
@@ -6,7 +15,15 @@
     "logo_width_mobile": 124,
     "cart_upsell_product": "clover-plush",
     "empty_cart_product": "clover-the-brave-chicken",
-    "empty_cart_addon": "personalized-author-inscription"
+    "empty_cart_addon": "personalized-author-inscription",
+    "launch_preview": true,
+    "preview_message": "Coming soon! Clover's plush isn't for sale just yet. 🐔",
+    "preview_plush_image": "shopify://shop_images/Untitleddesign-84.png",
+    "preview_plush_title": "Clover Plush",
+    "preview_plush_price": "19.99",
+    "preview_bundle_image": "shopify://shop_images/Untitleddesign-87.png",
+    "preview_bundle_title": "Clover Book & Plush Bundle",
+    "preview_bundle_price": "29.99"
   },
   "presets": {
     "Default": {}

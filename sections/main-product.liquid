@@ -7,7 +7,7 @@
     <div class="pdp__gallery">
       <div class="pdp__main" data-rail data-gallery>
         {%- for media in product.media -%}
-          <div class="pdp__slide{% if media.media_type == 'image' %} pdp__slide--scene{% endif %}" data-media-id="{{ media.id }}">
+                    <div class="pdp__slide{% if media.media_type == 'image' %} pdp__slide--scene{% endif %}" data-media-id="{{ media.id }}">
             {%- case media.media_type -%}
               {%- when 'image' -%}
                   <div class="pdp__scene" aria-hidden="true">
@@ -187,7 +187,8 @@
         { "type": "product", "id": "product", "label": "Product" },
         { "type": "text", "id": "title", "label": "Title" },
         { "type": "text", "id": "subtitle", "label": "Subtitle" },
-        { "type": "text", "id": "badge", "label": "Badge" }
+        { "type": "text", "id": "badge", "label": "Badge" },
+        { "type": "select", "id": "preview_as", "label": "Launch preview: show as", "default": "none", "options": [{ "value": "none", "label": "Nothing" }, { "value": "plush", "label": "Clover Plush" }, { "value": "bundle", "label": "Book & Plush Bundle" }], "info": "Used while the product is still a draft and Theme settings → Launch preview is on." }
       ]
     },
     {

@@ -210,6 +210,69 @@
     ]
   },
   {
+    "name": "Launch preview",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Shows Clover Plush and the Book & Plush Bundle while they're still drafts, so you can see the launch before it happens. Preview only: shoppers can't add them to the cart. Once the products are Active, the real products show instead and these settings are ignored."
+      },
+      {
+        "type": "checkbox",
+        "id": "launch_preview",
+        "label": "Show plush & bundle preview",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "preview_message",
+        "label": "Message when someone tries to add a preview item",
+        "default": "Coming soon! Clover's plush isn't for sale just yet. 🐔"
+      },
+      {
+        "type": "header",
+        "content": "Clover Plush"
+      },
+      {
+        "type": "image_picker",
+        "id": "preview_plush_image",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "preview_plush_title",
+        "label": "Title",
+        "default": "Clover Plush"
+      },
+      {
+        "type": "text",
+        "id": "preview_plush_price",
+        "label": "Price",
+        "default": "19.99"
+      },
+      {
+        "type": "header",
+        "content": "Book & Plush Bundle"
+      },
+      {
+        "type": "image_picker",
+        "id": "preview_bundle_image",
+        "label": "Image"
+      },
+      {
+        "type": "text",
+        "id": "preview_bundle_title",
+        "label": "Title",
+        "default": "Clover Book & Plush Bundle"
+      },
+      {
+        "type": "text",
+        "id": "preview_bundle_price",
+        "label": "Price",
+        "default": "29.99"
+      }
+    ]
+  },
+  {
     "name": "Social media",
     "settings": [
       {
