@@ -11,6 +11,7 @@
   - addon_product, addon_label, addon_placeholder
   - button_label, show_buy_now, show_payment_buttons
   - preselect_first: select the first available offer instead of the main product's offer
+    (with Launch preview on, a still-draft first offer's preview card is selected)
   Offer blocks (type "offer"): product, title, subtitle, badge, layout (card/compact), preview_as
   Optional per-offer "note" replaces the section's price note while that offer is selected
   (e.g. plush shipping on the bundle).
@@ -22,6 +23,7 @@
   assign offers_count = 0
   assign offer_match = false
   assign checked_id = blank
+  assign preview_first = false
   for block in section.blocks
     if block.type == 'offer' and block.settings.product != blank and block.settings.product.available
       assign offers_count = offers_count | plus: 1
@@ -37,6 +39,10 @@
     elsif block.type == 'offer' and settings.launch_preview and block.settings.preview_as != blank and block.settings.preview_as != 'none'
       unless block.settings.product != blank and block.settings.product.available
         assign offers_count = offers_count | plus: 1
+        if checked_id == blank and section.settings.preselect_first
+          assign preview_first = true
+          assign checked_id = 'preview'
+        endif
       endunless
     endif
   endfor
@@ -89,6 +95,10 @@
                 else
                   assign pk = block.settings.preview_as
                   assign o_value = ''
+                  if preview_first
+                    assign o_checked = true
+                    assign preview_first = false
+                  endif
                   capture o_price
                     render 'preview-field', key: pk, field: 'cents'
                   endcapture
