@@ -1,3 +1,20 @@
+{%- comment -%}
+  Only shows once at least two cards can be shown, so a "collection" of just the book stays
+  hidden until the plush and bundle are live (or Launch preview is on).
+{%- endcomment -%}
+{%- liquid
+  assign card_count = 0
+  for block in section.blocks
+    if block.settings.product != blank and block.settings.product.available
+      assign card_count = card_count | plus: 1
+    elsif settings.launch_preview and block.settings.preview_as != blank and block.settings.preview_as != 'none'
+      assign card_count = card_count | plus: 1
+    elsif block.settings.product != blank
+      assign card_count = card_count | plus: 1
+    endif
+  endfor
+-%}
+{%- if card_count >= 2 -%}
 <section class="pcards section anim" style="--bg: {{ section.settings.bg }};">
   <div class="container">
     <div class="section-head">
@@ -17,6 +34,11 @@
     </div>
   </div>
 </section>
+{%- elsif request.design_mode -%}
+  <div class="container" style="padding: 18px 0; text-align: center; font-size: .9rem; opacity: .7;">
+    Clover collection is hidden until at least two of its products are live (or Theme settings → Launch preview is on).
+  </div>
+{%- endif -%}
 
 {% schema %}
 {

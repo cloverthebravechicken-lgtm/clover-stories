@@ -16,7 +16,7 @@
     "cart_upsell_product": "clover-plush",
     "empty_cart_product": "clover-the-brave-chicken",
     "empty_cart_addon": "personalized-author-inscription",
-    "launch_preview": true,
+    "launch_preview": false,
     "preview_message": "Coming soon! Clover's plush isn't for sale just yet. 🐔",
     "preview_plush_image": "shopify://shop_images/Untitleddesign-84.png",
     "preview_plush_title": "Clover Plush",
