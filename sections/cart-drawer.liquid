@@ -19,7 +19,7 @@
             <li class="cart-line" data-line="{{ forloop.index }}">
               <a href="{{ item.url }}" class="cart-line__img">
                 {%- if item.image -%}
-                  {{ item.image | image_url: width: 180 | image_tag: loading: 'lazy', alt: item.product.title, width: 90, height: 90 }}
+                  {{ item.image | image_url: width: 360, height: 360, crop: 'center' | image_tag: loading: 'lazy', alt: item.product.title, width: 90, height: 90 }}
                 {%- endif -%}
               </a>
               <div class="cart-line__info">
@@ -83,9 +83,9 @@
               assign up_price = up_variant.price
               assign up_img = ''
               if upsell != blank and upsell.featured_image
-                assign up_img = upsell.featured_image | image_url: width: 160
+                assign up_img = upsell.featured_image | image_url: width: 300, height: 300, crop: 'center'
               elsif bundle.featured_image
-                assign up_img = bundle.featured_image | image_url: width: 160
+                assign up_img = bundle.featured_image | image_url: width: 300, height: 300, crop: 'center'
               endif
             elsif settings.launch_preview
               assign up_mode = 'preview'
@@ -141,7 +141,7 @@
             <p class="upsell__heading">{{ settings.cart_upsell_heading }}</p>
             <div class="upsell__card">
               {%- if upsell.featured_image -%}
-                {{ upsell.featured_image | image_url: width: 160 | image_tag: loading: 'lazy', alt: upsell.title, width: 72, height: 72, class: 'upsell__img' }}
+                {{ upsell.featured_image | image_url: width: 300, height: 300, crop: 'center' | image_tag: loading: 'lazy', alt: upsell.title, width: 72, height: 72, class: 'upsell__img' }}
               {%- endif -%}
               <div class="upsell__info">
                 <p class="upsell__title">{{ upsell.title }}</p>

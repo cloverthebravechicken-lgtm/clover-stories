@@ -65,10 +65,10 @@
           "type": "offer",
           "settings": {
             "product": "clover-plush",
-            "title": "Already have the book? Get Clover plush on her own",
-            "subtitle": "",
+            "title": "Just Clover plush",
+            "subtitle": "Already have the book? Add her cuddly friend",
             "badge": "",
-            "layout": "compact",
+            "layout": "card",
             "preview_as": "plush"
           }
         }

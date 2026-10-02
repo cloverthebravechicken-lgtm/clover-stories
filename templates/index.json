@@ -108,17 +108,6 @@
             "badge": "Best gift",
             "preview_as": "bundle"
           }
-        },
-        "offer_11": {
-          "type": "offer",
-          "settings": {
-            "product": "clover-plush",
-            "title": "Already have the book? Get Clover plush on her own",
-            "subtitle": "",
-            "badge": "",
-            "layout": "compact",
-            "preview_as": "plush"
-          }
         }
       },
       "block_order": [
@@ -131,8 +120,7 @@
         "bullet_7",
         "bullet_8",
         "offer_9",
-        "offer_10",
-        "offer_11"
+        "offer_10"
       ]
     },
     "trust": {
