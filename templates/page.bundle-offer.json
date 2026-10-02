@@ -87,7 +87,7 @@
           "settings": {
             "product": "clover-book-plush-bundle",
             "title": "Book + Clover plush",
-            "subtitle": "Savings more than cover plush shipping",
+            "subtitle": "Story time with a cuddly 8\" friend",
             "badge": "Best gift",
             "note": "Book ships free · plush just $4.99",
             "layout": "card",
@@ -120,7 +120,7 @@
           "settings": {
             "product": "clover-plush",
             "title": "Just Clover plush",
-            "subtitle": "Already have the book? Ships for a flat $4.99",
+            "subtitle": "Already have the book? Add her cuddly friend",
             "badge": "",
             "note": "Plush ships for a flat $4.99",
             "layout": "card",
@@ -152,9 +152,9 @@
         "badge_1": {
           "type": "badge",
           "settings": {
-            "icon": "truck",
-            "title": "Book ships free",
-            "text": "Plush ships for a flat $4.99"
+            "icon": "heart",
+            "title": "Made for little hands",
+            "text": "Soft, huggable 8-inch plush"
           }
         },
         "badge_2": {

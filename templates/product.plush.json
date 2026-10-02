@@ -12,7 +12,7 @@
         "addon_product": "",
         "addon_label": "Personalize & sign it by the author",
         "addon_placeholder": "Who is it for? (e.g. “To Emma”)",
-        "perk_1": "Book ships free · plush ships for a flat $4.99",
+        "perk_1": "Book ships free · plush just $4.99",
         "perk_2": "Free 10-page printable activity packet",
         "perk_3": "Secure checkout",
         "quote": "",
@@ -73,9 +73,9 @@
         "badge_1": {
           "type": "badge",
           "settings": {
-            "icon": "truck",
-            "title": "Books ship free",
-            "text": "Plush ships for a flat $4.99"
+            "icon": "heart",
+            "title": "Made for little hands",
+            "text": "Soft, huggable 8-inch plush"
           }
         },
         "badge_2": {
