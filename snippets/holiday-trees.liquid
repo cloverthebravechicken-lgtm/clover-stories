@@ -1,0 +1,29 @@
+{%- comment -%}
+  Snowy Christmas trees with twinkling lights that pop up on the hero's hill at night.
+  --w sets each tree's width; --md trees are hidden on phones to keep the hill uncluttered.
+{%- endcomment -%}
+{%- assign trees = '6|96|lg,15|62|md,84|70|md,93|108|lg' | split: ',' -%}
+<div class="hol__trees" aria-hidden="true">
+  {%- for t in trees -%}
+    {%- assign tp = t | split: '|' -%}
+    <span class="hol__tree hol__tree--{{ tp[2] }}" style="left: {{ tp[0] }}%; --w: clamp({{ tp[1] | times: 0.6 | round }}px, {{ tp[1] | divided_by: 12.0 }}vw, {{ tp[1] }}px); animation-delay: {{ forloop.index0 | times: 0.12 }}s">
+      <svg viewBox="0 0 100 140" focusable="false">
+        <rect x="44" y="116" width="12" height="20" rx="2" fill="#6B4220"/>
+        <path d="M50 54 L92 120 H8 Z" fill="#2F7D4A"/>
+        <path d="M8 120 Q22 110 34 117 Q50 108 66 117 Q78 110 92 120 Z" fill="#FFFFFF"/>
+        <path d="M50 30 L82 88 H18 Z" fill="#358A52"/>
+        <path d="M18 88 Q30 79 41 85 Q50 78 59 85 Q70 79 82 88 Z" fill="#FFFFFF"/>
+        <path d="M50 10 L70 56 H30 Z" fill="#3C9A5B"/>
+        <path d="M30 56 Q38 49 45 54 Q50 49 55 54 Q62 49 70 56 Z" fill="#FFFFFF"/>
+        <circle class="hol__bulb" cx="40" cy="102" r="3.4" fill="#FF5757"/>
+        <circle class="hol__bulb" cx="62" cy="106" r="3.4" fill="#FFD45C"/>
+        <circle class="hol__bulb" cx="26" cy="112" r="3" fill="#6CC6FF"/>
+        <circle class="hol__bulb" cx="76" cy="113" r="3" fill="#FF5757"/>
+        <circle class="hol__bulb" cx="44" cy="72" r="3" fill="#6CC6FF"/>
+        <circle class="hol__bulb" cx="60" cy="76" r="3" fill="#FF5757"/>
+        <circle class="hol__bulb" cx="50" cy="42" r="2.8" fill="#FFD45C"/>
+        <path class="hol__star" d="M50 0 L53.5 7.5 L61.5 8 L55.3 13 L57.4 21 L50 16.6 L42.6 21 L44.7 13 L38.5 8 L46.5 7.5 Z" fill="#FFD45C"/>
+      </svg>
+    </span>
+  {%- endfor -%}
+</div>

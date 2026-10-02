@@ -8,7 +8,7 @@
   endif
 -%}
 {%- if holiday -%}{{ 'holiday.css' | asset_url | stylesheet_tag }}{%- endif -%}
-<section class="hero{% if section.settings.show_grass %} hero--grass{% endif %}{% if holiday %} hero--holiday{% endif %}" id="top-buy" style="--hero-bg: {{ section.settings.bg }};{% if holiday %} --hol-cycle: {{ section.settings.holiday_cycle }}s; --hat-x: {{ section.settings.hat_x }}%; --hat-y: {{ section.settings.hat_y }}%; --hat-size: {{ section.settings.hat_size }}%; --hat-tilt: {{ section.settings.hat_tilt }}deg;{% endif %}">
+<section class="hero{% if section.settings.show_grass %} hero--grass{% endif %}{% if holiday %} hero--holiday{% endif %}" id="top-buy" style="--hero-bg: {{ section.settings.bg }};{% if holiday %} --hol-cycle: {{ section.settings.holiday_cycle }}s;{% endif %}">
   <div class="hero__sky" aria-hidden="true">
     {%- if holiday -%}{% render 'holiday-sky' %}{%- endif -%}
     <span class="hero__sunset"><span class="hero__sun">{% render 'deco', name: 'sunburst', color: '#FFD45C' %}</span></span>
@@ -56,9 +56,7 @@
 
       {%- if section.settings.mascot != blank -%}
         <span class="hero__mascot hero__mascot--{{ section.settings.mascot_animation }}{% if section.settings.mascot_trim %} hero__mascot--trim{% endif %}" aria-hidden="true">
-          {%- if holiday -%}<span class="hero__mascot-fig">{%- endif -%}
-            {{ section.settings.mascot | image_url: width: 500 | image_tag: loading: 'eager', alt: '', widths: '200, 300, 400, 500', sizes: '(min-width: 990px) 170px, 30vw' }}
-            {%- if holiday -%}{% render 'santa-hat' %}</span>{%- endif -%}
+          {{ section.settings.mascot | image_url: width: 500 | image_tag: loading: 'eager', alt: '', widths: '200, 300, 400, 500', sizes: '(min-width: 990px) 170px, 30vw' }}
         </span>
       {%- endif -%}
       {%- if section.settings.sticker != blank -%}
@@ -116,6 +114,7 @@
   {%- if section.settings.show_grass -%}
     {% render 'grass' %}
     {%- if holiday -%}
+      {% render 'holiday-trees' %}
       <div class="hol__snowcap" aria-hidden="true">
         <svg viewBox="0 0 1440 110" preserveAspectRatio="xMidYMax slice" focusable="false">
           <path fill="#EEF4FF" d="M0 72 C180 46 360 46 540 64 S900 90 1080 66 S1340 42 1440 58 V110 H0 Z"/>
@@ -139,13 +138,9 @@
     { "type": "checkbox", "id": "show_grass", "label": "Grassy hill with blowing grass at the bottom", "default": true },
     {
       "type": "select", "id": "sky_mode", "label": "Sky", "default": "day",
-      "options": [{ "value": "day", "label": "Sunny day" }, { "value": "holiday", "label": "Holiday: sunny → snowy night with Santa → sunny" }]
+      "options": [{ "value": "day", "label": "Sunny day" }, { "value": "holiday", "label": "Holiday: Christmas night with Santa" }]
     },
     { "type": "range", "id": "holiday_cycle", "label": "Holiday loop length", "min": 20, "max": 60, "step": 2, "unit": "s", "default": 36 },
-    { "type": "range", "id": "hat_x", "label": "Santa hat: left/right", "min": 0, "max": 100, "step": 1, "unit": "%", "default": 50 },
-    { "type": "range", "id": "hat_y", "label": "Santa hat: up/down", "min": -40, "max": 60, "step": 1, "unit": "%", "default": -12 },
-    { "type": "range", "id": "hat_size", "label": "Santa hat: size", "min": 30, "max": 100, "step": 1, "unit": "%", "default": 64 },
-    { "type": "range", "id": "hat_tilt", "label": "Santa hat: tilt", "min": -40, "max": 40, "step": 1, "unit": "°", "default": 12 },
     { "type": "text", "id": "badge", "label": "Badge", "default": "Available in premium hardcover" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Meet Clover, the <em>Brave</em> Chicken" },
     { "type": "text", "id": "rating_text", "label": "Rating link text", "default": "Read reviews" },

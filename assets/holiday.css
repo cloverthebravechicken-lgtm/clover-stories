@@ -1,8 +1,8 @@
 /* ---------- Holiday hero: sunny day → snowy night with Santa → sunny again ----------
    Every layer runs one shared, infinite animation of length --hol-cycle, so they stay in step.
    Timeline (% of the cycle):
-     0–30  sunny day           30–38  dusk          38–84  snowy night
-     46–72 Santa flies across  41–86  Clover wears a Santa hat
+     0–24  sunny day           24–28  dusk          28–84  snowy Christmas night
+     36–62 Santa flies across  26–30  Christmas trees appear
      84–92 dawn                92–100 sunny day
 */
 .hero--holiday { --hol-cycle: 36s; }
@@ -15,25 +15,25 @@
   opacity: 0;
   animation: hol-night var(--hol-cycle) ease-in-out infinite;
 }
-@keyframes hol-night { 0%, 30% { opacity: 0; } 38%, 84% { opacity: 1; } 92%, 100% { opacity: 0; } }
+@keyframes hol-night { 0%, 24% { opacity: 0; } 28%, 84% { opacity: 1; } 92%, 100% { opacity: 0; } }
 
 /* Sun sets and rises; clouds turn into dim snow clouds */
 .hero__sunset { animation: hol-sun var(--hol-cycle) ease-in-out infinite; }
 @keyframes hol-sun {
-  0%, 29% { opacity: 1; translate: 0 0; }
-  37%, 85% { opacity: 0; translate: 0 140px; }
+  0%, 23% { opacity: 1; translate: 0 0; }
+  28%, 85% { opacity: 0; translate: 0 140px; }
   93%, 100% { opacity: 1; translate: 0 0; }
 }
 .hero__clouds { animation: hol-clouds var(--hol-cycle) ease-in-out infinite; }
 @keyframes hol-clouds {
-  0%, 30% { filter: none; opacity: 1; }
-  38%, 84% { filter: brightness(.62) saturate(.5); opacity: .55; }
+  0%, 24% { filter: none; opacity: 1; }
+  28%, 84% { filter: brightness(.62) saturate(.5); opacity: .55; }
   92%, 100% { filter: none; opacity: 1; }
 }
 
 /* Stars + moon */
 .hol__stars, .hol__moon { opacity: 0; animation: hol-stars var(--hol-cycle) ease-in-out infinite; }
-@keyframes hol-stars { 0%, 33% { opacity: 0; } 40%, 82% { opacity: 1; } 88%, 100% { opacity: 0; } }
+@keyframes hol-stars { 0%, 25% { opacity: 0; } 30%, 82% { opacity: 1; } 88%, 100% { opacity: 0; } }
 .hol__stars i {
   position: absolute; border-radius: 50%; background: #FFF6D6;
   box-shadow: 0 0 6px 1px rgba(255, 246, 214, .7);
@@ -45,7 +45,7 @@
 
 /* Falling snow */
 .hol__snow { opacity: 0; overflow: hidden; animation: hol-snow var(--hol-cycle) ease-in-out infinite; }
-@keyframes hol-snow { 0%, 39% { opacity: 0; } 44%, 80% { opacity: 1; } 86%, 100% { opacity: 0; } }
+@keyframes hol-snow { 0%, 26% { opacity: 0; } 30%, 80% { opacity: 1; } 86%, 100% { opacity: 0; } }
 .hol__flake {
   position: absolute; top: -3%; border-radius: 50%; background: #FFFFFF; opacity: .9;
   box-shadow: 0 0 4px rgba(255,255,255,.8);
@@ -62,11 +62,11 @@
   animation: hol-santa var(--hol-cycle) linear infinite;
 }
 @keyframes hol-santa {
-  0%, 45.9% { translate: -110% 60px; opacity: 0; }
-  46% { translate: -110% 60px; opacity: 1; }
-  59% { translate: calc(50vw - 50%) -6px; }
-  72% { translate: calc(100vw + 10%) 50px; opacity: 1; }
-  72.1%, 100% { translate: calc(100vw + 10%) 50px; opacity: 0; }
+  0%, 35.9% { translate: -110% 60px; opacity: 0; }
+  36% { translate: -110% 60px; opacity: 1; }
+  49% { translate: calc(50vw - 50%) -6px; }
+  62% { translate: calc(100vw + 10%) 50px; opacity: 1; }
+  62.1%, 100% { translate: calc(100vw + 10%) 50px; opacity: 0; }
 }
 .hol__santa-bob { display: block; animation: hol-bob 1.6s ease-in-out infinite; }
 .hol__santa svg { display: block; width: 100%; height: auto; overflow: visible; }
@@ -81,7 +81,7 @@
 
 /* Snow settles on the grassy hill */
 .hero--holiday .grass { animation: hol-grass var(--hol-cycle) ease-in-out infinite; }
-@keyframes hol-grass { 0%, 30% { filter: none; } 38%, 84% { filter: brightness(.7) saturate(.75); } 92%, 100% { filter: none; } }
+@keyframes hol-grass { 0%, 24% { filter: none; } 28%, 84% { filter: brightness(.7) saturate(.75); } 92%, 100% { filter: none; } }
 .hol__snowcap {
   position: absolute; left: 0; right: 0; bottom: -1px; height: clamp(70px, 8vw, 110px); z-index: 2; pointer-events: none;
   opacity: 0; animation: hol-snow var(--hol-cycle) ease-in-out infinite;
@@ -95,43 +95,38 @@
 .hero--holiday .hero__rating-link,
 .hero--holiday .hero__content > .checks li { animation: hol-ink var(--hol-cycle) ease-in-out infinite; }
 @keyframes hol-ink {
-  0%, 31% { color: var(--c-text); text-shadow: none; }
-  37%, 85% { color: #FFFFFF; text-shadow: 0 2px 10px rgba(10, 18, 50, .55); }
+  0%, 24% { color: var(--c-text); text-shadow: none; }
+  28%, 85% { color: #FFFFFF; text-shadow: 0 2px 10px rgba(10, 18, 50, .55); }
   91%, 100% { color: var(--c-text); text-shadow: none; }
 }
 
-/* Clover's Santa hat. The figure wrapper takes over the mascot's bob so the hat moves with her. */
-.hero__mascot-fig { position: relative; display: block; transform-origin: 50% 100%; }
-.hero--holiday .hero__mascot--bob img, .hero--holiday .hero__mascot--peck img { animation: none; }
-.hero--holiday .hero__mascot--bob .hero__mascot-fig { animation: mascot-bob 3.2s 1.3s ease-in-out infinite; }
-.hero--holiday .hero__mascot--peck .hero__mascot-fig { animation: mascot-peck 4s 1.3s ease-in-out infinite; }
-.hol__hat {
-  position: absolute; z-index: 1;
-  left: var(--hat-x, 50%); top: var(--hat-y, -12%); width: var(--hat-size, 64%);
-  translate: -50% 0; rotate: var(--hat-tilt, 12deg);
-  opacity: 0;
-  animation: hol-hat var(--hol-cycle) ease-in-out infinite;
+/* Christmas trees on the snowy hill */
+.hol__trees { position: absolute; left: 0; right: 0; bottom: 0; height: 0; z-index: 2; pointer-events: none; }
+.hol__tree {
+  position: absolute; bottom: clamp(18px, 2.4vw, 34px); width: var(--w, 80px); margin-left: calc(var(--w, 80px) / -2);
+  opacity: 0; transform-origin: 50% 100%;
+  animation: hol-trees var(--hol-cycle) ease-out infinite;
 }
-.hol__hat svg { display: block; width: 100%; height: auto; filter: drop-shadow(0 3px 3px rgba(0,0,0,.2)); }
-@keyframes hol-hat {
-  0%, 40% { transform: translateY(-320%) rotate(-25deg); opacity: 0; }
-  40.5% { opacity: 1; }
-  42.5% { transform: translateY(10%) rotate(4deg); opacity: 1; }
-  43.7% { transform: translateY(-8%) rotate(-3deg); }
-  45%, 85% { transform: translateY(0) rotate(0); opacity: 1; }
-  88.5%, 100% { transform: translateY(-320%) rotate(30deg); opacity: 0; }
+.hol__tree svg { display: block; width: 100%; height: auto; overflow: visible; filter: drop-shadow(0 6px 6px rgba(0, 0, 0, .25)); }
+@keyframes hol-trees {
+  0%, 25% { opacity: 0; transform: translateY(24px) scale(.85); }
+  29%, 84% { opacity: 1; transform: none; }
+  90%, 100% { opacity: 0; transform: translateY(24px) scale(.85); }
 }
+.hol__bulb { animation: hol-twinkle 1.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+.hol__bulb:nth-of-type(2n) { animation-delay: -.5s; } .hol__bulb:nth-of-type(3n) { animation-delay: -.9s; }
+.hol__star { filter: drop-shadow(0 0 5px #FFD45C); animation: hol-glow 1.2s ease-in-out infinite alternate; }
 
 @media (max-width: 749px) {
   .hol__moon { width: 56px; right: 5%; }
   .hol__santa { top: 26%; width: 190px; }
+  .hol__tree--md { display: none; }
 }
 
 /* Reduce motion: keep the sunny day and skip the loop */
 @media (prefers-reduced-motion: reduce) {
-  .hol__night, .hol__stars, .hol__moon, .hol__santa, .hol__snow, .hol__snowcap, .hol__hat { display: none; }
+  .hol__night, .hol__stars, .hol__moon, .hol__santa, .hol__snow, .hol__snowcap, .hol__trees { display: none; }
   .hero__sunset, .hero__clouds, .hero--holiday .grass,
   .hero--holiday .hero__title, .hero--holiday .hero__text, .hero--holiday .hero__rating,
-  .hero--holiday .hero__rating-link, .hero--holiday .hero__content > .checks li,
-  .hero--holiday .hero__mascot-fig { animation: none; }
+  .hero--holiday .hero__rating-link, .hero--holiday .hero__content > .checks li { animation: none; }
 }

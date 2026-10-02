@@ -35,11 +35,7 @@
         "mascot_trim": true,
         "show_grass": true,
         "sky_mode": "holiday",
-        "holiday_cycle": 36,
-        "hat_x": 50,
-        "hat_y": -12,
-        "hat_size": 64,
-        "hat_tilt": 12
+        "holiday_cycle": 36
       },
       "blocks": {
         "image_1": {
