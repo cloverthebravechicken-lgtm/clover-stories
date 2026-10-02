@@ -1,0 +1,435 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero-buy",
+      "settings": {
+        "product": "clover-the-brave-chicken",
+        "bg": "#EAFBFF",
+        "next_bg": "#FFFFFF",
+        "show_grass": true,
+        "sky_mode": "day",
+        "holiday_cycle": 36,
+        "badge": "New! Clover plush is here",
+        "heading": "Story time with a friend <em>to hug</em>",
+        "rating_text": "Read reviews",
+        "text": "<p>The rhyming picture book families love, plus a soft 8-inch Clover plush to cuddle long after the last page.</p>",
+        "price_note": "Free shipping",
+        "sticker": "Save $6.99",
+        "autoplay_speed": 4,
+        "button_label": "Add to cart",
+        "show_buy_now": false,
+        "show_payment_buttons": true,
+        "addon_product": "personalized-author-inscription",
+        "addon_label": "Personalize & sign it by the author",
+        "addon_placeholder": "Who is it for? (e.g. “To Emma”)",
+        "quote": "",
+        "quote_author": "",
+        "mascot": "shopify://shop_images/Written_by_Melanie_Dieas_-_2_97c8c5fe-2952-4c29-b9c5-003b8a38daf7.png",
+        "mascot_trim": true,
+        "mascot_animation": "bob",
+        "preselect_first": true
+      },
+      "blocks": {
+        "image_1": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Untitleddesign-87.png",
+            "caption": ""
+          }
+        },
+        "image_2": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Untitleddesign-84.png",
+            "caption": ""
+          }
+        },
+        "image_3": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Untitleddesign-85.png",
+            "caption": ""
+          }
+        },
+        "image_4": {
+          "type": "image",
+          "settings": {
+            "image": "shopify://shop_images/Untitleddesign-86.png",
+            "caption": ""
+          }
+        },
+        "bullet_1": {
+          "type": "bullet",
+          "settings": {
+            "text": "Soft 8-inch Clover plush"
+          }
+        },
+        "bullet_2": {
+          "type": "bullet",
+          "settings": {
+            "text": "Premium hardcover book"
+          }
+        },
+        "bullet_3": {
+          "type": "bullet",
+          "settings": {
+            "text": "Free activity packet"
+          }
+        },
+        "bullet_4": {
+          "type": "bullet",
+          "settings": {
+            "text": "Perfect gift for ages 3–5"
+          }
+        },
+        "offer_bundle": {
+          "type": "offer",
+          "settings": {
+            "product": "clover-book-plush-bundle",
+            "title": "Book + Clover plush",
+            "subtitle": "Savings more than cover plush shipping",
+            "badge": "Best gift",
+            "note": "Book ships free · plush just $4.99",
+            "layout": "card",
+            "preview_as": "bundle"
+          }
+        },
+        "offer_book": {
+          "type": "offer",
+          "settings": {
+            "product": "clover-the-brave-chicken",
+            "title": "Just the book",
+            "subtitle": "Rhyming picture book · ships free",
+            "badge": "",
+            "layout": "card",
+            "preview_as": "none"
+          }
+        },
+        "stock": {
+          "type": "stock",
+          "settings": {
+            "product": "clover-book-plush-bundle",
+            "text": "Limited first batch: only [count] bundles left!",
+            "text_fallback": "Limited first batch: get yours while they last!",
+            "threshold": 100,
+            "batch": 100
+          }
+        },
+        "offer_plush": {
+          "type": "offer",
+          "settings": {
+            "product": "clover-plush",
+            "title": "Just Clover plush",
+            "subtitle": "Already have the book? Ships for a flat $4.99",
+            "badge": "",
+            "note": "Plush ships for a flat $4.99",
+            "layout": "card",
+            "preview_as": "plush"
+          }
+        }
+      },
+      "block_order": [
+        "image_1",
+        "image_2",
+        "image_3",
+        "image_4",
+        "bullet_1",
+        "bullet_2",
+        "bullet_3",
+        "bullet_4",
+        "stock",
+        "offer_bundle",
+        "offer_plush",
+        "offer_book"
+      ]
+    },
+    "trust": {
+      "type": "trust-bar",
+      "settings": {
+        "bg": "#FFFFFF"
+      },
+      "blocks": {
+        "badge_1": {
+          "type": "badge",
+          "settings": {
+            "icon": "truck",
+            "title": "Book ships free",
+            "text": "Plush ships for a flat $4.99"
+          }
+        },
+        "badge_2": {
+          "type": "badge",
+          "settings": {
+            "icon": "gift",
+            "title": "Free activity packet",
+            "text": "With every order"
+          }
+        },
+        "badge_3": {
+          "type": "badge",
+          "settings": {
+            "icon": "pencil",
+            "title": "Signed copies available",
+            "text": "Add an inscription to get it signed"
+          }
+        },
+        "badge_4": {
+          "type": "badge",
+          "settings": {
+            "icon": "star",
+            "title": "5-star reviews",
+            "text": "From parents, grandparents & teachers"
+          }
+        }
+      },
+      "block_order": [
+        "badge_1",
+        "badge_2",
+        "badge_3",
+        "badge_4"
+      ]
+    },
+    "plush": {
+      "type": "image-text",
+      "settings": {
+        "bg": "#FFF3ED",
+        "anchor": "meet-the-plush",
+        "image": "shopify://shop_images/Untitleddesign-85.png",
+        "frame": "polaroid",
+        "reverse": false,
+        "sticker": "So soft!",
+        "eyebrow": "Meet Clover plush",
+        "heading": "Soft, huggable and <em>8 inches</em> of brave",
+        "text": "<p>Clover hops right off the page and into little arms. She's there for storytime, bedtime, adventures and plenty of hugs, and she's a sweet reminder that being yourself is something to celebrate.</p><ul><li>Soft 8-inch plush, just right for little hands</li><li>The perfect companion to <em>Clover, the Brave Chicken</em></li><li>Great for pretend play, storytime and bedtime</li></ul><p><strong>Book $16.99 + plush $19.99 = $36.98 separately. Get both in the bundle for just $29.99.</strong></p>",
+        "signature": "",
+        "use_signature_asset": false,
+        "button_label": "Get the bundle",
+        "button_link": "#top-buy"
+      }
+    },
+    "reviews": {
+      "type": "review-wall",
+      "settings": {
+        "bg": "#FFF3ED",
+        "eyebrow": "Real families, real smiles",
+        "heading": "Families love Clover",
+        "summary": "5-star reviews from parents, grandparents & teachers",
+        "button_label": "Get the bundle",
+        "button_link": "#top-buy",
+        "source_product": "clover-the-brave-chicken",
+        "critter": "goat",
+        "critter_side": "right",
+        "autoscroll": true,
+        "autoscroll_speed": 30,
+        "use_judgeme": true,
+        "min_length": 40,
+        "max_reviews": 12
+      },
+      "blocks": {
+        "review_1": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Absolutely adorable",
+            "text": "This book is absolutely adorable!!! My three year old loves it! The story is heartwarming and the illustrations are excellent!! Highly recommend for your kiddos!!",
+            "author": "Kathryn",
+            "verified": false
+          }
+        },
+        "review_2": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Perfect read-aloud rhythm",
+            "text": "As a mom to a 2 year old, we were SO excited to read this book. I really appreciate how it rhymes and has a great rhythm when I read it out loud. The illustrations are adorable and my son just loves pointing to each animal to tell me the sounds they make. It’s got a great message to it and I highly recommend it to anyone with littles (especially if they love farm animals)!",
+            "author": "Kelsey",
+            "verified": false
+          }
+        },
+        "review_3": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "We read it over and over",
+            "text": "I purchased the book for my grandson and it is excellent! Very colorful, lots of farm animals that he loves and a good story! We read it over and over again!",
+            "author": "Jane",
+            "verified": false
+          }
+        },
+        "review_4": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Perfect just the way they are",
+            "text": "This book is perfect for little ones that are exploring their talents. It creates a sense that everyone is perfect just the way they are, and the way they were created to be!",
+            "author": "Ashley",
+            "verified": false
+          }
+        },
+        "review_5": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "Fantastic message",
+            "text": "This book is great. The message and the illustrations are fantastic. My grandson loves the book. I hope there will be more books in the future!",
+            "author": "Chandra",
+            "verified": false
+          }
+        },
+        "review_6": {
+          "type": "review",
+          "settings": {
+            "rating": 5,
+            "title": "You can be brave",
+            "text": "Well written book for 2-5 years old. Teaches children being themselves is a good thing and no matter who you are, you can be brave.",
+            "author": "Sandra",
+            "verified": false
+          }
+        }
+      },
+      "block_order": [
+        "review_1",
+        "review_2",
+        "review_3",
+        "review_4",
+        "review_5",
+        "review_6"
+      ]
+    },
+    "gift": {
+      "type": "benefits",
+      "settings": {
+        "critter": "chicks",
+        "critter_side": "right",
+        "bg": "#FFFFFF",
+        "eyebrow": "The perfect gift",
+        "heading": "A gift they'll read <em>and</em> hug",
+        "button_label": "Get the bundle",
+        "button_link": "#top-buy"
+      },
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "icon": "heart",
+            "accent": "#FF5757",
+            "title": "Storytime with a friend",
+            "text": "Kids can hold Clover while you read about her adventure together."
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "icon": "gift",
+            "accent": "#E86AA6",
+            "title": "Birthdays & holidays",
+            "text": "A thoughtful gift for little ones, from parents, grandparents and friends."
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "icon": "sparkle",
+            "accent": "#FFB800",
+            "title": "Builds confidence",
+            "text": "A story and a cuddly reminder that the bravest thing you can be is yourself."
+          }
+        },
+        "b4": {
+          "type": "benefit",
+          "settings": {
+            "icon": "moon",
+            "accent": "#6C8CFF",
+            "title": "A bedtime buddy",
+            "text": "Read the story, then Clover stays for snuggles after lights out."
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b4"
+      ]
+    },
+    "faq": {
+      "type": "faq",
+      "settings": {
+        "critter": "none",
+        "critter_side": "left",
+        "bg": "#FFFFFF",
+        "eyebrow": "Good questions",
+        "heading": "Bundle questions",
+        "open_first": true,
+        "spacing": "medium",
+        "tight_top": false
+      },
+      "blocks": {
+        "q1": {
+          "type": "question",
+          "settings": {
+            "question": "What's in the bundle?",
+            "answer": "<p>A premium hardcover copy of <em>Clover, the Brave Chicken</em> and a soft 8-inch Clover plush, plus the free printable activity packet that comes with every order.</p>"
+          }
+        },
+        "q2": {
+          "type": "question",
+          "settings": {
+            "question": "How much is shipping?",
+            "answer": "<p>The book always ships free. Orders with Clover plush ship for a flat $4.99, and your $6.99 bundle savings more than cover it.</p>"
+          }
+        },
+        "q3": {
+          "type": "question",
+          "settings": {
+            "question": "What ages is it for?",
+            "answer": "<p>The book is written for ages 3–5, and little ones love having Clover to hold while you read.</p>"
+          }
+        },
+        "q4": {
+          "type": "question",
+          "settings": {
+            "question": "Can I get the book signed?",
+            "answer": "<p>Yes! Tick <strong>“Personalize & sign it by the author”</strong> and tell us who it's for, and Melanie will sign the book with a personal inscription.</p>"
+          }
+        },
+        "q5": {
+          "type": "question",
+          "settings": {
+            "question": "Already have the book?",
+            "answer": "<p>You can <a href=\"/products/clover-plush\">get Clover plush on her own</a> so every little reader has a brave chicken to hug.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ]
+    },
+    "final": {
+      "type": "final-cta",
+      "settings": {
+        "critter": "none",
+        "critter_side": "right",
+        "bg": "#FF5757",
+        "product": "clover-book-plush-bundle",
+        "image": "shopify://shop_images/Untitleddesign-87.png",
+        "heading": "Story time is better with a friend.",
+        "text": "<p>Bring home the book and the plush, and save $6.99.</p>",
+        "button_label": "Add the bundle"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "trust",
+    "reviews",
+    "plush",
+    "gift",
+    "faq",
+    "final"
+  ]
+}

@@ -2,14 +2,18 @@
    - buy box: show the selected option's price note (e.g. plush shipping on the bundle)
    - cart drawer: swap the book for the book + plush bundle in one tap */
 (() => {
-  document.addEventListener('change', (e) => {
-    const radio = e.target.closest('.offer input');
-    if (!radio) return;
+  const syncNote = (radio) => {
     const scope = radio.closest('.shopify-section') || document;
     scope.querySelectorAll('[data-price-note]').forEach((el) => {
       el.textContent = radio.dataset.note || el.dataset.default || '';
     });
+  };
+  document.addEventListener('change', (e) => {
+    const radio = e.target.closest('.offer input');
+    if (radio) syncNote(radio);
   });
+  // The pre-selected option may have its own note (e.g. the bundle on the landing page)
+  document.querySelectorAll('.offer input:checked[data-note]').forEach(syncNote);
 
   const routes = (window.Clover && Clover.routes) || { cartAdd: '/cart/add', cartChange: '/cart/change' };
   const post = async (url, body) => {

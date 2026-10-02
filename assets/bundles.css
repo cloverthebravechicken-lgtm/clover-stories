@@ -23,3 +23,12 @@
 /* Cart: "Make it the bundle" upgrade */
 .upsell--bundle .upsell__card { background: #FFF6F2; border: 2px dashed #FFCBB4; }
 .upsell--bundle .upsell__title strong { color: var(--c-primary); }
+
+/* Limited stock bar (hero buy box) */
+.stock { margin: 0 0 12px; padding: 10px 12px; border-radius: 14px; background: #FFF1EA; border: 2px dashed #FFB79A; }
+.stock__text { display: flex; align-items: center; gap: 8px; margin: 0; font-weight: 700; font-size: .9rem; color: #B23A1E; }
+.stock__dot { flex: 0 0 10px; height: 10px; border-radius: 50%; background: #FF5757; box-shadow: 0 0 0 0 rgba(255, 87, 87, .6); animation: stock-pulse 1.6s ease-out infinite; }
+@keyframes stock-pulse { 70% { box-shadow: 0 0 0 9px rgba(255, 87, 87, 0); } 100% { box-shadow: 0 0 0 0 rgba(255, 87, 87, 0); } }
+.stock__bar { margin-top: 8px; height: 8px; border-radius: 99px; background: #FFDCCB; overflow: hidden; }
+.stock__bar span { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #FF5757, #FE924E); }
+@media (prefers-reduced-motion: reduce) { .stock__dot { animation: none; } }
