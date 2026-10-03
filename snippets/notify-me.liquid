@@ -6,6 +6,7 @@
   - what (optional): names of the sold-out options, when other options can still be bought
 {%- endcomment -%}
 {%- assign notify_form_id = 'NotifyForm-' | append: form_id -%}
+{%- assign what = what | default: '' -%}
 <div class="notify" id="Notify-{{ form_id }}">
   {%- form 'customer', id: notify_form_id, class: 'notify__form' -%}
     <input type="hidden" name="contact[tags]" value="newsletter,back-in-stock,back-in-stock-{{ product.handle }}">
@@ -16,7 +17,8 @@
         {%- render 'icon', name: 'sparkle', size: 14 -%}
         <span>
           {%- if what != blank -%}<strong>{{ what }}</strong>{% if settings.notify_eta != blank %} back {{ settings.notify_eta }}.{% else %} back soon.{% endif %}
-          {%- else -%}<strong>{{ settings.notify_heading }}</strong>{% if settings.notify_eta != blank %} Expected {{ settings.notify_eta }}.{% endif %}
+          {%- elsif settings.notify_eta != blank -%}<strong>Back {{ settings.notify_eta }}!</strong>
+          {%- else -%}<strong>{{ settings.notify_heading }}</strong>
           {%- endif %} {{ settings.notify_text }}
         </span>
       </p>
@@ -40,7 +42,8 @@
   .notify__btn { flex: none; min-height: 0; height: 38px; padding: 0 18px; font-size: .92rem; box-shadow: none; }
   .notify__done { display: flex; align-items: center; gap: 6px; margin: 0; padding: 10px 14px; border-radius: 99px; background: #EEF6E8; font-size: .92rem; font-weight: 600; color: var(--c-green, #518339); }
   .notify__error { margin: 6px 0 0; color: #C62A1E; font-size: .85rem; }
-  .offer--soldout { opacity: .6; cursor: not-allowed; }
+  .offer--soldout { opacity: .6; cursor: not-allowed; padding-top: 5px; padding-bottom: 5px; font-size: .88rem; box-shadow: none; }
+  .offers:has(.offer--soldout) { gap: 6px; }
   .offer--soldout .offer__radio { visibility: hidden; }
   .offer--soldout .offer__title { font-weight: 600; }
   .offer--soldout .offer__price { display: flex; align-items: center; }

@@ -18,8 +18,8 @@
   Cards show "Save $X" when the variant has a compare-at price (the bundle).
   While the product is sold out and Theme settings > Back in stock is on, the add-to-cart
   controls are replaced by a slim "notify me" email row (snippets/notify-me.liquid). Sold-out
-  options show as slim greyed rows, or, when Back in stock > "Offer instead" has a product in
-  stock, are swapped for that product so the buy box keeps its usual height.
+  options show as slim greyed rows; when Back in stock > "Offer instead" has a product in stock,
+  it's added below them, ready to buy.
   With Theme settings → Launch preview on, an offer whose product isn't live yet (draft) still
   shows, using the preview title/price/image, but can't be added to the cart.
 {%- endcomment -%}
@@ -28,7 +28,6 @@
   assign offer_match = false
   assign checked_id = blank
   assign preview_first = false
-  assign soldout_titles = ''
   assign has_live_offer = false
   for block in section.blocks
     if block.type == 'offer' and settings.notify_enabled and block.settings.product != blank and block.settings.product.available == false
@@ -36,12 +35,6 @@
         assign offers_count = offers_count | plus: 1
         if block.settings.product.id == product.id
           assign offer_match = true
-        endif
-        assign so_title = block.settings.title | default: block.settings.product.title
-        if soldout_titles == ''
-          assign soldout_titles = so_title
-        else
-          assign soldout_titles = soldout_titles | append: ' & ' | append: so_title
         endif
       endunless
     endif
@@ -85,7 +78,7 @@
   assign addon = section.settings.addon_product
   # Sold out: the add-to-cart controls give way to a "notify me" form. If another option can still
   # be bought (e.g. the plush when the book and bundle are out), it stays buyable and the form
-  # sits underneath, naming what's sold out.
+  # sits underneath.
   assign show_notify = false
   assign can_buy = current_variant.available
   if offers_count > 1 and has_live_offer
@@ -96,10 +89,6 @@
   endif
   if settings.notify_enabled and current_variant.available == false
     assign show_notify = true
-  endif
-  assign notify_what = ''
-  if show_notify and can_buy
-    assign notify_what = soldout_titles
   endif
 -%}
 
@@ -121,8 +110,8 @@
                 assign o_live = true
               elsif settings.launch_preview and block.settings.preview_as != blank and block.settings.preview_as != 'none'
                 assign o_preview = true
-              elsif settings.notify_enabled and op != blank and fallback == blank
-                # Sold-out options shrink to a slim row (and give way to the stand-in when there is one)
+              elsif settings.notify_enabled and op != blank
+                # Sold-out options shrink to a slim greyed row
                 assign o_live = true
                 assign o_soldout = true
               endif
@@ -326,5 +315,5 @@
 
     <p class="buy-form__error" role="alert" hidden data-form-error></p>
   {%- endform -%}
-  {%- if show_notify -%}{% render 'notify-me', product: product, form_id: form_id, what: notify_what %}{%- endif -%}
+  {%- if show_notify -%}{% render 'notify-me', product: product, form_id: form_id %}{%- endif -%}
 </buy-form>
