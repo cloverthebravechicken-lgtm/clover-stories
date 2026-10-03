@@ -45,13 +45,13 @@
 /* Geese flying over in a V, right to left */
 .fall__geese {
   top: 8%; left: 0; width: clamp(110px, 12vw, 170px);
-  translate: calc(100vw + 10%) 0; opacity: 0;
+  translate: calc(var(--scene-w, 100vw) + 10%) 0; opacity: 0;
   animation: fall-geese var(--hol-cycle) linear infinite;
 }
 @keyframes fall-geese {
-  0%, 35.9% { translate: calc(100vw + 10%) 40px; opacity: 0; }
-  36% { translate: calc(100vw + 10%) 40px; opacity: 1; }
-  49% { translate: calc(50vw - 50%) 0; }
+  0%, 35.9% { translate: calc(var(--scene-w, 100vw) + 10%) 40px; opacity: 0; }
+  36% { translate: calc(var(--scene-w, 100vw) + 10%) 40px; opacity: 1; }
+  49% { translate: calc(var(--scene-w, 100vw) / 2 - 50%) 0; }
   62% { translate: -120% 30px; opacity: 1; }
   62.1%, 100% { translate: -120% 30px; opacity: 0; }
 }

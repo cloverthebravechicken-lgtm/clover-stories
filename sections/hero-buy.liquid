@@ -3,6 +3,9 @@
   assign images = section.blocks | where: 'type', 'image'
   assign bullets = section.blocks | where: 'type', 'bullet'
   assign sky = section.settings.sky_mode
+  if sky == 'site' or sky == blank
+    assign sky = settings.scene | default: 'day'
+  endif
   assign holiday = false
   assign fall = false
   assign season = false
@@ -14,9 +17,7 @@
     assign season = true
   endif
 -%}
-{%- if holiday -%}{{ 'holiday.css' | asset_url | stylesheet_tag }}{%- endif -%}
-{%- if fall -%}{{ 'fall.css' | asset_url | stylesheet_tag }}{%- endif -%}
-{%- if season or sky == 'day' -%}{{ 'seasons.css' | asset_url | stylesheet_tag }}{%- endif -%}
+{% render 'scene-styles', mode: sky %}
 <section class="hero{% if section.settings.show_grass %} hero--grass{% endif %}{% if holiday %} hero--holiday{% endif %}{% if fall %} hero--fall{% endif %}{% if season %} hero--season hero--{{ sky }}{% endif %}" id="top-buy" style="--hero-bg: {{ section.settings.bg }};{% if holiday or fall or season %} --hol-cycle: {{ section.settings.holiday_cycle }}s;{% endif %}">
   <div class="hero__sky" aria-hidden="true">
     {%- if holiday -%}{% render 'holiday-sky' %}{%- endif -%}
@@ -182,8 +183,10 @@
     { "type": "color", "id": "next_bg", "label": "Wave color (next section background)", "default": "#FFFFFF" },
     { "type": "checkbox", "id": "show_grass", "label": "Grassy hill with blowing grass at the bottom", "default": true },
     {
-      "type": "select", "id": "sky_mode", "label": "Sky", "default": "day",
+      "type": "select", "id": "sky_mode", "label": "Sky", "default": "site",
+      "info": "“Use the site-wide scene” follows Theme settings → Seasonal scene, which also sets the background behind product photos.",
       "options": [
+        { "value": "site", "label": "Use the site-wide scene (Theme settings)" },
         { "value": "day", "label": "Sunny day (summer)" },
         { "value": "fall", "label": "Fall: golden leaves and scarecrow" },
         { "value": "thanksgiving", "label": "Thanksgiving: harvest and a waddling turkey" },

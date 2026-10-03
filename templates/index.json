@@ -34,7 +34,7 @@
         "mascot": "shopify://shop_images/Written_by_Melanie_Dieas_-_2_97c8c5fe-2952-4c29-b9c5-003b8a38daf7.png",
         "mascot_trim": true,
         "show_grass": true,
-        "sky_mode": "fall",
+        "sky_mode": "site",
         "holiday_cycle": 36
       },
       "blocks": {

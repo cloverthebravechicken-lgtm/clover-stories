@@ -64,9 +64,9 @@
 @keyframes hol-santa {
   0%, 35.9% { translate: -110% 60px; opacity: 0; }
   36% { translate: -110% 60px; opacity: 1; }
-  49% { translate: calc(50vw - 50%) -6px; }
-  62% { translate: calc(100vw + 10%) 50px; opacity: 1; }
-  62.1%, 100% { translate: calc(100vw + 10%) 50px; opacity: 0; }
+  49% { translate: calc(var(--scene-w, 100vw) / 2 - 50%) -6px; }
+  62% { translate: calc(var(--scene-w, 100vw) + 10%) 50px; opacity: 1; }
+  62.1%, 100% { translate: calc(var(--scene-w, 100vw) + 10%) 50px; opacity: 0; }
 }
 .hol__santa-bob { display: block; animation: hol-bob 1.6s ease-in-out infinite; }
 .hol__santa svg { display: block; width: 100%; height: auto; overflow: visible; }

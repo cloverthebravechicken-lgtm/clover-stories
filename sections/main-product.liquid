@@ -1,7 +1,25 @@
 {%- liquid
   assign current_variant = product.selected_or_first_available_variant
   assign media_count = product.media.size
+  comment
+    The backdrop behind product photos follows Theme settings > Seasonal scene, like the homepage header.
+  endcomment
+  assign scene = settings.scene | default: 'day'
+  assign scene_class = ''
+  case scene
+    when 'holiday'
+      assign scene_class = 'hero--holiday'
+    when 'fall'
+      assign scene_class = 'hero--fall'
+    when 'day'
+      assign scene_class = ''
+    else
+      assign scene_class = 'hero--season hero--' | append: scene
+  endcase
 -%}
+{% render 'scene-styles', mode: scene %}
+{{ 'pdp-scene.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'pdp-scene.js' | asset_url }}" defer></script>
 <section class="pdp section" id="top-buy">
   <div class="container pdp__inner">
     <div class="pdp__gallery">
@@ -10,12 +28,35 @@
                     <div class="pdp__slide{% if media.media_type == 'image' %} pdp__slide--scene{% endif %}" data-media-id="{{ media.id }}">
             {%- case media.media_type -%}
               {%- when 'image' -%}
-                  <div class="pdp__scene" aria-hidden="true">
-                    <span class="pdp__sun">{% render 'deco', name: 'sunburst', color: '#FFD45C' %}</span>
-                    <span class="hero__cloud hero__cloud--1">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
-                    <span class="hero__cloud hero__cloud--3">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
-                    <span class="hero__cloud hero__cloud--5">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
+                  <div class="pdp__scene {{ scene_class }}" aria-hidden="true">
+                    <div class="hero__sky">
+                      {%- case scene -%}
+                        {%- when 'holiday' -%}{% render 'holiday-sky' %}
+                        {%- when 'fall' -%}{% render 'fall-sky' %}
+                        {%- when 'day' -%}{% render 'season-sky', mode: 'summer' %}
+                        {%- else -%}{% render 'season-sky', mode: scene %}
+                      {%- endcase -%}
+                      <span class="hero__sunset"><span class="pdp__sun">{% render 'deco', name: 'sunburst', color: '#FFD45C' %}</span></span>
+                      <span class="hero__clouds">
+                        <span class="hero__cloud hero__cloud--1">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
+                        <span class="hero__cloud hero__cloud--3">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
+                        <span class="hero__cloud hero__cloud--5">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
+                      </span>
+                    </div>
                     {% render 'grass' %}
+                    {%- case scene -%}
+                      {%- when 'holiday' -%}
+                        {% render 'holiday-trees' %}
+                        <div class="hol__snowcap">
+                          <svg viewBox="0 0 1440 110" preserveAspectRatio="xMidYMax slice" focusable="false">
+                            <path fill="#EEF4FF" d="M0 72 C180 46 360 46 540 64 S900 90 1080 66 S1340 42 1440 58 V110 H0 Z"/>
+                            <path fill="#FFFFFF" d="M0 86 C220 72 420 76 640 86 S1040 98 1240 84 S1400 76 1440 80 V110 H0 Z"/>
+                          </svg>
+                        </div>
+                      {%- when 'fall' -%}{% render 'fall-hill' %}
+                      {%- when 'day' -%}
+                      {%- else -%}{% render 'season-hill', mode: scene %}
+                    {%- endcase -%}
                   </div>
                 <button type="button" class="pdp__zoom" data-lightbox="{{ media | image_url: width: 2400 }}" data-lightbox-alt="{{ media.alt | escape }}" aria-label="Zoom image {{ forloop.index }}">
                   {%- if forloop.first -%}

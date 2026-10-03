@@ -1,0 +1,24 @@
+/* ---------- Product photo backdrop ----------
+   The site-wide seasonal scene (Theme settings > Seasonal scene) drawn behind product photos.
+   --scene-w makes the flying characters cross the photo frame instead of the whole screen. */
+.pdp__scene { container-type: inline-size; --scene-w: 100cqw; overflow: hidden; }
+.pdp__slide--scene .pdp__zoom img { object-position: 50% 50%; }
+
+/* Snow and hill pieces sized to the frame */
+.pdp__scene .hol__snowcap, .pdp__scene .ssn__snowcap { height: 24%; }
+.pdp__scene .hol__trees, .pdp__scene .fall__hill, .pdp__scene .ssn__hill { bottom: 4%; }
+.pdp__scene .hol__tree, .pdp__scene .fall__item, .pdp__scene .ssn__item { bottom: 0; }
+.pdp__scene .hol__tree { width: calc(var(--w, 80px) * .7); margin-left: calc(var(--w, 80px) * -.35); }
+.pdp__scene .fall__harvest, .pdp__scene .ssn__item { width: 24%; }
+.pdp__scene .fall__scarecrow, .pdp__scene .ssn__item--right:has(.ssn__sway) { width: 14%; }
+.pdp__scene .ssn__bunny, .pdp__scene .ssn__turkey { bottom: 4%; width: 12%; }
+
+/* Flyers sized and placed for the frame */
+.pdp__scene .hol__santa { width: 42%; top: 6%; }
+.pdp__scene .fall__geese { width: 24%; top: 10%; }
+.pdp__scene .ssn__butterfly { width: 9%; }
+.pdp__scene .ssn__balloons { width: 14%; }
+.pdp__scene .ssn__cardinal { width: 11%; }
+.pdp__scene .ssn__birds { width: 15%; }
+.pdp__scene .hol__moon { width: 12%; top: 5%; right: 6%; }
+.pdp__scene .ssn__halo { width: 60%; height: auto; aspect-ratio: 1; top: -26%; right: -24%; }

@@ -1,0 +1,10 @@
+{%- comment -%}
+  Loads the stylesheet for an animated scene ('day', 'fall', 'holiday', 'thanksgiving', 'winter',
+  'valentine', 'spring' or 'easter'). Used by the homepage hero and the product photo backdrop.
+  Usage: {% render 'scene-styles', mode: 'fall' %}
+{%- endcomment -%}
+{%- case mode -%}
+  {%- when 'holiday' -%}{{ 'holiday.css' | asset_url | stylesheet_tag }}
+  {%- when 'fall' -%}{{ 'fall.css' | asset_url | stylesheet_tag }}
+  {%- else -%}{{ 'seasons.css' | asset_url | stylesheet_tag }}
+{%- endcase -%}

@@ -136,6 +136,55 @@
     ]
   },
   {
+    "name": "Seasonal scene",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "One switch for the whole site: sets the animated scene in the homepage header (when its Sky is set to “Use the site-wide scene”) and behind the photos on product pages."
+      },
+      {
+        "type": "select",
+        "id": "scene",
+        "label": "Scene",
+        "default": "day",
+        "options": [
+          {
+            "value": "day",
+            "label": "Sunny day (summer)"
+          },
+          {
+            "value": "fall",
+            "label": "Fall: golden leaves and scarecrow"
+          },
+          {
+            "value": "thanksgiving",
+            "label": "Thanksgiving: harvest and a waddling turkey"
+          },
+          {
+            "value": "holiday",
+            "label": "Holiday: Christmas night with Santa"
+          },
+          {
+            "value": "winter",
+            "label": "Winter: snowfall and a friendly snowman"
+          },
+          {
+            "value": "valentine",
+            "label": "Valentine's: floating hearts and tulips"
+          },
+          {
+            "value": "spring",
+            "label": "Spring: blossoms, butterflies and tulips"
+          },
+          {
+            "value": "easter",
+            "label": "Easter: eggs, chicks and a hopping bunny"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "name": "Cart",
     "settings": [
       {
