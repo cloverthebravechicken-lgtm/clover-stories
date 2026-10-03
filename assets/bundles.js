@@ -15,6 +15,29 @@
   // The pre-selected option may have its own note (e.g. the bundle on the landing page)
   document.querySelectorAll('.offer input:checked[data-note]').forEach(syncNote);
 
+  // Options without a book (e.g. the plush on its own) can't be signed: hide the signing add-on
+  // while one is selected, and untick it so an inscription never goes in the cart with a plush.
+  const syncAddon = (radio) => {
+    const form = radio.closest('buy-form');
+    const addon = form && form.querySelector('[data-addon]');
+    if (!addon) return;
+    const hide = radio.hasAttribute('data-no-addon');
+    addon.hidden = hide;
+    const toggle = addon.querySelector('[data-addon-toggle]');
+    if (hide && toggle && toggle.checked) {
+      toggle.checked = false;
+      toggle.dispatchEvent(new Event('change', { bubbles: true }));
+      // Express checkout stays hidden for launch-preview options
+      const dynamic = form.querySelector('[data-dynamic-checkout]');
+      if (dynamic && radio.dataset.preview) dynamic.hidden = true;
+    }
+  };
+  document.addEventListener('change', (e) => {
+    const radio = e.target.closest('.offer input');
+    if (radio) syncAddon(radio);
+  });
+  document.querySelectorAll('.offer input:checked').forEach(syncAddon);
+
   const routes = (window.Clover && Clover.routes) || { cartAdd: '/cart/add', cartChange: '/cart/change' };
   const post = async (url, body) => {
     const res = await fetch(url + '.js', {

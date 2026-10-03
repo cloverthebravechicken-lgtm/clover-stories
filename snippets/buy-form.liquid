@@ -131,6 +131,7 @@
                   data-price="{{ o_price | money }}"
                   {% if block.settings.note != blank %}data-note="{{ block.settings.note | escape }}"{% endif %}
                   {% if o_preview %}data-preview="{{ pk }}"{% endif %}
+                  {% if block.settings.hide_addon %}data-no-addon{% endif %}
                   {% if o_checked %}checked{% endif %}
                 >
                 {%- if block.settings.badge != blank and o_compact == false -%}

@@ -124,7 +124,8 @@
             "badge": "",
             "note": "Plush ships for a flat $4.99",
             "layout": "card",
-            "preview_as": "plush"
+            "preview_as": "plush",
+            "hide_addon": true
           }
         }
       },
@@ -199,7 +200,7 @@
         "reverse": false,
         "sticker": "So soft!",
         "eyebrow": "Meet Clover plush",
-        "heading": "Soft, huggable and <em>8 inches</em> of brave",
+        "heading": "The hero of the story, <em>ready to hug</em>",
         "text": "<p>Clover hops right off the page and into little arms. She's there for storytime, bedtime, adventures and plenty of hugs, and she's a sweet reminder that being yourself is something to celebrate.</p><ul><li>Soft 8-inch plush, just right for little hands</li><li>The perfect companion to <em>Clover, the Brave Chicken</em></li><li>Great for pretend play, storytime and bedtime</li></ul><p><strong>Book $16.99 + plush $19.99 = $36.98 separately. Get both in the bundle for just $29.99.</strong></p>",
         "signature": "",
         "use_signature_asset": false,

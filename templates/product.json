@@ -69,7 +69,8 @@
             "subtitle": "Already have the book? Add her cuddly friend",
             "badge": "",
             "layout": "card",
-            "preview_as": "plush"
+            "preview_as": "plush",
+            "hide_addon": true
           }
         }
       },
