@@ -1,0 +1,48 @@
+{%- comment -%}
+  Slim "notify me when it's back" row, shown in the buy box while the product is sold out
+  (Theme settings > Back in stock). Signups become customers tagged back-in-stock and
+  back-in-stock-[product handle], ready for a "Clover's back!" email from Shopify Email.
+  Usage: {% render 'notify-me', product: product, form_id: 'HeroForm', what: 'Book + Clover plush' %}
+  - what (optional): names of the sold-out options, when other options can still be bought
+{%- endcomment -%}
+{%- assign notify_form_id = 'NotifyForm-' | append: form_id -%}
+<div class="notify" id="Notify-{{ form_id }}">
+  {%- form 'customer', id: notify_form_id, class: 'notify__form' -%}
+    <input type="hidden" name="contact[tags]" value="newsletter,back-in-stock,back-in-stock-{{ product.handle }}">
+    {%- if form.posted_successfully? -%}
+      <p class="notify__done" role="status">{% render 'icon', name: 'check', size: 16 %} {{ settings.notify_success }}</p>
+    {%- else -%}
+      <p class="notify__text">
+        {%- render 'icon', name: 'sparkle', size: 14 -%}
+        <span>
+          {%- if what != blank -%}<strong>{{ what }}</strong>{% if settings.notify_eta != blank %} back {{ settings.notify_eta }}.{% else %} back soon.{% endif %}
+          {%- else -%}<strong>{{ settings.notify_heading }}</strong>{% if settings.notify_eta != blank %} Expected {{ settings.notify_eta }}.{% endif %}
+          {%- endif %} {{ settings.notify_text }}
+        </span>
+      </p>
+      <div class="notify__row">
+        <label class="visually-hidden" for="NotifyEmail-{{ form_id }}">Email</label>
+        <input id="NotifyEmail-{{ form_id }}" class="notify__input" type="email" name="contact[email]" required autocomplete="email" placeholder="Your email"{% if settings.notify_fine_print != blank %} title="{{ settings.notify_fine_print | escape }}"{% endif %}>
+        <button type="submit" class="btn btn--primary notify__btn">{{ settings.notify_button }}</button>
+      </div>
+      {%- if form.errors -%}<p class="notify__error" role="alert">{{ form.errors | default_errors }}</p>{%- endif -%}
+    {%- endif -%}
+  {%- endform -%}
+</div>
+<style>
+  .notify { margin-top: 12px; }
+  .notify__text { display: flex; align-items: baseline; gap: 6px; margin: 0 0 6px; font-size: .88rem; line-height: 1.35; }
+  .notify__text svg { flex: none; color: var(--c-primary, #FF5757); transform: translateY(1px); }
+  .notify__text strong { color: var(--c-primary, #FF5757); }
+  .notify__row { display: flex; align-items: center; gap: 4px; padding: 4px; border: 2px solid #FFD3C2; border-radius: 99px; background: #fff; transition: border-color .2s; }
+  .notify__row:focus-within { border-color: var(--c-primary, #FF5757); }
+  .notify__input { flex: 1 1 auto; min-width: 0; height: 38px; padding: 0 14px; border: 0; background: transparent; font: inherit; font-size: .95rem; color: inherit; outline: none; }
+  .notify__btn { flex: none; min-height: 0; height: 38px; padding: 0 18px; font-size: .92rem; box-shadow: none; }
+  .notify__done { display: flex; align-items: center; gap: 6px; margin: 0; padding: 10px 14px; border-radius: 99px; background: #EEF6E8; font-size: .92rem; font-weight: 600; color: var(--c-green, #518339); }
+  .notify__error { margin: 6px 0 0; color: #C62A1E; font-size: .85rem; }
+  .offer--soldout { opacity: .6; cursor: not-allowed; }
+  .offer--soldout .offer__radio { visibility: hidden; }
+  .offer--soldout .offer__title { font-weight: 600; }
+  .offer--soldout .offer__price { display: flex; align-items: center; }
+  .offer__soldout { display: inline-block; margin-right: 6px; padding: 1px 8px; border-radius: 99px; background: #EDE6E1; color: #6B4A33; font-size: .72rem; font-weight: 700; white-space: nowrap; vertical-align: middle; }
+</style>

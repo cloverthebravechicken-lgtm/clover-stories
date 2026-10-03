@@ -302,6 +302,95 @@
     ]
   },
   {
+    "name": "Back in stock",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "While a product is sold out, the buy box shows an email form instead of “Add to cart”. Signups are saved as customers tagged back-in-stock (and back-in-stock-[product handle]) so you can email them the moment it’s back. It switches off on its own when the product is in stock again."
+      },
+      {
+        "type": "checkbox",
+        "id": "notify_enabled",
+        "label": "Show “Notify me” when sold out",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "notify_eta",
+        "label": "Expected back",
+        "default": "in November",
+        "info": "Shown as “Expected back in November.” Leave blank to hide. E.g. “November 12” or “in mid-November”."
+      },
+      {
+        "type": "text",
+        "id": "notify_heading",
+        "label": "Heading",
+        "default": "Back in stock soon!"
+      },
+      {
+        "type": "text",
+        "id": "notify_text",
+        "label": "Text",
+        "default": "Leave your email and we'll let you know the moment Clover's back."
+      },
+      {
+        "type": "text",
+        "id": "notify_button",
+        "label": "Button",
+        "default": "Notify me"
+      },
+      {
+        "type": "text",
+        "id": "notify_success",
+        "label": "Thank-you message",
+        "default": "You're on the list! We'll email you as soon as Clover's back. 🐔"
+      },
+      {
+        "type": "text",
+        "id": "notify_fine_print",
+        "label": "Fine print",
+        "default": "You'll also join Clover's Club. Unsubscribe anytime."
+      },
+      {
+        "type": "header",
+        "content": "Offer instead"
+      },
+      {
+        "type": "paragraph",
+        "content": "When everything in a buy box is sold out (e.g. the book and bundle on the homepage), show this product as a ready-to-buy option above the notify form."
+      },
+      {
+        "type": "product",
+        "id": "notify_fallback_product",
+        "label": "Product to offer"
+      },
+      {
+        "type": "text",
+        "id": "notify_fallback_title",
+        "label": "Title",
+        "default": "Just Clover plush"
+      },
+      {
+        "type": "text",
+        "id": "notify_fallback_subtitle",
+        "label": "Subtitle",
+        "default": "Available now! Already have the book? Add her cuddly friend"
+      },
+      {
+        "type": "text",
+        "id": "notify_fallback_badge",
+        "label": "Badge",
+        "default": "In stock"
+      },
+      {
+        "type": "text",
+        "id": "notify_fallback_note",
+        "label": "Price note when selected",
+        "default": "Plush ships for a flat $4.99"
+      }
+    ]
+  },
+  {
     "name": "Launch preview",
     "settings": [
       {

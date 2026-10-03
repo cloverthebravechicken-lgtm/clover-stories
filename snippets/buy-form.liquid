@@ -16,6 +16,10 @@
   Optional per-offer "note" replaces the section's price note while that offer is selected
   (e.g. plush shipping on the bundle).
   Cards show "Save $X" when the variant has a compare-at price (the bundle).
+  While the product is sold out and Theme settings > Back in stock is on, the add-to-cart
+  controls are replaced by a slim "notify me" email row (snippets/notify-me.liquid). Sold-out
+  options show as slim greyed rows, or, when Back in stock > "Offer instead" has a product in
+  stock, are swapped for that product so the buy box keeps its usual height.
   With Theme settings → Launch preview on, an offer whose product isn't live yet (draft) still
   shows, using the preview title/price/image, but can't be added to the cart.
 {%- endcomment -%}
@@ -24,9 +28,26 @@
   assign offer_match = false
   assign checked_id = blank
   assign preview_first = false
+  assign soldout_titles = ''
+  assign has_live_offer = false
   for block in section.blocks
+    if block.type == 'offer' and settings.notify_enabled and block.settings.product != blank and block.settings.product.available == false
+      unless settings.launch_preview and block.settings.preview_as != blank and block.settings.preview_as != 'none'
+        assign offers_count = offers_count | plus: 1
+        if block.settings.product.id == product.id
+          assign offer_match = true
+        endif
+        assign so_title = block.settings.title | default: block.settings.product.title
+        if soldout_titles == ''
+          assign soldout_titles = so_title
+        else
+          assign soldout_titles = soldout_titles | append: ' & ' | append: so_title
+        endif
+      endunless
+    endif
     if block.type == 'offer' and block.settings.product != blank and block.settings.product.available
       assign offers_count = offers_count | plus: 1
+      assign has_live_offer = true
       if checked_id == blank
         assign checked_id = block.settings.product.id
       endif
@@ -49,15 +70,44 @@
   if require_match and offer_match == false
     assign offers_count = 0
   endif
+  # While everything here is sold out, offer a stand-in that's still in stock
+  # (Theme settings > Back in stock > "Offer instead", e.g. the plush on the homepage).
+  assign fallback = blank
+  if settings.notify_enabled and has_live_offer == false and product.available == false
+    assign fb = settings.notify_fallback_product
+    if fb != blank and fb.available and fb.id != product.id
+      assign fallback = fb
+      assign has_live_offer = true
+      assign offers_count = offers_count | plus: 1
+    endif
+  endif
   assign current_variant = product.selected_or_first_available_variant
   assign addon = section.settings.addon_product
+  # Sold out: the add-to-cart controls give way to a "notify me" form. If another option can still
+  # be bought (e.g. the plush when the book and bundle are out), it stays buyable and the form
+  # sits underneath, naming what's sold out.
+  assign show_notify = false
+  assign can_buy = current_variant.available
+  if offers_count > 1 and has_live_offer
+    assign can_buy = true
+  endif
+  if fallback != blank
+    assign can_buy = true
+  endif
+  if settings.notify_enabled and current_variant.available == false
+    assign show_notify = true
+  endif
+  assign notify_what = ''
+  if show_notify and can_buy
+    assign notify_what = soldout_titles
+  endif
 -%}
 
 <buy-form class="buy-form" data-section="{{ section.id }}">
   {%- form 'product', product, id: form_id, class: 'buy-form__form', novalidate: 'novalidate', data-type: 'add-to-cart-form' -%}
     <input type="hidden" name="id" value="{{ current_variant.id }}" data-variant-input>
 
-    {%- if offers_count > 1 -%}
+    {%- if offers_count > 1 or fallback != blank -%}
       <fieldset class="offers">
         <legend class="offers__legend">Choose your Clover</legend>
         {%- for block in section.blocks -%}
@@ -66,16 +116,21 @@
               assign op = block.settings.product
               assign o_live = false
               assign o_preview = false
+              assign o_soldout = false
               if op != blank and op.available
                 assign o_live = true
               elsif settings.launch_preview and block.settings.preview_as != blank and block.settings.preview_as != 'none'
                 assign o_preview = true
+              elsif settings.notify_enabled and op != blank and fallback == blank
+                # Sold-out options shrink to a slim row (and give way to the stand-in when there is one)
+                assign o_live = true
+                assign o_soldout = true
               endif
             -%}
             {%- if o_live or o_preview -%}
               {%- liquid
                 assign o_compact = false
-                if block.settings.layout == 'compact'
+                if block.settings.layout == 'compact' or o_soldout
                   assign o_compact = true
                 endif
                 assign o_checked = false
@@ -123,7 +178,7 @@
                   assign o_save = o_compare | minus: o_price
                 endif
               -%}
-              <label class="offer{% if o_compact %} offer--compact{% endif %}{% if o_preview %} offer--preview{% endif %}{% if block.settings.badge != blank and o_compact == false %} offer--badged{% endif %}" {{ block.shopify_attributes }}>
+              <label class="offer{% if o_compact %} offer--compact{% endif %}{% if o_preview %} offer--preview{% endif %}{% if o_soldout %} offer--soldout{% endif %}{% if block.settings.badge != blank and o_compact == false %} offer--badged{% endif %}" {{ block.shopify_attributes }}>
                 <input
                   type="radio"
                   name="offer-{{ form_id }}"
@@ -132,7 +187,8 @@
                   {% if block.settings.note != blank %}data-note="{{ block.settings.note | escape }}"{% endif %}
                   {% if o_preview %}data-preview="{{ pk }}"{% endif %}
                   {% if block.settings.hide_addon %}data-no-addon{% endif %}
-                  {% if o_checked %}checked{% endif %}
+                  {% if o_checked and o_soldout == false %}checked{% endif %}
+                  {% if o_soldout %}disabled{% endif %}
                 >
                 {%- if block.settings.badge != blank and o_compact == false -%}
                   <span class="offer__badge">{{ block.settings.badge }}</span>
@@ -143,13 +199,14 @@
                 {%- endif -%}
                 <span class="offer__body">
                   <span class="offer__title">{{ o_title }}</span>
-                  {%- if block.settings.subtitle != blank -%}
+                  {%- if block.settings.subtitle != blank and o_soldout == false -%}
                     <span class="offer__sub">{{ block.settings.subtitle }}</span>
                   {%- endif -%}
                 </span>
                 <span class="offer__price">
+                  {%- if o_soldout -%}<span class="offer__soldout">Sold out</span>{%- endif -%}
                   <strong>{{ o_price | money }}</strong>
-                  {%- if o_save > 0 and o_compact == false -%}
+                  {%- if o_save > 0 and o_compact == false and o_soldout == false -%}
                     <s>{{ o_compare | money }}</s>
                     <span class="offer__save">Save {{ o_save | money }}</span>
                   {%- endif -%}
@@ -158,6 +215,30 @@
             {%- endif -%}
           {%- endif -%}
         {%- endfor -%}
+        {%- if fallback != blank -%}
+          {%- assign fv = fallback.selected_or_first_available_variant -%}
+          <label class="offer offer--fallback">
+            <input
+              type="radio"
+              name="offer-{{ form_id }}"
+              value="{{ fv.id }}"
+              data-price="{{ fv.price | money }}"
+              {% if settings.notify_fallback_note != blank %}data-note="{{ settings.notify_fallback_note | escape }}"{% endif %}
+              data-no-addon
+              checked
+            >
+            {%- if settings.notify_fallback_badge != blank -%}<span class="offer__badge">{{ settings.notify_fallback_badge }}</span>{%- endif -%}
+            <span class="offer__radio" aria-hidden="true"></span>
+            {%- if fallback.featured_image -%}
+              <span class="offer__img"><img src="{{ fallback.featured_image | image_url: width: 160 }}" alt="" width="80" height="80" loading="lazy"></span>
+            {%- endif -%}
+            <span class="offer__body">
+              <span class="offer__title">{{ settings.notify_fallback_title | default: fallback.title }}</span>
+              {%- if settings.notify_fallback_subtitle != blank -%}<span class="offer__sub">{{ settings.notify_fallback_subtitle }}</span>{%- endif -%}
+            </span>
+            <span class="offer__price"><strong>{{ fv.price | money }}</strong></span>
+          </label>
+        {%- endif -%}
       </fieldset>
     {%- elsif product.has_only_default_variant == false -%}
       <div class="variant-pills">
@@ -178,7 +259,7 @@
       </div>
     {%- endif -%}
 
-    {%- if addon != blank and addon.available -%}
+    {%- if addon != blank and addon.available and can_buy -%}
       {%- assign addon_variant = addon.selected_or_first_available_variant -%}
       <div class="addon" data-addon>
         <label class="addon__toggle">
@@ -204,6 +285,7 @@
       </div>
     {%- endif -%}
 
+    {%- if can_buy or show_notify == false -%}
     <div class="buy-form__row">
       <div class="qty" data-qty>
         <button type="button" class="qty__btn" data-qty-minus aria-label="Decrease quantity">{% render 'icon', name: 'minus', size: 16 %}</button>
@@ -215,10 +297,10 @@
         name="add"
         class="btn btn--primary btn--xl btn--wiggle buy-form__submit"
         data-add-btn
-        {% unless current_variant.available %}disabled{% endunless %}
+        {% unless can_buy %}disabled{% endunless %}
       >
         <span class="btn__label">
-          {%- if current_variant.available -%}
+          {%- if can_buy -%}
             {{ section.settings.button_label | default: 'Add to cart' }}
           {%- else -%}
             Sold out
@@ -229,7 +311,7 @@
     </div>
 
     {%- if section.settings.show_buy_now -%}
-      <button type="button" class="btn btn--dark btn--block buy-form__buynow" data-buy-now {% unless current_variant.available %}disabled{% endunless %}>
+      <button type="button" class="btn btn--dark btn--block buy-form__buynow" data-buy-now {% unless can_buy %}disabled{% endunless %}>
         {% render 'icon', name: 'lock', size: 18 %} Buy it now
       </button>
     {%- endif -%}
@@ -240,6 +322,9 @@
       </div>
     {%- endif -%}
 
+    {%- endif -%}
+
     <p class="buy-form__error" role="alert" hidden data-form-error></p>
   {%- endform -%}
+  {%- if show_notify -%}{% render 'notify-me', product: product, form_id: form_id, what: notify_what %}{%- endif -%}
 </buy-form>
