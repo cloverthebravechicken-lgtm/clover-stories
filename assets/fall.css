@@ -1,8 +1,8 @@
 /* ---------- Fall hero: sunny day → golden autumn afternoon → sunny again ----------
    Every layer runs one shared, infinite animation of length --hol-cycle, so they stay in step.
    Timeline (% of the cycle):
-     0–24  sunny day        24–28  colors turn      28–84  golden autumn, leaves falling
-     36–62 geese fly over   26–30  scarecrow & harvest pop up
+     0–10  sunny day        10–14  colors turn      14–84  golden autumn, leaves falling
+     24–56 geese fly over   12–16  scarecrow & harvest pop up
      84–92 back to green    92–100 sunny day
 */
 .hero--fall { --hol-cycle: 36s; }
@@ -15,25 +15,25 @@
   opacity: 0;
   animation: fall-on var(--hol-cycle) ease-in-out infinite;
 }
-@keyframes fall-on { 0%, 24% { opacity: 0; } 28%, 84% { opacity: 1; } 92%, 100% { opacity: 0; } }
+@keyframes fall-on { 0%, 10% { opacity: 0; } 14%, 84% { opacity: 1; } 92%, 100% { opacity: 0; } }
 
 /* Sun sinks a little and glows orange; clouds pick up a warm tint */
 .hero--fall .hero__sunset { animation: fall-sun var(--hol-cycle) ease-in-out infinite; }
 @keyframes fall-sun {
-  0%, 24% { translate: 0 0; filter: none; }
-  28%, 84% { translate: 0 50px; filter: hue-rotate(-18deg) saturate(1.4); }
+  0%, 10% { translate: 0 0; filter: none; }
+  14%, 84% { translate: 0 50px; filter: hue-rotate(-18deg) saturate(1.4); }
   92%, 100% { translate: 0 0; filter: none; }
 }
 .hero--fall .hero__clouds { animation: fall-clouds var(--hol-cycle) ease-in-out infinite; }
 @keyframes fall-clouds {
-  0%, 24% { filter: none; }
-  28%, 84% { filter: sepia(.35) saturate(1.2); }
+  0%, 10% { filter: none; }
+  14%, 84% { filter: sepia(.35) saturate(1.2); }
   92%, 100% { filter: none; }
 }
 
 /* Falling leaves */
 .fall__leaves { overflow: hidden; opacity: 0; animation: fall-leaves var(--hol-cycle) ease-in-out infinite; }
-@keyframes fall-leaves { 0%, 26% { opacity: 0; } 30%, 82% { opacity: 1; } 88%, 100% { opacity: 0; } }
+@keyframes fall-leaves { 0%, 12% { opacity: 0; } 16.5%, 81.5% { opacity: 1; } 88%, 100% { opacity: 0; } }
 .fall__leaf { position: absolute; top: -6%; display: block; animation: fall-drop 9s linear infinite; }
 .fall__leaf svg { display: block; width: 100%; height: auto; animation: fall-spin 3.4s ease-in-out infinite alternate; }
 .fall__leaf--alt { animation-name: fall-drop-alt; }
@@ -49,11 +49,11 @@
   animation: fall-geese var(--hol-cycle) linear infinite;
 }
 @keyframes fall-geese {
-  0%, 35.9% { translate: calc(var(--scene-w, 100vw) + 10%) 40px; opacity: 0; }
-  36% { translate: calc(var(--scene-w, 100vw) + 10%) 40px; opacity: 1; }
-  49% { translate: calc(var(--scene-w, 100vw) / 2 - 50%) 0; }
-  62% { translate: -120% 30px; opacity: 1; }
-  62.1%, 100% { translate: -120% 30px; opacity: 0; }
+  0%, 23.88% { translate: calc(var(--scene-w, 100vw) + 10%) 40px; opacity: 0; }
+  24% { translate: calc(var(--scene-w, 100vw) + 10%) 40px; opacity: 1; }
+  40.25% { translate: calc(var(--scene-w, 100vw) / 2 - 50%) 0; }
+  56.5% { translate: -120% 30px; opacity: 1; }
+  56.62%, 100% { translate: -120% 30px; opacity: 0; }
 }
 .fall__geese-bob { display: block; animation: hol-bob-fall 2s ease-in-out infinite; }
 .fall__geese svg { display: block; width: 100%; height: auto; overflow: visible; }
@@ -64,8 +64,8 @@
 /* Grass turns golden */
 .hero--fall .grass { animation: fall-grass var(--hol-cycle) ease-in-out infinite; }
 @keyframes fall-grass {
-  0%, 24% { filter: none; }
-  28%, 84% { filter: hue-rotate(-55deg) saturate(1.1) brightness(1.04); }
+  0%, 10% { filter: none; }
+  14%, 84% { filter: hue-rotate(-55deg) saturate(1.1) brightness(1.04); }
   92%, 100% { filter: none; }
 }
 
@@ -82,8 +82,8 @@
 .fall__scarecrow-sway { display: block; transform-origin: 50% 100%; animation: fall-sway 3.6s ease-in-out infinite; }
 @keyframes fall-sway { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2.5deg); } }
 @keyframes fall-pop {
-  0%, 25% { opacity: 0; transform: translateY(24px) scale(.85); }
-  29%, 84% { opacity: 1; transform: none; }
+  0%, 11% { opacity: 0; transform: translateY(24px) scale(.85); }
+  15.25%, 84% { opacity: 1; transform: none; }
   90%, 100% { opacity: 0; transform: translateY(24px) scale(.85); }
 }
 
