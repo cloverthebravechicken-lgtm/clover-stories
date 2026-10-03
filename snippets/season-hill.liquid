@@ -1,7 +1,8 @@
 {%- comment -%}
   Things that pop up on the hero's hill during the seasonal loops (see assets/seasons.css):
   spring flowers and a chick, valentine tulips and a heart sign, easter eggs, a basket and a
-  hopping bunny, or winter snow, snowy bushes and a snowman.
+  hopping bunny, winter snow, snowy bushes and a snowman, or a thanksgiving harvest with a
+  waddling turkey.
   Usage: {% render 'season-hill', mode: 'spring' %}
 {%- endcomment -%}
 {%- capture tulip_red -%}<g><path d="M30 60 V140" stroke="#5E9E3A" stroke-width="6" stroke-linecap="round"/><path d="M30 112 Q10 92 8 74 Q26 84 30 104" fill="#6FAF45"/><path d="M12 22 L20 34 L30 16 L40 34 L48 22 Q52 56 30 64 Q8 56 12 22Z" fill="#E8435F"/><path d="M30 16 L40 34 L48 22 Q50 46 34 60" fill="rgba(255,255,255,.18)"/></g>{%- endcapture -%}
@@ -92,6 +93,56 @@
             <circle cx="20" cy="46" r="3" fill="#FFC2D1" opacity=".7"/>
             <ellipse cx="38" cy="74" rx="10" ry="5" fill="#EDE5DB"/>
             <ellipse cx="66" cy="74" rx="12" ry="5" fill="#EDE5DB"/>
+          </svg>
+        </span>
+      </span>
+
+    {%- when 'thanksgiving' -%}
+      <span class="ssn__item ssn__item--left" style="--w: clamp(110px, 12vw, 170px)">
+        <svg viewBox="0 0 200 150" focusable="false">
+          {%- assign stalks = '18,-14|30,-6|42,2|54,10|66,16' | split: '|' -%}
+          {%- for st in stalks -%}
+            {%- assign sp = st | split: ',' -%}
+            <g transform="rotate({{ sp[1] }} 44 140)"><path d="M{{ sp[0] | plus: 20 }} 140 V18" stroke="#C9A44C" stroke-width="5" stroke-linecap="round"/><path d="M{{ sp[0] | plus: 20 }} 70 Q{{ sp[0] | minus: 4 }} 56 {{ sp[0] | minus: 10 }} 34 M{{ sp[0] | plus: 20 }} 52 Q{{ sp[0] | plus: 42 }} 40 {{ sp[0] | plus: 48 }} 20" stroke="#D9B85C" stroke-width="4" fill="none" stroke-linecap="round"/></g>
+          {%- endfor -%}
+          <path d="M28 104 Q44 96 62 104" stroke="#8A5A2B" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="112" cy="122" rx="30" ry="21" fill="#E8762D"/>
+          <path d="M112 102 Q102 122 112 143 M112 102 Q122 122 112 143 M88 110 Q84 122 90 136 M136 110 Q140 122 134 136" fill="none" stroke="#C85D1F" stroke-width="2.2"/>
+          <path d="M112 103 Q111 94 117 91" fill="none" stroke="#4E7A2E" stroke-width="5" stroke-linecap="round"/>
+          <ellipse cx="166" cy="130" rx="20" ry="14" fill="#F2A13A"/>
+          <path d="M166 117 Q160 130 166 144 M166 117 Q172 130 166 144" fill="none" stroke="#D9852A" stroke-width="2"/>
+          <path d="M166 117 Q166 110 171 107" fill="none" stroke="#4E7A2E" stroke-width="3.5" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="ssn__item ssn__item--right" style="--w: clamp(110px, 12vw, 170px)">
+        <svg viewBox="0 0 210 120" focusable="false">
+          <path d="M8 34 Q-4 14 18 16 Q70 24 128 30 L134 104 Q76 106 34 74 Q14 58 8 34Z" fill="#C98F55"/>
+          <path d="M22 26 Q30 50 36 74 M46 28 Q54 56 60 88 M72 30 Q80 62 84 98 M98 31 Q104 66 108 102" stroke="#A8743E" stroke-width="3" fill="none"/>
+          <path d="M14 36 Q70 44 130 46 M20 56 Q76 62 132 66 M34 76 Q84 82 133 86" stroke="#B57B43" stroke-width="2.4" fill="none"/>
+          <ellipse cx="131" cy="67" rx="15" ry="37" fill="#8A5A2B"/>
+          <g transform="translate(138 44)"><circle cx="8" cy="8" r="7" fill="#7B4FA0"/><circle cx="20" cy="8" r="7" fill="#7B4FA0"/><circle cx="14" cy="19" r="7" fill="#6A4290"/><circle cx="26" cy="19" r="7" fill="#7B4FA0"/><circle cx="20" cy="30" r="7" fill="#6A4290"/><path d="M14 0 Q16 -8 22 -10" stroke="#4E7A2E" stroke-width="3" fill="none"/></g>
+          <g transform="rotate(-24 186 84)"><ellipse cx="186" cy="84" rx="9" ry="22" fill="#F2C33D"/><path d="M180 70 H192 M179 78 H193 M179 86 H193 M180 94 H192" stroke="#D9A42A" stroke-width="2"/><path d="M186 106 Q172 96 170 72 Q182 86 186 100 Q190 86 202 72 Q200 96 186 106Z" fill="#9FBF5A"/></g>
+          <circle cx="146" cy="100" r="14" fill="#D7372B"/><path d="M146 87 Q148 82 152 81" stroke="#6B4220" stroke-width="2.4" fill="none"/><ellipse cx="141" cy="95" rx="4" ry="3" fill="rgba(255,255,255,.4)"/>
+          <ellipse cx="168" cy="106" rx="18" ry="12" fill="#E8762D"/><path d="M168 94 Q162 106 168 118 M168 94 Q174 106 168 118" fill="none" stroke="#C85D1F" stroke-width="2"/>
+        </svg>
+      </span>
+      <span class="ssn__turkey">
+        <span class="ssn__waddle">
+          <svg viewBox="0 0 100 92" focusable="false">
+            {%- assign feathers = '-80,#9C3B22|-56,#E8762D|-32,#F2B33D|-8,#C8462B|16,#E8762D|40,#F2B33D|64,#9C3B22' | split: '|' -%}
+            {%- for fe in feathers -%}
+              {%- assign fd = fe | split: ',' -%}
+              <ellipse cx="38" cy="22" rx="10" ry="26" fill="{{ fd[1] }}" transform="rotate({{ fd[0] }} 38 50)"/>
+            {%- endfor -%}
+            <path d="M40 80 V90 M38 90 h6 M54 80 V90 M52 90 h6" stroke="#E8952D" stroke-width="3" stroke-linecap="round"/>
+            <ellipse cx="46" cy="60" rx="24" ry="21" fill="#8B5A3C"/>
+            <path d="M30 56 Q44 48 58 58 Q50 72 34 70Z" fill="#6E4630"/>
+            <path d="M62 54 Q70 46 70 30" stroke="#8B5A3C" stroke-width="12" stroke-linecap="round" fill="none"/>
+            <circle cx="72" cy="26" r="10" fill="#9A6646"/>
+            <path d="M80 25 L90 28 L80 31 Z" fill="#F2B33D"/>
+            <path d="M78 31 Q82 40 77 44 Q73 40 75 32 Z" fill="#D7372B"/>
+            <circle cx="74" cy="23" r="2.4" fill="#2B1D14"/><circle cx="74.8" cy="22.2" r=".8" fill="#fff"/>
+            <circle cx="70" cy="30" r="2.6" fill="#FFB0A0" opacity=".6"/>
           </svg>
         </span>
       </span>

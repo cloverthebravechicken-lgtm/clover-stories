@@ -10,7 +10,7 @@
     assign holiday = true
   elsif sky == 'fall'
     assign fall = true
-  elsif sky == 'spring' or sky == 'valentine' or sky == 'easter' or sky == 'winter'
+  elsif sky == 'spring' or sky == 'valentine' or sky == 'easter' or sky == 'winter' or sky == 'thanksgiving'
     assign season = true
   endif
 -%}
@@ -186,6 +186,7 @@
       "options": [
         { "value": "day", "label": "Sunny day (summer)" },
         { "value": "fall", "label": "Fall: golden leaves and scarecrow" },
+        { "value": "thanksgiving", "label": "Thanksgiving: harvest and a waddling turkey" },
         { "value": "holiday", "label": "Holiday: Christmas night with Santa" },
         { "value": "winter", "label": "Winter: snowfall and a friendly snowman" },
         { "value": "valentine", "label": "Valentine's: floating hearts and tulips" },

@@ -1,5 +1,5 @@
 {%- comment -%}
-  Sky layers for the hero's seasonal loops (spring, valentine, easter, winter) and the extra
+  Sky layers for the hero's seasonal loops (spring, valentine, easter, winter, thanksgiving) and the extra
   touches on the plain sunny day ('summer'). Seasonal layers fade in and out on the shared
   --hol-cycle (see assets/seasons.css).
   Usage: {% render 'season-sky', mode: 'spring' %}
@@ -19,6 +19,9 @@
     when 'winter'
       assign colors = '#FFFFFF,#F2F9FF,#FFFFFF,#E6F4FF,#FFFFFF' | split: ','
       assign count = 25
+    when 'thanksgiving'
+      assign colors = '#C8462B,#E8762D,#B5532A,#F2B33D,#9C3B22' | split: ','
+      assign count = 21
   endcase
 -%}
 
@@ -52,6 +55,8 @@
         {%- case mode -%}
           {%- when 'valentine' -%}
             <svg viewBox="0 0 40 36" focusable="false"><path fill="{{ colors[ci] }}" d="M20 34 C6 24 1 17 1 10 C1 4 6 0 11 0 C15 0 18 2 20 6 C22 2 25 0 29 0 C34 0 39 4 39 10 C39 17 34 24 20 34Z"/></svg>
+          {%- when 'thanksgiving' -%}
+            <svg viewBox="0 0 24 24" focusable="false"><path fill="{{ colors[ci] }}" d="M12 1 C15 5 21 6 22 12 C18 12 17 15 19 19 C15 18 13 20 12 23 C11 20 9 18 5 19 C7 15 6 12 2 12 C3 6 9 5 12 1 Z"/><path d="M12 6 V22" stroke="rgba(90,50,20,.45)" stroke-width="1.2" fill="none"/></svg>
           {%- when 'winter' -%}
             <svg viewBox="0 0 40 40" focusable="false"><g stroke="{{ colors[ci] }}" stroke-width="3" stroke-linecap="round" fill="none"><path d="M20 3 V37 M5.3 11.5 L34.7 28.5 M5.3 28.5 L34.7 11.5"/><path d="M15 6 L20 10 L25 6 M15 34 L20 30 L25 34 M6 17 L11 19 L9 13 M34 23 L29 21 L31 27 M6 23 L11 21 L9 27 M34 17 L29 19 L31 13"/></g></svg>
           {%- else -%}
