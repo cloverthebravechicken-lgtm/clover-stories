@@ -2,20 +2,26 @@
   assign product = section.settings.product
   assign images = section.blocks | where: 'type', 'image'
   assign bullets = section.blocks | where: 'type', 'bullet'
+  assign sky = section.settings.sky_mode
   assign holiday = false
   assign fall = false
-  if section.settings.sky_mode == 'holiday'
+  assign season = false
+  if sky == 'holiday'
     assign holiday = true
-  elsif section.settings.sky_mode == 'fall'
+  elsif sky == 'fall'
     assign fall = true
+  elsif sky == 'spring' or sky == 'valentine' or sky == 'easter' or sky == 'winter'
+    assign season = true
   endif
 -%}
 {%- if holiday -%}{{ 'holiday.css' | asset_url | stylesheet_tag }}{%- endif -%}
 {%- if fall -%}{{ 'fall.css' | asset_url | stylesheet_tag }}{%- endif -%}
-<section class="hero{% if section.settings.show_grass %} hero--grass{% endif %}{% if holiday %} hero--holiday{% endif %}{% if fall %} hero--fall{% endif %}" id="top-buy" style="--hero-bg: {{ section.settings.bg }};{% if holiday or fall %} --hol-cycle: {{ section.settings.holiday_cycle }}s;{% endif %}">
+{%- if season or sky == 'day' -%}{{ 'seasons.css' | asset_url | stylesheet_tag }}{%- endif -%}
+<section class="hero{% if section.settings.show_grass %} hero--grass{% endif %}{% if holiday %} hero--holiday{% endif %}{% if fall %} hero--fall{% endif %}{% if season %} hero--season hero--{{ sky }}{% endif %}" id="top-buy" style="--hero-bg: {{ section.settings.bg }};{% if holiday or fall or season %} --hol-cycle: {{ section.settings.holiday_cycle }}s;{% endif %}">
   <div class="hero__sky" aria-hidden="true">
     {%- if holiday -%}{% render 'holiday-sky' %}{%- endif -%}
     {%- if fall -%}{% render 'fall-sky' %}{%- endif -%}
+    {%- if season -%}{% render 'season-sky', mode: sky %}{%- elsif sky == 'day' -%}{% render 'season-sky', mode: 'summer' %}{%- endif -%}
     <span class="hero__sunset"><span class="hero__sun">{% render 'deco', name: 'sunburst', color: '#FFD45C' %}</span></span>
     <span class="hero__clouds">
       <span class="hero__cloud hero__cloud--1">{% render 'deco', name: 'cloud', color: '#FFFFFF' %}</span>
@@ -160,6 +166,7 @@
       </div>
     {%- endif -%}
     {%- if fall -%}{% render 'fall-hill' %}{%- endif -%}
+    {%- if season -%}{% render 'season-hill', mode: sky %}{%- endif -%}
   {%- else -%}
     {% render 'deco', name: 'wave', color: section.settings.next_bg %}
   {%- endif -%}
@@ -176,7 +183,15 @@
     { "type": "checkbox", "id": "show_grass", "label": "Grassy hill with blowing grass at the bottom", "default": true },
     {
       "type": "select", "id": "sky_mode", "label": "Sky", "default": "day",
-      "options": [{ "value": "day", "label": "Sunny day" }, { "value": "holiday", "label": "Holiday: Christmas night with Santa" }, { "value": "fall", "label": "Fall: golden leaves and scarecrow" }]
+      "options": [
+        { "value": "day", "label": "Sunny day (summer)" },
+        { "value": "fall", "label": "Fall: golden leaves and scarecrow" },
+        { "value": "holiday", "label": "Holiday: Christmas night with Santa" },
+        { "value": "winter", "label": "Winter: snowfall and a friendly snowman" },
+        { "value": "valentine", "label": "Valentine's: floating hearts and tulips" },
+        { "value": "spring", "label": "Spring: blossoms, butterflies and tulips" },
+        { "value": "easter", "label": "Easter: eggs, chicks and a hopping bunny" }
+      ]
     },
     { "type": "range", "id": "holiday_cycle", "label": "Seasonal loop length", "min": 20, "max": 60, "step": 2, "unit": "s", "default": 36 },
     { "type": "text", "id": "badge", "label": "Badge", "default": "Available in premium hardcover" },

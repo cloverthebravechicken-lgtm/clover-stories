@@ -1,0 +1,114 @@
+{%- comment -%}
+  Sky layers for the hero's seasonal loops (spring, valentine, easter, winter) and the extra
+  touches on the plain sunny day ('summer'). Seasonal layers fade in and out on the shared
+  --hol-cycle (see assets/seasons.css).
+  Usage: {% render 'season-sky', mode: 'spring' %}
+{%- endcomment -%}
+{%- liquid
+  assign count = 0
+  case mode
+    when 'spring'
+      assign colors = '#FFB3CC,#FFC9DB,#FFD6E5,#FFFFFF,#FFA5C2' | split: ','
+      assign count = 21
+    when 'valentine'
+      assign colors = '#FF5C7A,#FF8FAB,#FFB3C6,#E8435F,#FFC2D1' | split: ','
+      assign count = 17
+    when 'easter'
+      assign colors = '#C9B6FF,#FFE07A,#FFB3CC,#9EDCFF,#B8F0C8' | split: ','
+      assign count = 17
+    when 'winter'
+      assign colors = '#FFFFFF,#F2F9FF,#FFFFFF,#E6F4FF,#FFFFFF' | split: ','
+      assign count = 25
+  endcase
+-%}
+
+{%- if mode == 'summer' -%}
+  <span class="ssn__halo"></span>
+  <span class="ssn__birds">
+    <span class="ssn__bob">
+      <svg viewBox="0 0 120 50" focusable="false">
+        {%- assign birds = '6,26|40,12|72,30' | split: '|' -%}
+        {%- for b in birds -%}
+          {%- assign xy = b | split: ',' -%}
+          <g transform="translate({{ xy[0] }} {{ xy[1] }})"><path class="ssn__flap" style="animation-delay: -{{ forloop.index | times: 0.2 }}s" d="M0 8 Q8 0 16 8 Q24 0 32 8" fill="none" stroke="#3B4A5C" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></g>
+        {%- endfor -%}
+      </svg>
+    </span>
+  </span>
+{%- else -%}
+  <span class="ssn__glow"></span>
+
+  <span class="ssn__drops">
+    {%- for i in (0..count) -%}
+      {%- liquid
+        assign lx = i | times: 37 | modulo: 100
+        assign ls = i | times: 11 | modulo: 10 | plus: 14
+        assign ld = i | times: 17 | modulo: 50 | divided_by: 10.0 | plus: 8
+        assign ldel = i | times: 29 | modulo: 100 | divided_by: 10.0
+        assign ci = i | modulo: 5
+        assign lalt = i | modulo: 2
+      -%}
+      <i class="ssn__drop{% if lalt == 1 %} ssn__drop--alt{% endif %}" style="left: {{ lx }}%; width: {{ ls }}px; animation-duration: {{ ld }}s; animation-delay: -{{ ldel }}s">
+        {%- case mode -%}
+          {%- when 'valentine' -%}
+            <svg viewBox="0 0 40 36" focusable="false"><path fill="{{ colors[ci] }}" d="M20 34 C6 24 1 17 1 10 C1 4 6 0 11 0 C15 0 18 2 20 6 C22 2 25 0 29 0 C34 0 39 4 39 10 C39 17 34 24 20 34Z"/></svg>
+          {%- when 'winter' -%}
+            <svg viewBox="0 0 40 40" focusable="false"><g stroke="{{ colors[ci] }}" stroke-width="3" stroke-linecap="round" fill="none"><path d="M20 3 V37 M5.3 11.5 L34.7 28.5 M5.3 28.5 L34.7 11.5"/><path d="M15 6 L20 10 L25 6 M15 34 L20 30 L25 34 M6 17 L11 19 L9 13 M34 23 L29 21 L31 27 M6 23 L11 21 L9 27 M34 17 L29 19 L31 13"/></g></svg>
+          {%- else -%}
+            <svg viewBox="0 0 24 24" focusable="false"><path fill="{{ colors[ci] }}" d="M12 2 C18 6 20 14 12 22 C4 14 6 6 12 2Z"/><path d="M12 6 V18" stroke="rgba(160,70,110,.22)" stroke-width="1.2"/></svg>
+        {%- endcase -%}
+      </i>
+    {%- endfor -%}
+  </span>
+
+  {%- case mode -%}
+    {%- when 'spring' or 'easter' -%}
+      {%- assign flyers = 'ssn__fly--a,#FF9EC0,#FFD45C|ssn__fly--b,#B9A4FF,#FFE07A' | split: '|' -%}
+      {%- if mode == 'easter' -%}{%- assign flyers = 'ssn__fly--a,#B9A4FF,#FFE07A' | split: '|' -%}{%- endif -%}
+      {%- for f in flyers -%}
+        {%- assign fp = f | split: ',' -%}
+        <span class="ssn__flyer ssn__butterfly {{ fp[0] }}">
+          <span class="ssn__bob">
+            <svg viewBox="0 0 80 60" focusable="false">
+              <g class="ssn__wings">
+                <ellipse cx="24" cy="22" rx="20" ry="16" fill="{{ fp[1] }}" transform="rotate(-20 24 22)"/>
+                <ellipse cx="56" cy="22" rx="20" ry="16" fill="{{ fp[1] }}" transform="rotate(20 56 22)"/>
+                <ellipse cx="27" cy="44" rx="12" ry="10" fill="{{ fp[2] }}"/>
+                <ellipse cx="53" cy="44" rx="12" ry="10" fill="{{ fp[2] }}"/>
+                <circle cx="22" cy="20" r="5" fill="rgba(255,255,255,.6)"/>
+                <circle cx="58" cy="20" r="5" fill="rgba(255,255,255,.6)"/>
+              </g>
+              <rect x="37" y="12" width="6" height="40" rx="3" fill="#4A3424"/>
+              <path d="M39 13 Q34 2 28 2 M41 13 Q46 2 52 2" stroke="#4A3424" stroke-width="2" fill="none" stroke-linecap="round"/>
+            </svg>
+          </span>
+        </span>
+      {%- endfor -%}
+    {%- when 'valentine' -%}
+      <span class="ssn__flyer ssn__balloons">
+        <span class="ssn__bob">
+          <svg viewBox="0 0 120 170" focusable="false">
+            <path d="M60 168 Q50 130 30 92 M60 168 Q62 120 60 70 M60 168 Q74 128 92 96" stroke="#9C7A66" stroke-width="1.6" fill="none"/>
+            <g transform="translate(6 46) scale(1.25)"><path fill="#FF8FAB" d="M20 34 C6 24 1 17 1 10 C1 4 6 0 11 0 C15 0 18 2 20 6 C22 2 25 0 29 0 C34 0 39 4 39 10 C39 17 34 24 20 34Z"/><ellipse cx="11" cy="9" rx="4" ry="3" fill="rgba(255,255,255,.5)" transform="rotate(-30 11 9)"/></g>
+            <g transform="translate(64 50) scale(1.15)"><path fill="#FFB3C6" d="M20 34 C6 24 1 17 1 10 C1 4 6 0 11 0 C15 0 18 2 20 6 C22 2 25 0 29 0 C34 0 39 4 39 10 C39 17 34 24 20 34Z"/><ellipse cx="11" cy="9" rx="4" ry="3" fill="rgba(255,255,255,.5)" transform="rotate(-30 11 9)"/></g>
+            <g transform="translate(32 0) scale(1.5)"><path fill="#FF5C7A" d="M20 34 C6 24 1 17 1 10 C1 4 6 0 11 0 C15 0 18 2 20 6 C22 2 25 0 29 0 C34 0 39 4 39 10 C39 17 34 24 20 34Z"/><ellipse cx="11" cy="9" rx="4" ry="3" fill="rgba(255,255,255,.5)" transform="rotate(-30 11 9)"/></g>
+          </svg>
+        </span>
+      </span>
+    {%- when 'winter' -%}
+      <span class="ssn__flyer ssn__cardinal">
+        <span class="ssn__bob">
+          <svg viewBox="0 0 70 44" focusable="false">
+            <path d="M52 24 L69 18 L66 28 Z" fill="#B3261E"/>
+            <ellipse cx="38" cy="25" rx="20" ry="12" fill="#D7372B"/>
+            <path d="M14 14 L24 4 L28 16 Z" fill="#D7372B"/>
+            <circle cx="20" cy="20" r="10" fill="#D7372B"/>
+            <path d="M12 18 Q16 26 24 24 L22 18 Z" fill="#2B1D14"/>
+            <path d="M10 19 L2 22 L10 24 Z" fill="#F29B38"/>
+            <circle cx="18" cy="18" r="1.8" fill="#fff"/>
+            <path class="ssn__flap" d="M30 22 Q42 0 54 14 Q44 18 30 22 Z" fill="#B3261E"/>
+          </svg>
+        </span>
+      </span>
+  {%- endcase -%}
+{%- endif -%}

@@ -1,0 +1,136 @@
+{%- comment -%}
+  Things that pop up on the hero's hill during the seasonal loops (see assets/seasons.css):
+  spring flowers and a chick, valentine tulips and a heart sign, easter eggs, a basket and a
+  hopping bunny, or winter snow, snowy bushes and a snowman.
+  Usage: {% render 'season-hill', mode: 'spring' %}
+{%- endcomment -%}
+{%- capture tulip_red -%}<g><path d="M30 60 V140" stroke="#5E9E3A" stroke-width="6" stroke-linecap="round"/><path d="M30 112 Q10 92 8 74 Q26 84 30 104" fill="#6FAF45"/><path d="M12 22 L20 34 L30 16 L40 34 L48 22 Q52 56 30 64 Q8 56 12 22Z" fill="#E8435F"/><path d="M30 16 L40 34 L48 22 Q50 46 34 60" fill="rgba(255,255,255,.18)"/></g>{%- endcapture -%}
+{%- capture tulip_pink -%}<g><path d="M30 60 V140" stroke="#5E9E3A" stroke-width="6" stroke-linecap="round"/><path d="M30 112 Q50 92 52 74 Q34 84 30 104" fill="#6FAF45"/><path d="M12 22 L20 34 L30 16 L40 34 L48 22 Q52 56 30 64 Q8 56 12 22Z" fill="#FF8FAB"/><path d="M30 16 L40 34 L48 22 Q50 46 34 60" fill="rgba(255,255,255,.2)"/></g>{%- endcapture -%}
+{%- capture tulip_gold -%}<g><path d="M30 60 V140" stroke="#5E9E3A" stroke-width="6" stroke-linecap="round"/><path d="M30 112 Q10 92 8 74 Q26 84 30 104" fill="#6FAF45"/><path d="M12 22 L20 34 L30 16 L40 34 L48 22 Q52 56 30 64 Q8 56 12 22Z" fill="#FFB347"/><path d="M30 16 L40 34 L48 22 Q50 46 34 60" fill="rgba(255,255,255,.2)"/></g>{%- endcapture -%}
+{%- capture daisy -%}<g>{%- for p in (0..9) -%}<ellipse cx="50" cy="26" rx="9" ry="20" transform="rotate({{ p | times: 36 }} 50 50)" fill="#FFFFFF" stroke="rgba(0,0,0,.08)"/>{%- endfor -%}<circle cx="50" cy="50" r="14" fill="#FFC93C"/></g>{%- endcapture -%}
+{%- capture chick -%}<g><ellipse cx="40" cy="50" rx="26" ry="22" fill="#FFE066"/><circle cx="40" cy="28" r="17" fill="#FFE066"/><circle cx="34" cy="26" r="3" fill="#2B1D14"/><circle cx="46" cy="26" r="3" fill="#2B1D14"/><path d="M36 33 L44 33 L40 39Z" fill="#F29B38"/><path d="M14 46 Q22 40 26 52" fill="#FFD23F"/><path d="M33 72 v6 M47 72 v6" stroke="#F29B38" stroke-width="3" stroke-linecap="round"/><circle cx="31" cy="32" r="3" fill="#FFB0A0" opacity=".8"/><circle cx="49" cy="32" r="3" fill="#FFB0A0" opacity=".8"/></g>{%- endcapture -%}
+
+<div class="ssn__hill" aria-hidden="true">
+  {%- case mode -%}
+    {%- when 'spring' -%}
+      <span class="ssn__item ssn__item--left" style="--w: clamp(110px, 12vw, 170px)">
+        <svg viewBox="0 0 220 150" focusable="false">
+          <g transform="translate(0 10)">{{ tulip_pink }}</g>
+          <g transform="translate(40 66) scale(.8)">{{ daisy }}</g>
+          <g transform="translate(110 0)">{{ tulip_gold }}</g>
+          <g transform="translate(150 70) scale(.7)">{{ daisy }}</g>
+        </svg>
+      </span>
+      <span class="ssn__item ssn__item--right" style="--w: clamp(90px, 9vw, 130px)">
+        <svg viewBox="0 0 170 150" focusable="false">
+          <g transform="translate(0 70)">{{ chick }}</g>
+          <g transform="translate(90 6)">{{ tulip_red }}</g>
+          <g transform="translate(120 20) scale(.9)">{{ tulip_pink }}</g>
+        </svg>
+      </span>
+
+    {%- when 'valentine' -%}
+      <span class="ssn__item ssn__item--left" style="--w: clamp(110px, 12vw, 170px)">
+        <svg viewBox="0 0 220 150" focusable="false">
+          <g transform="translate(0 14)">{{ tulip_red }}</g>
+          <g transform="translate(44 0)">{{ tulip_pink }}</g>
+          <g transform="translate(90 18)">{{ tulip_red }}</g>
+          <g transform="translate(134 6)">{{ tulip_pink }}</g>
+          <g transform="translate(170 22) scale(.85)">{{ tulip_red }}</g>
+        </svg>
+      </span>
+      <span class="ssn__item ssn__item--right" style="--w: clamp(80px, 8vw, 116px)">
+        <svg viewBox="0 0 120 150" focusable="false">
+          <rect x="54" y="60" width="12" height="90" rx="3" fill="#8A5A2B"/>
+          <rect x="10" y="14" width="100" height="62" rx="12" fill="#C98F55"/>
+          <path d="M14 30 H106 M14 46 H106 M14 62 H106" stroke="#B57B43" stroke-width="2"/>
+          <path fill="#E8435F" d="M60 70 C40 56 34 47 34 38 C34 31 40 26 46 26 C52 26 56 29 60 35 C64 29 68 26 74 26 C80 26 86 31 86 38 C86 47 80 56 60 70Z"/>
+          <ellipse cx="47" cy="36" rx="4" ry="3" fill="rgba(255,255,255,.5)" transform="rotate(-30 47 36)"/>
+        </svg>
+      </span>
+
+    {%- when 'easter' -%}
+      <span class="ssn__item ssn__item--left" style="--w: clamp(110px, 12vw, 170px)">
+        <svg viewBox="0 0 220 120" focusable="false">
+          {%- assign eggs = '10,48,#C9B6FF,#FFE07A|58,58,#FFB3CC,#FFFFFF|104,44,#9EDCFF,#FFB3CC|152,60,#FFE07A,#C9B6FF' | split: '|' -%}
+          {%- for e in eggs -%}
+            {%- assign ep = e | split: ',' -%}
+            <g transform="translate({{ ep[0] }} {{ ep[1] }}) scale(.8)">
+              <path d="M30 2 C46 2 58 28 58 46 C58 63 46 74 30 74 C14 74 2 63 2 46 C2 28 14 2 30 2Z" fill="{{ ep[2] }}"/>
+              <path d="M3 38 Q10 32 16 38 T30 38 T44 38 T57 38 V48 Q51 42 44 48 T30 48 T16 48 T3 48Z" fill="{{ ep[3] }}"/>
+              <circle cx="18" cy="22" r="3.5" fill="#fff"/><circle cx="36" cy="16" r="3.5" fill="#fff"/><circle cx="24" cy="62" r="3.5" fill="#fff"/><circle cx="40" cy="60" r="3.5" fill="#fff"/>
+            </g>
+          {%- endfor -%}
+          <path d="M0 116 Q30 96 60 112 Q100 92 140 112 Q180 96 220 114 V120 H0Z" fill="#6FAF45"/>
+        </svg>
+      </span>
+      <span class="ssn__item ssn__item--right" style="--w: clamp(100px, 10.5vw, 150px)">
+        <svg viewBox="0 0 190 130" focusable="false">
+          <g transform="translate(0 54)">{{ chick }}</g>
+          <path d="M84 60 Q130 -10 176 60" fill="none" stroke="#A8743E" stroke-width="7" stroke-linecap="round"/>
+          <ellipse cx="108" cy="58" rx="13" ry="17" fill="#FFB3CC"/>
+          <ellipse cx="132" cy="54" rx="13" ry="17" fill="#9EDCFF"/>
+          <ellipse cx="154" cy="58" rx="13" ry="17" fill="#FFE07A"/>
+          <path d="M80 60 H180 L170 120 Q130 128 90 120 Z" fill="#C98F55"/>
+          <path d="M84 76 H176 M86 92 H174 M88 108 H172" stroke="#A8743E" stroke-width="3"/>
+          <path d="M100 60 V122 M120 60 V125 M140 60 V125 M160 60 V122" stroke="#B57B43" stroke-width="2.4"/>
+          <path d="M78 60 H182" stroke="#A8743E" stroke-width="7" stroke-linecap="round"/>
+        </svg>
+      </span>
+      <span class="ssn__bunny">
+        <span class="ssn__hop">
+          <svg viewBox="0 0 90 80" focusable="false">
+            <ellipse cx="54" cy="56" rx="26" ry="20" fill="#F7F2EC"/>
+            <circle cx="80" cy="50" r="8" fill="#FFFFFF"/>
+            <ellipse cx="22" cy="40" rx="17" ry="15" fill="#F7F2EC"/>
+            <ellipse cx="22" cy="12" rx="6" ry="17" fill="#F7F2EC" transform="rotate(-12 22 26)"/>
+            <ellipse cx="22" cy="12" rx="3" ry="12" fill="#FFC2D1" transform="rotate(-12 22 26)"/>
+            <ellipse cx="33" cy="14" rx="6" ry="17" fill="#F7F2EC" transform="rotate(14 33 28)"/>
+            <ellipse cx="33" cy="14" rx="3" ry="12" fill="#FFC2D1" transform="rotate(14 33 28)"/>
+            <circle cx="17" cy="38" r="2.6" fill="#2B1D14"/>
+            <ellipse cx="7" cy="43" rx="3" ry="2.4" fill="#FF8FAB"/>
+            <circle cx="20" cy="46" r="3" fill="#FFC2D1" opacity=".7"/>
+            <ellipse cx="38" cy="74" rx="10" ry="5" fill="#EDE5DB"/>
+            <ellipse cx="66" cy="74" rx="12" ry="5" fill="#EDE5DB"/>
+          </svg>
+        </span>
+      </span>
+
+    {%- when 'winter' -%}
+      <div class="ssn__snowcap">
+        <svg viewBox="0 0 1440 110" preserveAspectRatio="xMidYMax slice" focusable="false">
+          <path fill="#EEF6FF" d="M0 72 C180 46 360 46 540 64 S900 90 1080 66 S1340 42 1440 58 V110 H0 Z"/>
+          <path fill="#FFFFFF" d="M0 86 C220 72 420 76 640 86 S1040 98 1240 84 S1400 76 1440 80 V110 H0 Z"/>
+        </svg>
+      </div>
+      <span class="ssn__item ssn__item--left" style="--w: clamp(110px, 12vw, 170px)">
+        <svg viewBox="0 0 220 100" focusable="false">
+          <path d="M6 96 Q10 40 60 44 Q100 30 116 70 Q120 90 112 96 Z" fill="#5E9E3A"/>
+          <path d="M8 70 Q14 38 58 42 Q98 30 116 66 Q96 58 82 64 Q62 54 46 64 Q26 58 8 70Z" fill="#FFFFFF"/>
+          <path d="M110 96 Q116 52 160 56 Q204 50 214 86 Q216 94 210 96 Z" fill="#4F8A31"/>
+          <path d="M112 78 Q120 52 160 54 Q200 50 214 82 Q190 72 176 78 Q156 68 140 78 Q124 72 112 78Z" fill="#FFFFFF"/>
+        </svg>
+      </span>
+      <span class="ssn__item ssn__item--right" style="--w: clamp(70px, 7.5vw, 108px)">
+        <span class="ssn__sway">
+          <svg viewBox="0 0 100 160" focusable="false">
+            <path d="M28 82 L4 62 M10 66 L2 70 M72 82 L96 60 M90 64 L98 66" stroke="#7A5230" stroke-width="4" stroke-linecap="round"/>
+            <circle cx="50" cy="126" r="32" fill="#FFFFFF" stroke="#DCEAF5" stroke-width="2"/>
+            <circle cx="50" cy="80" r="23" fill="#FFFFFF" stroke="#DCEAF5" stroke-width="2"/>
+            <circle cx="50" cy="42" r="18" fill="#FFFFFF" stroke="#DCEAF5" stroke-width="2"/>
+            <circle cx="50" cy="76" r="3" fill="#2B1D14"/><circle cx="50" cy="90" r="3" fill="#2B1D14"/><circle cx="50" cy="118" r="3.4" fill="#2B1D14"/>
+            <path d="M32 58 Q50 66 68 58 L68 64 Q50 72 32 64 Z" fill="#4FA3C7"/>
+            <path d="M58 62 L64 86 L56 86 L52 64 Z" fill="#4FA3C7"/>
+            <path d="M60 70 L62 76 M57 76 L60 82" stroke="#fff" stroke-width="2"/>
+            <circle cx="44" cy="38" r="2.4" fill="#2B1D14"/><circle cx="56" cy="38" r="2.4" fill="#2B1D14"/>
+            <path d="M50 43 L64 46 L50 48 Z" fill="#F29B38"/>
+            <path d="M43 50 Q50 54 57 50" fill="none" stroke="#2B1D14" stroke-width="1.8" stroke-linecap="round"/>
+            <circle cx="40" cy="45" r="2.6" fill="#FFB0A0" opacity=".7"/><circle cx="60" cy="45" r="2.6" fill="#FFB0A0" opacity=".7"/>
+            <path d="M33 30 Q34 12 50 12 Q66 12 67 30 Z" fill="#4FA3C7"/>
+            <path d="M32 28 H68" stroke="#3B87AB" stroke-width="5" stroke-linecap="round"/>
+            <circle cx="50" cy="10" r="6" fill="#FFFFFF"/>
+          </svg>
+        </span>
+      </span>
+  {%- endcase -%}
+</div>

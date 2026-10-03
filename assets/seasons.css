@@ -1,0 +1,154 @@
+/* ---------- Seasonal hero loops: sunny day → spring / valentine / easter / winter → sunny again ----------
+   Same idea as fall.css: every layer runs one shared, infinite animation of length --hol-cycle.
+   Timeline (% of the cycle):
+     0–24  sunny day        24–28  colors turn      28–84  seasonal scene, petals/hearts/snow falling
+     36–62 butterflies / balloons / cardinal / bunny pass by     26–30  hill items pop up
+     84–92 back to sunny    92–100 sunny day
+   The plain sunny day ('summer') also gets a sun halo and a passing flock of birds.
+*/
+.hero--season { --hol-cycle: 36s; }
+.hero__sky > .ssn__glow, .hero__sky > .ssn__drops, .hero__sky > .ssn__flyer,
+.hero__sky > .ssn__halo, .hero__sky > .ssn__birds { position: absolute; }
+.ssn__glow, .ssn__drops { inset: 0; pointer-events: none; }
+
+/* Seasonal sky tint */
+.ssn__glow { opacity: 0; animation: ssn-on var(--hol-cycle) ease-in-out infinite; }
+@keyframes ssn-on { 0%, 24% { opacity: 0; } 28%, 84% { opacity: 1; } 92%, 100% { opacity: 0; } }
+.hero--spring .ssn__glow { background: linear-gradient(180deg, #D8F0FF 0%, #ECFAF0 55%, #F7FFF2 100%); }
+.hero--valentine .ssn__glow { background: linear-gradient(180deg, #FFC9D8 0%, #FFE0E9 55%, #FFF2F6 100%); }
+.hero--easter .ssn__glow { background: linear-gradient(180deg, #DDF0FF 0%, #F3F9E9 55%, #FFFAE6 100%); }
+.hero--winter .ssn__glow { background: linear-gradient(180deg, #A9D3F2 0%, #D3EAF9 55%, #F2F9FF 100%); }
+
+/* Sun softens in winter */
+.hero--winter .hero__sunset { animation: ssn-sun-winter var(--hol-cycle) ease-in-out infinite; }
+@keyframes ssn-sun-winter {
+  0%, 24% { filter: none; opacity: 1; }
+  28%, 84% { filter: saturate(.45) brightness(1.15); opacity: .85; }
+  92%, 100% { filter: none; opacity: 1; }
+}
+
+/* Petals, hearts and snowflakes */
+.ssn__drops { overflow: hidden; opacity: 0; animation: ssn-drops var(--hol-cycle) ease-in-out infinite; }
+@keyframes ssn-drops { 0%, 26% { opacity: 0; } 30%, 82% { opacity: 1; } 88%, 100% { opacity: 0; } }
+.ssn__drop { position: absolute; top: -6%; display: block; animation: ssn-drop 10s linear infinite; }
+.ssn__drop svg { display: block; width: 100%; height: auto; animation: ssn-spin 3.4s ease-in-out infinite alternate; }
+.ssn__drop--alt { animation-name: ssn-drop-alt; }
+.ssn__drop--alt svg { animation-duration: 2.6s; animation-direction: alternate-reverse; }
+@keyframes ssn-drop { 0% { top: -6%; transform: translateX(0); } 50% { transform: translateX(40px); } 100% { top: 104%; transform: translateX(-10px); } }
+@keyframes ssn-drop-alt { 0% { top: -6%; transform: translateX(0); } 50% { transform: translateX(-36px); } 100% { top: 104%; transform: translateX(14px); } }
+@keyframes ssn-spin { from { transform: rotate(-35deg) rotateY(0deg); } to { transform: rotate(40deg) rotateY(160deg); } }
+/* hearts float up instead of falling, and wobble rather than tumble */
+.hero--valentine .ssn__drop { top: auto; animation-name: ssn-rise; }
+.hero--valentine .ssn__drop--alt { animation-name: ssn-rise-alt; }
+.hero--valentine .ssn__drop svg { animation-name: ssn-wobble; }
+@keyframes ssn-rise { 0% { top: 104%; transform: translateX(0); opacity: 0; } 8% { opacity: .9; } 50% { transform: translateX(30px); } 100% { top: -8%; transform: translateX(-10px); opacity: .9; } }
+@keyframes ssn-rise-alt { 0% { top: 104%; transform: translateX(0); opacity: 0; } 8% { opacity: .85; } 50% { transform: translateX(-28px); } 100% { top: -8%; transform: translateX(12px); opacity: .85; } }
+@keyframes ssn-wobble { from { transform: rotate(-14deg); } to { transform: rotate(14deg); } }
+/* snowflakes: slower, gentle spin, a touch of shadow so they show on the pale sky */
+.hero--winter .ssn__drop { animation-duration: 12s; }
+.hero--winter .ssn__drop svg { filter: drop-shadow(0 1px 2px rgba(60, 110, 160, .35)); animation-name: ssn-twirl; animation-duration: 6s; }
+@keyframes ssn-twirl { to { transform: rotate(180deg); } }
+
+/* Butterflies, heart balloons and a cardinal pass by (36–62%) */
+.ssn__flyer { left: 0; opacity: 0; pointer-events: none; animation: ssn-ltr var(--hol-cycle) linear infinite; }
+.ssn__flyer svg { display: block; width: 100%; height: auto; overflow: visible; }
+.ssn__bob { display: block; animation: ssn-bob 2.2s ease-in-out infinite; }
+@keyframes ssn-bob { 50% { transform: translateY(-10px); } }
+@keyframes ssn-ltr {
+  0%, 35.9% { translate: -120% 30px; opacity: 0; }
+  36% { translate: -120% 30px; opacity: 1; }
+  49% { translate: calc(50vw - 50%) -10px; }
+  62% { translate: calc(100vw + 10%) 20px; opacity: 1; }
+  62.1%, 100% { translate: calc(100vw + 10%) 20px; opacity: 0; }
+}
+@keyframes ssn-rtl {
+  0%, 35.9% { translate: calc(100vw + 10%) 40px; opacity: 0; }
+  36% { translate: calc(100vw + 10%) 40px; opacity: 1; }
+  49% { translate: calc(50vw - 50%) 0; }
+  62% { translate: -120% 30px; opacity: 1; }
+  62.1%, 100% { translate: -120% 30px; opacity: 0; }
+}
+.ssn__butterfly { width: clamp(42px, 4vw, 60px); }
+.ssn__fly--a { top: 5%; }
+.ssn__fly--b { top: 13%; width: clamp(34px, 3.2vw, 48px); animation-delay: -1.4s; }
+.ssn__fly--b .ssn__bob { animation-duration: 1.7s; }
+.ssn__wings { transform-box: fill-box; transform-origin: center; animation: ssn-flutter .28s ease-in-out infinite alternate; }
+@keyframes ssn-flutter { to { transform: scaleX(.45); } }
+.ssn__balloons { top: 6%; width: clamp(70px, 7vw, 104px); }
+.ssn__balloons .ssn__bob { animation-duration: 3.4s; }
+.ssn__cardinal { top: 10%; width: clamp(54px, 5vw, 76px); animation-name: ssn-rtl; }
+.ssn__flap { transform-box: fill-box; transform-origin: 50% 100%; animation: ssn-flap .32s ease-in-out infinite alternate; }
+@keyframes ssn-flap { to { transform: scaleY(.3); } }
+
+/* Grass changes with the season */
+.hero--spring .grass, .hero--easter .grass { animation: ssn-grass-fresh var(--hol-cycle) ease-in-out infinite; }
+@keyframes ssn-grass-fresh { 0%, 24% { filter: none; } 28%, 84% { filter: saturate(1.25) brightness(1.07); } 92%, 100% { filter: none; } }
+.hero--winter .grass { animation: ssn-grass-winter var(--hol-cycle) ease-in-out infinite; }
+@keyframes ssn-grass-winter { 0%, 24% { filter: none; } 28%, 84% { filter: saturate(.4) brightness(1.12); } 92%, 100% { filter: none; } }
+.ssn__snowcap {
+  position: absolute; left: 0; right: 0; bottom: -1px; height: clamp(70px, 8vw, 110px); pointer-events: none;
+  opacity: 0; animation: ssn-drops var(--hol-cycle) ease-in-out infinite;
+}
+.ssn__snowcap svg { width: 100%; height: 100%; display: block; }
+
+/* Hill items pop up */
+.ssn__hill { position: absolute; left: 0; right: 0; bottom: 0; height: 0; z-index: 2; pointer-events: none; }
+.ssn__item {
+  position: absolute; bottom: clamp(16px, 2.2vw, 32px); width: var(--w, 120px);
+  opacity: 0; transform-origin: 50% 100%;
+  animation: ssn-pop var(--hol-cycle) ease-out infinite;
+}
+.ssn__item svg { display: block; width: 100%; height: auto; overflow: visible; filter: drop-shadow(0 6px 6px rgba(40, 60, 20, .22)); }
+.ssn__item--left { left: 3%; }
+.ssn__item--right { right: 5%; animation-delay: .15s; }
+@keyframes ssn-pop {
+  0%, 25% { opacity: 0; transform: translateY(24px) scale(.85); }
+  29%, 84% { opacity: 1; transform: none; }
+  90%, 100% { opacity: 0; transform: translateY(24px) scale(.85); }
+}
+.ssn__sway { display: block; transform-origin: 50% 100%; animation: ssn-sway 3.6s ease-in-out infinite; }
+@keyframes ssn-sway { 0%, 100% { transform: rotate(-2deg); } 50% { transform: rotate(2.5deg); } }
+
+/* Easter bunny hops across the hill */
+.ssn__bunny {
+  position: absolute; bottom: clamp(18px, 2.4vw, 34px); left: 0; width: clamp(56px, 5.5vw, 80px);
+  opacity: 0; animation: ssn-rtl var(--hol-cycle) linear infinite;
+}
+.ssn__hop { display: block; animation: ssn-hop .7s ease-in-out infinite; }
+.ssn__hop svg { display: block; width: 100%; height: auto; overflow: visible; filter: drop-shadow(0 6px 5px rgba(40, 60, 20, .25)); }
+@keyframes ssn-hop {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  45% { transform: translateY(-30px) rotate(-8deg); }
+  70% { transform: translateY(-8px) rotate(4deg); }
+}
+
+/* ---------- Sunny day extras: warm sun halo and a passing flock of birds ---------- */
+.ssn__halo {
+  top: -150px; right: -150px; width: 360px; height: 360px; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle, rgba(255, 236, 160, .75) 0%, rgba(255, 236, 160, .35) 40%, rgba(255, 236, 160, 0) 70%);
+  animation: ssn-halo 6s ease-in-out infinite;
+}
+@keyframes ssn-halo { 50% { transform: scale(1.12); opacity: .8; } }
+.ssn__birds { top: 12%; left: 0; width: clamp(70px, 7vw, 104px); opacity: 0; pointer-events: none; animation: ssn-birds 30s linear infinite; }
+.ssn__birds svg { display: block; width: 100%; height: auto; overflow: visible; }
+@keyframes ssn-birds {
+  0%, 9.9% { translate: calc(100vw + 10%) 30px; opacity: 0; }
+  10% { translate: calc(100vw + 10%) 30px; opacity: 1; }
+  45% { translate: -120% -10px; opacity: 1; }
+  45.1%, 100% { translate: -120% -10px; opacity: 0; }
+}
+
+@media (max-width: 749px) {
+  .ssn__item--left { left: 2%; }
+  .ssn__item--right { right: 3%; }
+  .ssn__fly--a, .ssn__cardinal, .ssn__balloons, .ssn__birds { top: 24%; }
+  .ssn__fly--b { top: 38%; }
+  .ssn__halo { width: 260px; height: 260px; top: -110px; right: -110px; }
+}
+
+/* Reduce motion: keep the sunny day and skip the loop */
+@media (prefers-reduced-motion: reduce) {
+  .ssn__glow, .ssn__drops, .ssn__flyer, .ssn__hill, .ssn__birds { display: none; }
+  .ssn__halo { animation: none; }
+  .hero--season .hero__sunset, .hero--season .grass { animation: none; }
+}
