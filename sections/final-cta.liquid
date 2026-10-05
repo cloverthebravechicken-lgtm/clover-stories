@@ -31,13 +31,13 @@
       {%- if live -%}
         <div class="final-cta__actions">
           <button type="button" class="btn btn--light btn--xl btn--wiggle" data-quick-add="{{ v.id }}">
-            {{ section.settings.button_label }} — {{ v.price | money }}
+            {{ section.settings.button_label }} for {{ v.price | money }}
           </button>
         </div>
       {%- elsif show_preview -%}
         <div class="final-cta__actions">
           <button type="button" class="btn btn--light btn--xl btn--wiggle" data-preview-add>
-            {{ section.settings.button_label }} — {% render 'preview-field', key: pv_key, field: 'price' %}
+            {{ section.settings.button_label }} for {% render 'preview-field', key: pv_key, field: 'price' %}
           </button>
         </div>
       {%- elsif product != blank -%}
