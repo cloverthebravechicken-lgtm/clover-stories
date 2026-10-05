@@ -203,7 +203,7 @@
         "type": "text",
         "id": "cart_perk_text_plush",
         "label": "Cart perk message when the plush or bundle is in the basket",
-        "default": "📦 Your book ships free, and Clover plush ships for a flat $4.99. Plus a free printable activity packet!"
+        "default": "📦 Your book ships free, and Clover plush ships for a flat $6.99. Plus a free printable activity packet!"
       },
       {
         "type": "checkbox",
@@ -386,7 +386,7 @@
         "type": "text",
         "id": "notify_fallback_note",
         "label": "Price note when selected",
-        "default": "Plush ships for a flat $4.99"
+        "default": "Plush ships for a flat $6.99"
       }
     ]
   },
