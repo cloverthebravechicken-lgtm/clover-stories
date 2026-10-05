@@ -11,13 +11,17 @@
   # Which Judge.me reviews are from verified buyers: read Judge.me's own review list and keep a
   # whitespace-free snippet of each verified review's text to match against below
   assign verified_keys = '|'
+  assign imported_keys = '|'
   if jm_reviews != blank
     assign ssr = source.metafields.judgeme.review_widget_ssr_html.value
     assign chunks = ssr | split: "<div class='jdgm-rev "
     for c in chunks
+      assign vb = c | split: "jdgm-rev__body'>" | last | split: '</div>' | first | strip_html | strip_newlines | remove: ' ' | remove: '&nbsp;' | downcase | slice: 0, 24
       if c contains "data-verified-buyer='true'"
-        assign vb = c | split: "jdgm-rev__body'>" | last | split: '</div>' | first | strip_html | strip_newlines | remove: ' ' | remove: '&nbsp;' | downcase | slice: 0, 24
         assign verified_keys = verified_keys | append: vb | append: '|'
+      elsif c contains 'review_collected_from_another_provider'
+        # imported reviews (verified Amazon purchases)
+        assign imported_keys = imported_keys | append: vb | append: '|'
       endif
     endfor
   endif
@@ -53,7 +57,8 @@
               <span class="review__avatar" aria-hidden="true">{{ author | slice: 0 | upcase }}</span>
               <span>
                 <strong>{{ author | capitalize }}</strong>
-                {%- if verified_keys contains rkey -%}<small class="review__verified">{% render 'icon', name: 'check', size: 12 %} Verified buyer</small>{%- endif -%}
+                {%- if verified_keys contains rkey -%}<small class="review__verified">{% render 'icon', name: 'check', size: 12 %} Verified buyer</small>
+                {%- elsif section.settings.imported_label != blank and imported_keys contains rkey -%}<small class="review__verified">{% render 'icon', name: 'check', size: 12 %} {{ section.settings.imported_label }}</small>{%- endif -%}
               </span>
             </figcaption>
           </figure>
@@ -99,6 +104,7 @@
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "What people are saying" },
     { "type": "checkbox", "id": "use_judgeme", "label": "Pull 5-star reviews from Judge.me automatically", "default": true, "info": "Falls back to the review blocks below if there are no Judge.me reviews." },
     { "type": "product", "id": "source_product", "label": "Product to pull Judge.me reviews from", "info": "Defaults to the current product on product pages." },
+    { "type": "text", "id": "imported_label", "label": "Tag for reviews imported into Judge.me", "default": "Verified Amazon buyer", "info": "Shown on reviews you imported from another site (e.g. Amazon). Leave blank to show no tag." },
     { "type": "range", "id": "min_length", "label": "Hide reviews shorter than", "min": 0, "max": 120, "step": 5, "unit": "chr", "default": 40 },
     { "type": "range", "id": "max_reviews", "label": "Maximum reviews", "min": 3, "max": 100, "step": 1, "default": 100, "info": "Set high so new reviews are added without older ones dropping off." },
     { "type": "text", "id": "summary", "label": "Summary text", "default": "5-star reviews from parents, grandparents & teachers" },
