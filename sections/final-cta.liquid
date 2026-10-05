@@ -12,12 +12,45 @@
     <div class="final-cta__content">
       <h2 class="h1">{{ section.settings.heading }}</h2>
       <div class="rte">{{ section.settings.text }}</div>
-      {%- if product != blank -%}
-        {%- assign v = product.selected_or_first_available_variant -%}
+      {%- liquid
+        # Draft products (blank or unavailable here) can show a Launch preview button instead
+        assign pv_key = section.settings.preview_as
+        assign v = blank
+        assign live = false
+        if product != blank
+          assign v = product.selected_or_first_available_variant
+          if v.available
+            assign live = true
+          endif
+        endif
+        assign show_preview = false
+        if live == false and settings.launch_preview and pv_key != blank and pv_key != 'none'
+          assign show_preview = true
+        endif
+      -%}
+      {%- if live -%}
         <div class="final-cta__actions">
-          <button type="button" class="btn btn--light btn--xl btn--wiggle" data-quick-add="{{ v.id }}" {% unless v.available %}disabled{% endunless %}>
+          <button type="button" class="btn btn--light btn--xl btn--wiggle" data-quick-add="{{ v.id }}">
             {{ section.settings.button_label }} — {{ v.price | money }}
           </button>
+        </div>
+      {%- elsif show_preview -%}
+        <div class="final-cta__actions">
+          <button type="button" class="btn btn--light btn--xl btn--wiggle" data-preview-add>
+            {{ section.settings.button_label }} — {% render 'preview-field', key: pv_key, field: 'price' %}
+          </button>
+        </div>
+      {%- elsif product != blank -%}
+        <div class="final-cta__actions">
+          {%- if settings.notify_enabled -%}
+            {%- comment -%} Sold out: send shoppers up to the buy box's "notify me" form {%- endcomment -%}
+            <a href="#top" class="btn btn--light btn--xl" onclick="var n=document.querySelector('.notify');if(n){event.preventDefault();n.scrollIntoView({behavior:'smooth',block:'center'});var i=n.querySelector('input[type=email]');if(i)setTimeout(function(){i.focus({preventScroll:true})},500);}">
+              Sold out · {{ settings.notify_button | default: 'Notify me' }}
+            </a>
+            {%- if settings.notify_eta != blank -%}<p class="final-cta__eta">Back {{ settings.notify_eta }}!</p>{%- endif -%}
+          {%- else -%}
+            <button type="button" class="btn btn--light btn--xl" disabled>Sold out</button>
+          {%- endif -%}
         </div>
       {%- endif -%}
       <p class="final-cta__perks">
@@ -30,6 +63,7 @@
   {% render 'critter', name: section.settings.critter, side: section.settings.critter_side %}
 </section>
 
+<style>.final-cta__eta { margin: 8px 0 0; font-weight: 700; opacity: .9; }</style>
 {% schema %}
 {
   "name": "Final call to action",
@@ -41,7 +75,8 @@
     { "type": "image_picker", "id": "image", "label": "Image" },
     { "type": "inline_richtext", "id": "heading", "label": "Heading", "default": "Be brave. Be you. Bring Clover home." },
     { "type": "richtext", "id": "text", "label": "Text", "default": "<p>The story your little one will ask for again and again.</p>" },
-    { "type": "text", "id": "button_label", "label": "Button label", "default": "Add to cart" }
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Add to cart" },
+    { "type": "select", "id": "preview_as", "label": "Launch preview: if the product is still a draft, show", "options": [{ "value": "none", "label": "Nothing" }, { "value": "plush", "label": "Clover Plush preview" }, { "value": "bundle", "label": "Book & Plush Bundle preview" }], "default": "none", "info": "Only while Theme settings → Launch preview is on." }
   ],
   "presets": [{ "name": "Final call to action" }]
 }
