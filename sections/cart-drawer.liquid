@@ -21,6 +21,10 @@
               assign perk = settings.cart_perk_text_plush
             endif
           endfor
+          # Outside the US: free-shipping wording doesn't apply, and customs may charge import taxes on delivery
+          if localization.country.iso_code != 'US' and section.settings.intl_note != blank
+            assign perk = section.settings.intl_note
+          endif
         -%}
         {%- if perk != blank -%}
           <p class="drawer__perk">{{ perk }}</p>
@@ -204,7 +208,7 @@
           </button>
         </form>
         <p class="drawer__trust">
-          <span>{% render 'icon', name: 'truck', size: 16 %} Free shipping on books</span>
+          {%- if localization.country.iso_code == 'US' -%}<span>{% render 'icon', name: 'truck', size: 16 %} Free shipping on books</span>{%- endif -%}
           <span>{% render 'icon', name: 'shield', size: 16 %} Secure checkout</span>
         </p>
       </div>
@@ -215,6 +219,8 @@
 {% schema %}
 {
   "name": "Cart drawer",
-  "settings": []
+  "settings": [
+    { "type": "text", "id": "intl_note", "label": "Message for shoppers outside the US", "default": "🌎 Shipping to your country is calculated at checkout. Import taxes or duties may be charged by customs on delivery and are paid by the recipient.", "info": "Replaces the free-shipping message in the cart for shoppers in Mexico, Canada and other countries. Leave blank to hide." }
+  ]
 }
 {% endschema %}

@@ -5,7 +5,13 @@
       <div class="center mt-m cart-page__empty">{% render 'empty-basket' %}</div>
     {%- else -%}
       <form action="{{ routes.cart_url }}" method="post" class="cart-form card mt-m">
-        {%- if settings.cart_perk_text != blank -%}<p class="drawer__perk">{{ settings.cart_perk_text }}</p>{%- endif -%}
+        {%- liquid
+          assign perk = settings.cart_perk_text
+          if localization.country.iso_code != 'US' and section.settings.intl_note != blank
+            assign perk = section.settings.intl_note
+          endif
+        -%}
+        {%- if perk != blank -%}<p class="drawer__perk">{{ perk }}</p>{%- endif -%}
         <ul class="cart-lines" role="list">
           {%- for item in cart.items -%}
             <li class="cart-line">
@@ -49,6 +55,8 @@
 {% schema %}
 {
   "name": "Cart",
-  "settings": []
+  "settings": [
+    { "type": "text", "id": "intl_note", "label": "Message for shoppers outside the US", "default": "🌎 Shipping to your country is calculated at checkout. Import taxes or duties may be charged by customs on delivery and are paid by the recipient.", "info": "Replaces the free-shipping message in the cart for shoppers in Mexico, Canada and other countries. Leave blank to hide." }
+  ]
 }
 {% endschema %}
