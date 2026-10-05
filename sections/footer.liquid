@@ -26,6 +26,15 @@
         {%- if section.settings.text != blank -%}
           <div class="footer__text rte">{{ section.settings.text }}</div>
         {%- endif -%}
+        {%- liquid
+          assign has_social = false
+          if settings.social_instagram != blank or settings.social_facebook != blank
+            assign has_social = true
+          endif
+        -%}
+        {%- if has_social and section.settings.social_heading != blank -%}
+          <p class="footer__social-heading">{{ section.settings.social_heading }}</p>
+        {%- endif -%}
         <ul class="social footer__social" role="list">
           {%- if settings.social_instagram != blank -%}<li><a href="{{ settings.social_instagram }}" aria-label="Instagram" target="_blank" rel="noopener">{% render 'icon', name: 'instagram', size: 22 %}</a></li>{%- endif -%}
           {%- if settings.social_facebook != blank -%}<li><a href="{{ settings.social_facebook }}" aria-label="Facebook" target="_blank" rel="noopener">{% render 'icon', name: 'facebook', size: 22 %}</a></li>{%- endif -%}
@@ -89,6 +98,7 @@
   </div>
 </footer>
 
+<style>.footer__social-heading { margin: 14px 0 6px; font-weight: 700; font-size: .95rem; }</style>
 {% schema %}
 {
   "name": "Footer",
@@ -100,6 +110,7 @@
     { "type": "select", "id": "mascot_faces", "label": "Clover faces this way in the image", "options": [{ "value": "left", "label": "Left" }, { "value": "right", "label": "Right" }], "default": "left" },
     { "type": "select", "id": "grazer", "label": "Farm friend grazing on the grass", "options": [{ "value": "none", "label": "None" }, { "value": "horse", "label": "Horse" }, { "value": "cow", "label": "Cow" }, { "value": "duck", "label": "Duck" }, { "value": "goat", "label": "Goat" }, { "value": "chicks", "label": "Chicks" }], "default": "cow" },
     { "type": "richtext", "id": "text", "label": "About text", "default": "<p>Heartwarming picture books that help little ones discover the bravest thing they can be is themselves.</p>" },
+    { "type": "text", "id": "social_heading", "label": "Line above the social icons", "default": "Follow along & tag us! @cloverthebravechicken", "info": "Social links are set in Theme settings → Social media." },
     { "type": "text", "id": "menu_heading", "label": "First menu heading", "default": "Explore" },
     { "type": "link_list", "id": "menu", "label": "First menu", "default": "main-menu" },
     { "type": "text", "id": "menu_2_heading", "label": "Second menu heading", "default": "Help" },
