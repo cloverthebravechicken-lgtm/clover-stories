@@ -8,6 +8,19 @@
     endif
   endif
   assign min_len = section.settings.min_length
+  # Which Judge.me reviews are from verified buyers: read Judge.me's own review list and keep a
+  # whitespace-free snippet of each verified review's text to match against below
+  assign verified_keys = '|'
+  if jm_reviews != blank
+    assign ssr = source.metafields.judgeme.review_widget_ssr_html.value
+    assign chunks = ssr | split: "<div class='jdgm-rev "
+    for c in chunks
+      if c contains "data-verified-buyer='true'"
+        assign vb = c | split: "jdgm-rev__body'>" | last | split: '</div>' | first | strip_html | strip_newlines | remove: ' ' | remove: '&nbsp;' | downcase | slice: 0, 24
+        assign verified_keys = verified_keys | append: vb | append: '|'
+      endif
+    endfor
+  endif
 -%}
 <section class="reviews section anim" id="reviews" style="--bg: {{ section.settings.bg }};">
   {% render 'deco', name: 'scallop', color: section.settings.bg, flip: true %}
@@ -32,12 +45,16 @@
           {%- assign shown = shown | plus: 1 -%}
           {%- assign author = r.author.name | default: 'Happy reader' -%}
           {%- if author == 'Anonymous' -%}{%- assign author = 'Happy reader' -%}{%- endif -%}
+          {%- assign rkey = body | strip_newlines | remove: ' ' | downcase | slice: 0, 24 | prepend: '|' | append: '|' -%}
           <figure class="review card tilt-{{ shown | modulo: 3 }}">
             {% render 'stars', rating: 5, size: 16 %}
             <blockquote class="review__text">“{{ body | escape }}”</blockquote>
             <figcaption class="review__author">
               <span class="review__avatar" aria-hidden="true">{{ author | slice: 0 | upcase }}</span>
-              <span><strong>{{ author | capitalize }}</strong></span>
+              <span>
+                <strong>{{ author | capitalize }}</strong>
+                {%- if verified_keys contains rkey -%}<small class="review__verified">{% render 'icon', name: 'check', size: 12 %} Verified buyer</small>{%- endif -%}
+              </span>
             </figcaption>
           </figure>
         {%- endif -%}
@@ -83,7 +100,7 @@
     { "type": "checkbox", "id": "use_judgeme", "label": "Pull 5-star reviews from Judge.me automatically", "default": true, "info": "Falls back to the review blocks below if there are no Judge.me reviews." },
     { "type": "product", "id": "source_product", "label": "Product to pull Judge.me reviews from", "info": "Defaults to the current product on product pages." },
     { "type": "range", "id": "min_length", "label": "Hide reviews shorter than", "min": 0, "max": 120, "step": 5, "unit": "chr", "default": 40 },
-    { "type": "range", "id": "max_reviews", "label": "Maximum reviews", "min": 3, "max": 30, "step": 1, "default": 12 },
+    { "type": "range", "id": "max_reviews", "label": "Maximum reviews", "min": 3, "max": 100, "step": 1, "default": 100, "info": "Set high so new reviews are added without older ones dropping off." },
     { "type": "text", "id": "summary", "label": "Summary text", "default": "5-star reviews from parents, grandparents & teachers" },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Join the Clover fan club" },
     { "type": "url", "id": "button_link", "label": "Button link" }
