@@ -119,7 +119,7 @@
       {% render 'buy-form', product: product, section: section, form_id: 'ProductForm', require_match: true %}
 
       <ul class="pdp__perks" role="list">
-        {%- if section.settings.perk_1 != blank -%}<li>{% render 'icon', name: 'truck', size: 20 %} {{ section.settings.perk_1 }}</li>{%- endif -%}
+        {%- if section.settings.perk_1 != blank -%}<li>{% render 'icon', name: 'truck', size: 20 %} <span data-price-note data-default="{{ section.settings.perk_1 | escape }}">{{ section.settings.perk_1 }}</span></li>{%- endif -%}
         {%- if section.settings.perk_2 != blank -%}<li>{% render 'icon', name: 'gift', size: 20 %} {{ section.settings.perk_2 }}</li>{%- endif -%}
         {%- if section.settings.perk_3 != blank -%}<li>{% render 'icon', name: 'shield', size: 20 %} {{ section.settings.perk_3 }}</li>{%- endif -%}
       </ul>
@@ -231,6 +231,7 @@
         { "type": "text", "id": "badge", "label": "Badge" },
         { "type": "select", "id": "layout", "label": "Style", "default": "card", "options": [{ "value": "card", "label": "Card" }, { "value": "compact", "label": "Small line (e.g. plush only)" }] },
         { "type": "checkbox", "id": "hide_addon", "label": "Hide the signing option when this is selected", "default": false, "info": "Turn on for options without a book, like the plush on its own." },
+        { "type": "text", "id": "note", "label": "Shipping perk when selected", "info": "Replaces the first perk (e.g. \"Free shipping on all books\") while this option is selected." },
         { "type": "checkbox", "id": "preselect", "label": "Pre-select this option", "default": false, "info": "Starts with this option selected. Turn on for one option only." },
         { "type": "select", "id": "preview_as", "label": "Launch preview: show as", "default": "none", "options": [{ "value": "none", "label": "Nothing" }, { "value": "plush", "label": "Clover Plush" }, { "value": "bundle", "label": "Book & Plush Bundle" }], "info": "Used while the product is still a draft and Theme settings → Launch preview is on." }
       ]
