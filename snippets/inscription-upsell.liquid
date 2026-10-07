@@ -1,6 +1,7 @@
 {%- comment -%}
   Cart upsell: offer the personalized, author-signed inscription when the book is
-  in the cart without it. Uses Theme settings → Cart → Empty basket product/add-on.
+  in the cart without it, on its own or inside a bundle (e.g. the book + plush bundle).
+  Uses Theme settings → Cart → Empty basket product/add-on.
 {%- endcomment -%}
 {%- liquid
   assign book = settings.empty_cart_product
@@ -11,6 +12,14 @@
     if book != blank and item.product_id == book.id
       assign has_book = true
     endif
+    if item.product.handle == 'clover-book-plush-bundle'
+      assign has_book = true
+    endif
+    for comp in item.item_components
+      if book != blank and comp.product_id == book.id
+        assign has_book = true
+      endif
+    endfor
     if ins != blank and item.product_id == ins.id
       assign has_ins = true
     endif
